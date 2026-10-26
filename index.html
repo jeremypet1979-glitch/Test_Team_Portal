@@ -420,6 +420,44 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .hp-formula b{color:var(--ink)}
 .hp-test.off{opacity:.55}
 @media (max-width:700px){.hp-test .form-grid,[data-view=hipot] .form-grid{grid-template-columns:1fr!important}}
+/* JHA printout (outside @media print so it can be measured before printing) */
+.jp{font:9.5pt/1.3 Calibri,Carlito,Arial,sans-serif;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.jp .hp-ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4pt}
+.jp .hp-ph img{height:36pt}
+.jp .hp-ph .addr{text-align:right;font-size:8pt;line-height:1.25}
+.jp-band{display:flex;justify-content:space-between;align-items:baseline;background:#1f2a30;color:#fff;padding:6pt 9pt;border-radius:3pt;margin-bottom:7pt}
+.jp-band b{font-size:14pt;letter-spacing:.02em}
+.jp-band span{font-size:10pt;color:#f2c94c;font-weight:bold}
+.jp-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #777;border-radius:3pt;overflow:hidden}
+.jp-f{padding:3pt 7pt 4pt;border-right:1px solid #bbb;border-bottom:1px solid #bbb;min-height:24pt}
+.jp-f.w2{grid-column:span 2}.jp-f.w3{grid-column:span 3;border-bottom:0}
+.jp-f span,.jp-l{display:block;font-size:7pt;text-transform:uppercase;letter-spacing:.08em;color:#555;font-weight:bold}
+.jp-f b{font-weight:normal;font-size:10pt}
+.jp-conds{display:flex;gap:16pt;flex-wrap:wrap;margin:6pt 0 2pt;padding:4pt 7pt;background:#f1f1f1;border-radius:3pt}
+.jp-conds>div{display:flex;align-items:center;gap:8pt;flex-wrap:wrap}
+.jp-conds .jp-l{display:inline;margin-right:2pt}
+.jp-conds i{font-style:normal;display:inline-flex;align-items:center;gap:3pt}
+.jp-cb{display:inline-flex;align-items:center;justify-content:center;width:9pt;height:9pt;border:1px solid #333;font-size:7.5pt;line-height:1;font-weight:bold;margin-right:2pt;vertical-align:-1pt}
+.jp-cb.on{background:#1f2a30;color:#fff;border-color:#1f2a30}
+.jp-h{font-size:10.5pt;margin:8pt 0 3pt;padding-bottom:2pt;border-bottom:2px solid #f2c94c}
+.jp table{width:100%;border-collapse:collapse}
+.jp-haz th,.jp-sig th{background:#e4e4e4;font-size:8pt;text-align:left;padding:3pt 5pt;border:1px solid #999}
+.jp-haz td{border:1px solid #999;padding:3pt 5pt;vertical-align:top;font-size:9pt}
+.jp-haz tbody tr:nth-child(even) td{background:#f7f7f7}
+.jp-haz tr,.jp-sig tr,.jp-q tr{break-inside:avoid}
+.jp td.n,.jp th.n{width:16pt;text-align:center;color:#444}
+.jp-q td{border-bottom:1px solid #ccc;padding:2pt 4pt;font-size:9pt}
+.jp-q td.yn{width:34pt;white-space:nowrap}
+.jp-q tr.flag td{background:#fde9e7;font-weight:bold}
+.jp-stop{display:flex;gap:8pt;align-items:center;margin-top:7pt;border:2px solid #c0392b;border-left-width:7pt;background:#fdecea;padding:4pt 7pt;border-radius:3pt;font-size:9pt}
+.jp-stop b{color:#c0392b;font-size:10pt;white-space:nowrap}
+.jp-aud{display:grid;grid-template-columns:auto repeat(4,1fr);gap:6pt;align-items:end;margin-top:6pt;padding:4pt 7pt;background:#e8f4f2;border-radius:3pt}
+.jp-aud div span{display:block;font-size:7.5pt;color:#333}
+.jp-aud div b{display:block;border-bottom:1px solid #333;font-weight:normal;min-height:12pt}
+.jp-note{margin:0 0 5pt;font-size:9pt;color:#333}
+.jp-sig td{border:1px solid #999;padding:0 5pt;height:24pt;font-size:10pt}
+.jp-sig td.s img{max-height:21pt;display:block}
+.jp-keep{break-inside:auto}
 /* Print */
 #printRoot{display:none}
 @media print{
@@ -1836,24 +1874,54 @@ function jhaForm(h) {
 }
 
 function printJha(h) {
-  UI.printKey = 'JHA';
-  const cb = on => on ? '☒' : '☐';
+  const cb = on => `<span class="jp-cb ${on ? 'on' : ''}">${on ? '✕' : ''}</span>`;
   const crew = h.crew.filter(c => c.name || c.sig);
-  const sigRows = Array.from({ length: Math.max(18, crew.length) }, (_, i) => { const c = crew[i] || {}; return `<tr><td>${esc(c.name)}</td><td>${c.sig ? `<img src="${c.sig}" alt="">` : ''}</td></tr>`; }).join('');
   const A = h.auditors || {};
-  printHTML(`<div class="pr-sheet"><p class="pr-title" style="text-decoration:underline">JHA</p>
-    <div class="pr-line"><b>Employee Names or Department:</b><span>${esc(h.employees || h.crewName)}</span></div>
-    <div class="pr-line"><div><b>Weather:</b> ${WEATHER.map(([k, l]) => `${l} ${cb(h.weather[k])}`).join(' &nbsp; ')}</div></div>
-    <div class="pr-line"><div><b>Expected Temperatures:</b> ${TEMPS.map(t => `${t} ${cb(h.temp === t)}`).join(' &nbsp; ')}</div></div>
-    <div class="pr-line"><b>Job Name/ Project:</b><span>${esc([h.jobs, h.project].filter(Boolean).join(' · '))}</span><b>Date:</b><span style="flex:0 0 1.4in">${esc(shortDate(h.date))}</span></div>
-    <div class="pr-line"><b>Supervisor(s):</b><span>${esc(h.supervisors)}</span></div>
-    <div class="pr-line"><b>Specific Task Locations:</b><span>${esc(h.locations)}</span></div>
-    <table class="pr-table pr-jrows"><thead><tr><th style="width:4%">#</th><th style="width:28%">Task Description</th><th style="width:30%">Hazard Associated w/ Tasks</th><th>How are the hazards being mitigated</th></tr></thead><tbody>${(h.rows.length ? h.rows : [{}, {}, {}]).map((r, i) => `<tr><td style="text-align:center">${i + 1}</td><td>${esc(r.task)}</td><td>${esc(r.hazard)}</td><td>${esc(r.mitigation)}</td></tr>`).join('')}</tbody></table>
-    <div style="font-size:10pt">${JHA_Q.map((q, i) => `<div>${esc(q.t)} Yes ${cb(h.q[i] === 'Yes')} No ${cb(h.q[i] === 'No')}</div>`).join('')}</div>
-    <div class="pr-stop">**${esc(STOP_TEXT)}</div>
-    <div class="pr-aud">Auditors: ${AUDITORS.map(([k, l]) => `${l} <u>&nbsp;${esc(A[k] || '      ')}&nbsp;</u>`).join(' &nbsp; ')}</div>
-  </div>
-  <div class="pr-sheet"><p class="pr-sub" style="text-align:left">Crew: ${esc(h.crewName)} · ${esc(shortDate(h.date))}</p><table class="pr-table pr-sig"><thead><tr><th style="width:55%">Print:</th><th>Signature:</th></tr></thead><tbody>${sigRows}</tbody></table></div>`);
+  const rows = h.rows.filter(r => r.task || r.hazard || r.mitigation);
+  const hazRows = (rows.length ? rows : [{}, {}, {}]).map((r, i) => `<tr><td class="n">${i + 1}</td><td>${esc(r.task)}</td><td>${esc(r.hazard)}</td><td>${esc(r.mitigation)}</td></tr>`).join('');
+  const field = (l, v, cls = '') => `<div class="jp-f ${cls}"><span>${l}</span><b>${esc(v) || '&nbsp;'}</b></div>`;
+  const when = ts => { if (!ts) return ''; const m = String(ts).match(/(\d{1,2}):(\d{2})/); if (!m) return ''; let hh = +m[1]; const ap = hh >= 12 ? 'PM' : 'AM'; hh = hh % 12 || 12; return `${hh}:${m[2]} ${ap}`; };
+  const sigTable = blank => `<table class="jp-sig"><thead><tr><th class="n">#</th><th style="width:38%">Print name</th><th>Signature</th><th style="width:13%">Time</th></tr></thead><tbody>
+    ${Array.from({ length: crew.length + blank }, (_, i) => { const c = crew[i] || {}; return `<tr><td class="n">${i + 1}</td><td>${esc(c.name)}</td><td class="s">${c.sig ? `<img src="${c.sig}" alt="">` : ''}</td><td>${esc(when(c.ts))}</td></tr>`; }).join('')}</tbody></table>`;
+  const band = (t, sub) => `<div class="jp-band"><b>${t}</b><span>${sub}</span></div>`;
+  const sub = `${esc(h.crewName || 'Crew')} &nbsp;·&nbsp; ${esc(niceDate ? niceDate(h.date) : shortDate(h.date))}`;
+  const partA = `${band('Daily Job Hazard Analysis', sub)}
+    <div class="jp-grid">
+      ${field('Employee names or department', h.employees || h.crewName, 'w2')}${field('Date', shortDate(h.date))}
+      ${field('Job # / project', [h.jobs, h.project].filter(Boolean).join(' · '), 'w2')}${field('Supervisor(s)', h.supervisors)}
+      ${field('Specific task locations', h.locations, 'w3')}
+    </div>
+    <div class="jp-conds"><div><span class="jp-l">Weather</span>${WEATHER.map(([k, l]) => `<i>${cb(h.weather[k])}${l}</i>`).join('')}</div><div><span class="jp-l">Expected temperatures</span>${TEMPS.map(t => `<i>${cb(h.temp === t)}${esc(t)}</i>`).join('')}</div></div>
+    <h4 class="jp-h">Tasks, hazards and controls</h4>
+    <table class="jp-haz"><thead><tr><th class="n">#</th><th style="width:27%">Task description</th><th style="width:31%">Hazards associated with the task</th><th>How the hazards are being mitigated</th></tr></thead><tbody>${hazRows}</tbody></table>
+    <h4 class="jp-h">Before work starts</h4>
+    <table class="jp-q"><tbody>${JHA_Q.map((q, i) => `<tr class="${h.q[i] && h.q[i] === q.flag ? 'flag' : ''}"><td>${esc(q.t)}</td><td class="yn">${cb(h.q[i] === 'Yes')}Yes</td><td class="yn">${cb(h.q[i] === 'No')}No</td></tr>`).join('')}</tbody></table>
+    <div class="jp-stop"><b>STOP WORK</b><span>${esc(STOP_TEXT)}</span></div>
+    <div class="jp-aud"><span class="jp-l">Auditors</span>${AUDITORS.map(([k, l]) => `<div><span>${l}</span><b>${esc(A[k] || '') || '&nbsp;'}</b></div>`).join('')}</div>`;
+  const partB = blank => `${band('Crew sign-in', sub)}<p class="jp-note">By signing, each crew member confirms they took part in this JHA, understand the hazards and controls above, and will stop work if conditions change.</p>${sigTable(blank)}`;
+  // measure at the printed width so the whole JHA stays within two Letter pages
+  const PAGE = 9.55 * 96, probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;left:-9999px;top:0;width:7.6in;visibility:hidden';
+  document.body.appendChild(probe);
+  const measure = html => { probe.innerHTML = `<div class="pr-sheet jp">${qesPrintHead()}${html}</div>`; return probe.firstElementChild.getBoundingClientRect().height; };
+  const hA = measure(partA), hB0 = measure(partB(0)), rowH = Math.max(20, measure(partB(1)) - hB0);
+  let html;
+  const zA = Math.min(1, PAGE / hA), zB = Math.min(1, PAGE / hB0);
+  if (zA >= 0.72 && zB >= 0.72) {
+    // form on page 1, sign-in on page 2, each shrunk a little if needed
+    const blank = zB < 1 ? 0 : Math.max(0, Math.min(30, Math.floor((PAGE - hB0) / rowH)));
+    const zs = z => z < 1 ? ` style="zoom:${(z * 0.985).toFixed(3)}"` : '';
+    html = `<div class="pr-sheet jp"${zs(zA)}>${partA}</div><div class="pr-sheet jp"${zs(zB)}>${partB(blank)}</div>`;
+  } else {
+    // too much for one page each: one flowing document, scaled to fit two pages
+    const blank = Math.max(0, 6 - crew.length);
+    const total = measure(partA + '<div style="height:10pt"></div>' + partB(blank));
+    const z = Math.max(0.55, Math.min(1, (2 * PAGE - 70) / total));
+    html = `<div class="pr-sheet jp" style="zoom:${z.toFixed(3)}">${partA}<div style="height:10pt"></div><div class="jp-keep">${partB(blank)}</div></div>`;
+  }
+  probe.remove();
+  UI.printKey = 'JHA';
+  printHTML(html);
 }
 
 // ============================================================
