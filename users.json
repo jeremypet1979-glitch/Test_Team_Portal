@@ -1,6 +1,6 @@
 {
   "requireLogin": true,
-  "updated": "2026-10-26 10:40:08",
+  "updated": "2026-10-26 11:36:46",
   "users": [
     {
       "name": "Admin",
@@ -9,10 +9,94 @@
       "role": "admin"
     },
     {
+      "name": "Brandon Henexson",
+      "salt": "sfp-rvm5p9fv",
+      "hash": "4782b8a58c710205a6c9d4949efcf376820a6dcd2870c55ad72ad7cd1934ef67",
+      "role": "user"
+    },
+    {
+      "name": "Colton Grider",
+      "salt": "sfp-vc4y6c0n",
+      "hash": "4cd4665f8e5c73ca64e40a9be5afe70d5b306d87435f3bdf69f01b093ebb9733",
+      "role": "user"
+    },
+    {
+      "name": "Dylan Johnson",
+      "salt": "sfp-cf1zkyc4",
+      "hash": "dd3a69d3ffd0bbfe678706b3ca17fb9abd8f8d0d7f58b39dd31eb6a583bedae8",
+      "role": "user"
+    },
+    {
+      "name": "Gabriel Venegas-Romero",
+      "salt": "sfp-xf8nw800",
+      "hash": "1364b2457445740d9eee45a8035fa2a334f94acf2bf18366a6c553d1f3721c4a",
+      "role": "user"
+    },
+    {
+      "name": "Jacob Cabe",
+      "salt": "sfp-rzzoqu75",
+      "hash": "c876a03ae38137219c1740f5810d5f22c81ffe7d150ecd3feca238dcc429a4c9",
+      "role": "user"
+    },
+    {
+      "name": "Jason Manning",
+      "salt": "sfp-xdnwpjie",
+      "hash": "a3f3c666de6bfad209d02e632a059a6f081d803016fb55cb31a9d73394de2542",
+      "role": "user"
+    },
+    {
+      "name": "Jay Gonzalez",
+      "salt": "sfp-gtrre919",
+      "hash": "e2313a2b935b680ba721a3772030fa21d8ac0a4bf6dff3ac7446b6a1a497d75c",
+      "role": "user"
+    },
+    {
+      "name": "Jeff Kuhn",
+      "salt": "sfp-hbkzbf5e",
+      "hash": "4e7341d3c55e091a1838d123f32bd6f214a831164172884a7de318ac625286a7",
+      "role": "admin"
+    },
+    {
       "name": "Jeremy petersen",
       "salt": "sfp-wqafyp77",
       "hash": "05925e225800ec18661c1ea5e3ffce8c6378b7eb14a91a353076e99f8c1d4bef",
       "role": "admin"
+    },
+    {
+      "name": "Justin Johns",
+      "salt": "sfp-epdxgu4f",
+      "hash": "2d0fdd3fadcf5b5e41ee701bb4ab139f9f3c45bc9ca7180d213ff5aee8a8e6c9",
+      "role": "admin"
+    },
+    {
+      "name": "Kevin Rikli",
+      "salt": "sfp-y4c0ta5z",
+      "hash": "f30b9147276af00bac935d89266f85b50dd4cda3707dc817217e8ec64154b098",
+      "role": "user"
+    },
+    {
+      "name": "Norm John",
+      "salt": "sfp-vggdn8rb",
+      "hash": "1d4e2cd8d2a623102a28a64b5260f5430f834174c9175c9b526862c20343ba08",
+      "role": "admin"
+    },
+    {
+      "name": "Poerani Cheung",
+      "salt": "sfp-sbk55m5y",
+      "hash": "568fb51846ffb3f79df045a1d82ef5be04734ddd038d05288cbd602fd7e62312",
+      "role": "user"
+    },
+    {
+      "name": "Tanner Francis",
+      "salt": "sfp-4x5x8q2h",
+      "hash": "9b7a51d075ce4ec8bd1d61c9f48c3d5f152d42f7251a0f9eb6b6678be1533857",
+      "role": "user"
+    },
+    {
+      "name": "Zeniff Mena-Frausto",
+      "salt": "sfp-0at302dc",
+      "hash": "978de441ebf0bafe6f43019edad76868300f94c34255a87d5f920ffb1731eced",
+      "role": "user"
     }
   ]
 }
