@@ -183,7 +183,20 @@ table.grid tr.flash td{animation:flash 1.4s ease-out}
 .punch-table td.issue{min-width:250px;width:30%}
 .punch-table .w-s{width:92px}.punch-table .w-d{width:128px}
 .punch-table .acts{white-space:nowrap}
-.addissue{display:grid;grid-template-columns:minmax(0,3fr) repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.addissue{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.2fr) repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.punch-table td.issue .pskid{margin-top:6px;font-size:13px;padding:4px 6px;width:100%}
+.pstat-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pstat-head b{font:700 30px/1 var(--f-display)}
+.pstat-head span{color:var(--muted);font-size:14px}
+.pbars{display:flex;flex-direction:column;gap:2px}
+.pbar{display:grid;grid-template-columns:minmax(120px,240px) minmax(0,1fr) 96px 54px 80px;gap:12px;align-items:center;padding:6px 4px;border-radius:4px;font-size:14px}
+.pbar:not(.hdr):hover{background:var(--panel-2)}
+.pbar.hdr{font:700 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pbar .track{height:14px;display:flex;align-items:center}
+.pbar .track i{display:block;height:12px;border-radius:0 4px 4px 0;background:var(--accent)}
+.pbar .v{font-weight:700;text-align:right}
+.pbar span.num{text-align:right}
+@media (max-width:640px){.pbar{grid-template-columns:minmax(0,1fr) 70px 52px;row-gap:4px}.pbar .track{grid-column:1/-1;order:5}.pbar>span:nth-child(4),.pbar>span:nth-child(5){display:none}}
 .jha-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;align-items:start}
 .jha-list{display:flex;flex-direction:column;gap:8px}
 .jha-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:2px}
@@ -1371,7 +1384,9 @@ function renderJobList(el) {
           <span class="meta">${last ? (last.date === t ? '<b style="color:var(--ok)">JHA done today</b>' : `Last JHA ${esc(niceDate(last.date))}`) : 'No JHA yet'}</span>
         </button>`; }).join('')}</div>`
       : `<div class="panel empty"><b>No test packets yet</b>Create one above. The job # from the yellow bar is filled in for you.</div>`}
+      ${jobs.some(j => j.punch.length) ? punchStatsHTML(punchItems(), `All jobs (${jobs.length})`) : ''}
     </div>`;
+  bindPunchStats(() => { const y = window.scrollY; renderTest(); window.scrollTo(0, y); });
   $('#newJobForm').addEventListener('submit', e => {
     e.preventDefault();
     const no = $('#njNo').value.trim(); if (!no) return;
@@ -1435,6 +1450,8 @@ function renderPunch(j) {
     <div class="stack">
       <form class="panel addissue" id="addIssue" autocomplete="off">
         <label class="field issue-f" for="piIssue"><span>New issue</span><textarea id="piIssue" rows="2" placeholder="What’s wrong and where, e.g. TB-4 terminal 12 landed on wrong side"></textarea></label>
+        <label class="field" for="piSkid"><span>Equipment / Skid</span><input type="text" id="piSkid" list="piSkidList" value="${esc(UI.lastPSkid?.[k] || j.skid || S.active.skid || '')}" autocomplete="off"></label>
+        <datalist id="piSkidList">${[...new Set([j.skid, S.active.skid, ...j.punch.map(p => p.skid), ...S.qr.filter(r => keyOf(r.job) === k).map(r => r.skid)].filter(Boolean))].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
         <label class="field" for="piInsp"><span>Inspector</span><input id="piInsp" type="text" value="${esc(S.active.tech)}"></label>
         <label class="field" for="piDate"><span>Date</span><input id="piDate" type="date" value="${today()}"></label>
         <label class="field" for="piSup"><span>Build supervisor</span><input id="piSup" type="text" value="${esc(j.supervisor)}"></label>
@@ -1451,7 +1468,7 @@ function renderPunch(j) {
         ${items.length ? `<div class="table-wrap"><table class="grid punch-table"><thead><tr><th>#</th><th>Issue</th><th>Inspector</th><th>Date</th><th>Build supervisor</th><th>Corrected by</th><th>Corrected date</th><th>Reinspect by</th><th>Status</th><th></th></tr></thead><tbody>
         ${items.map(([p, i]) => { const st = pStatus(p); const b = f2 => `data-punch="${p.id}" data-f="${f2}"`; return `<tr data-row="${p.id}">
           <td class="n" data-label="#">${i + 1}</td>
-          <td class="issue" data-label="Issue"><textarea rows="1" ${b('issue')} aria-label="Issue ${i + 1}">${esc(p.issue)}</textarea></td>
+          <td class="issue" data-label="Issue"><textarea rows="1" ${b('issue')} aria-label="Issue ${i + 1}">${esc(p.issue)}</textarea><input type="text" class="pskid" list="piSkidList" ${b('skid')} value="${esc(p.skid || '')}" placeholder="Skid: ${esc(j.skid || 'not set')}" aria-label="Equipment or skid for issue ${i + 1}"></td>
           <td data-label="Inspector" class="w-s"><input type="text" ${b('inspector')} value="${esc(p.inspector)}" aria-label="Inspector"></td>
           <td data-label="Date" class="w-d"><input type="date" ${b('date')} value="${esc(p.date)}" aria-label="Date"></td>
           <td data-label="Build supervisor" class="w-s"><input type="text" ${b('supervisor')} value="${esc(p.supervisor)}" aria-label="Build supervisor"></td>
@@ -1466,11 +1483,14 @@ function renderPunch(j) {
         </tr>`; }).join('')}
         </tbody></table></div>` : `<div class="empty"><b>${j.punch.length ? 'Nothing in this filter' : 'No punch-list items'}</b>${j.punch.length ? 'Pick another filter above.' : 'Add the first issue above. It prints on the QC169 Testing Punch List layout.'}</div>`}
       </div>
+      ${j.punch.length ? punchStatsHTML(punchItems(j), 'Job ' + j.no) : ''}
     </div>`;
+  bindPunchStats(() => renderPunchKeepFocus(j));
   $('#addIssue').addEventListener('submit', e => {
     e.preventDefault();
     const issue = $('#piIssue').value.trim(); if (!issue) return $('#piIssue').focus();
-    j.punch.push({ id: uid(), issue, inspector: $('#piInsp').value.trim(), date: $('#piDate').value, supervisor: $('#piSup').value.trim(), corrBy: '', corrDate: '', reBy: '', updatedAt: Date.now() });
+    const sk = $('#piSkid').value.trim(); (UI.lastPSkid ||= {})[k] = sk;
+    j.punch.push({ id: uid(), issue, skid: sk, created: today(), inspector: $('#piInsp').value.trim(), date: $('#piDate').value, supervisor: $('#piSup').value.trim(), corrBy: '', corrDate: '', reBy: '', updatedAt: Date.now() });
     touchJob(j); commit('job:' + k); UI.punchFilter = UI.punchFilter === 'closed' || UI.punchFilter === 'corrected' ? 'all' : UI.punchFilter;
     renderTest(); $('.subtabs [data-tab=punch]') && focusSoon('#piIssue');
   });
@@ -1483,11 +1503,94 @@ function renderPunch(j) {
       const pill = $(`[data-status="${p.id}"]`); const st = pStatus(p); pill.className = 'pill ' + st; pill.textContent = STATUS_LABEL[st];
       commit('job:' + k);
     });
-    inp.addEventListener('change', () => { if (['corrBy', 'corrDate', 'reBy'].includes(inp.dataset.f)) renderPunchKeepFocus(j, inp); });
+    inp.addEventListener('change', () => { if (['corrBy', 'corrDate', 'reBy', 'skid', 'date'].includes(inp.dataset.f)) renderPunchKeepFocus(j, inp); });
   });
 }
 function renderPunchKeepFocus(j) { const y = window.scrollY; renderPunch(j); window.scrollTo(0, y); }
 function autoGrow(t) { t.style.height = 'auto'; t.style.height = Math.max(38, t.scrollHeight + 2) + 'px'; }
+
+
+// ----- punch list: daily averages by equipment / skid
+const pDate = p => p.date || p.created || '';
+const pSkid = (p, j) => (p.skid || (j && j.skid) || '').trim();
+const BASIS = { work: ['working day', 'Working days (Mon–Fri)'], cal: ['calendar day', 'Calendar days'], active: ['day with entries', 'Days with punch entries'] };
+const NOSKID = 'No skid entered';
+function dayCount(a, b, basis) {
+  if (!a || !b || a > b) return 0;
+  let n = 0; const d = new Date(a + 'T12:00:00'), e = new Date(b + 'T12:00:00');
+  for (; d <= e; d.setDate(d.getDate() + 1)) { const w = d.getDay(); if (basis === 'cal' || (w > 0 && w < 6)) n++; if (n > 20000) break; }
+  return n;
+}
+// items: [{p, j}]
+function punchStats(items, range, basis) {
+  const t = today();
+  const dated = items.filter(x => pDate(x.p));
+  const first = dated.map(x => pDate(x.p)).sort()[0];
+  const start = range === 'all' ? (first || t) : shiftDay(t, -(+range - 1));
+  const inR = dated.filter(x => pDate(x.p) >= start && pDate(x.p) <= t);
+  const activeDays = new Set(inR.map(x => pDate(x.p))).size;
+  const days = basis === 'active' ? activeDays : dayCount(start, t, basis);
+  const by = {};
+  inR.forEach(({ p, j }) => { const k = pSkid(p, j) || NOSKID; const r = by[k] ||= { skid: k, n: 0, open: 0, corrected: 0, closed: 0, jobs: new Set() }; r.n++; r[pStatus(p)]++; if (j) r.jobs.add(j.no); });
+  const rows = Object.values(by).sort((a, b) => (a.skid === NOSKID) - (b.skid === NOSKID) || b.n - a.n || a.skid.localeCompare(b.skid, undefined, { numeric: true }));
+  rows.forEach(r => { r.avg = days ? r.n / days : 0; r.jobs = [...r.jobs]; });
+  return { start, end: t, days, total: inR.length, avg: days ? inR.length / days : 0, rows, items: inR };
+}
+const fmtAvg = v => v >= 10 ? v.toFixed(1) : v.toFixed(2);
+const punchItems = j => (j ? [j] : Object.values(S.jobs)).flatMap(x => x.punch.map(p => ({ p, j: x })));
+function punchStatsHTML(items, scope) {
+  const P = UI.pstat ||= { range: '30', basis: 'work' };
+  const st = punchStats(items, P.range, P.basis);
+  const max = Math.max(...st.rows.map(r => r.avg), 0.0001);
+  const unit = BASIS[P.basis][0];
+  return `<div class="panel stack pstats" style="gap:12px">
+    <div class="row" style="align-items:end">
+      <div class="grow" style="min-width:220px"><h3>Punch-list items per day, by equipment / skid</h3><span class="muted" style="font-size:13px">${esc(scope)} · counted on the date each item was written up</span></div>
+      <label class="field" for="psRange"><span>Period</span><select id="psRange">${[['7', 'Last 7 days'], ['30', 'Last 30 days'], ['90', 'Last 90 days'], ['365', 'Last 12 months'], ['all', 'All time']].map(([v, l]) => `<option value="${v}" ${P.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+      <label class="field" for="psBasis"><span>Average over</span><select id="psBasis">${Object.entries(BASIS).map(([v, [, l]]) => `<option value="${v}" ${P.basis === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+      <button class="btn sm" type="button" data-act="pstat-dl" data-scope="${esc(scope)}">${ICON.dl} Excel</button>
+    </div>
+    <div class="pstat-head"><b class="num">${fmtAvg(st.avg)}</b><span>items per ${unit} overall · ${st.total} item${st.total === 1 ? '' : 's'} over ${st.days} ${unit}${st.days === 1 ? '' : 's'} (${esc(shortDate(st.start))} – ${esc(shortDate(st.end))})</span></div>
+    ${st.rows.length ? `<div class="pbars" role="table" aria-label="Average punch-list items per ${unit} by equipment or skid">
+      <div class="pbar hdr" role="row"><span role="columnheader">Equipment / Skid</span><span role="columnheader" aria-hidden="true"></span><span role="columnheader">Per ${unit}</span><span role="columnheader">Items</span><span role="columnheader">Not closed</span></div>
+      ${st.rows.map(r => `<div class="pbar" role="row" title="${esc(r.skid)}${r.jobs.length ? ' (job ' + esc(r.jobs.join(', ')) + ')' : ''}: ${r.n} item${r.n === 1 ? '' : 's'}, ${fmtAvg(r.avg)} per ${unit}; ${r.open} open, ${r.corrected} awaiting reinspection, ${r.closed} closed">
+        <span role="cell" class="${r.skid === NOSKID ? 'muted' : ''}">${esc(r.skid)}${r.jobs.length && scope.startsWith('All jobs') ? `<small class="muted"> · ${esc(r.jobs.slice(0, 3).join(', '))}${r.jobs.length > 3 ? '…' : ''}</small>` : ''}</span>
+        <span role="cell" class="track"><i style="width:${Math.max(2, r.avg / max * 100)}%"></i></span>
+        <span role="cell" class="num v">${fmtAvg(r.avg)}</span>
+        <span role="cell" class="num muted">${r.n}</span>
+        <span role="cell" class="num ${r.open + r.corrected ? '' : 'muted'}">${r.open + r.corrected}</span></div>`).join('')}
+    </div>` : `<div class="empty" style="padding:18px"><b>No punch-list items in this period</b>Pick a longer period.</div>`}
+    ${st.rows.some(r => r.skid === NOSKID) ? `<p class="muted" style="margin:0;font-size:13px">“${NOSKID}” means neither the item nor its job has an Equipment/Skid number. Fill it in on the job page.</p>` : ''}
+  </div>`;
+}
+function bindPunchStats(rerender) {
+  const r = $('#psRange'), b = $('#psBasis');
+  if (r) r.addEventListener('change', () => { UI.pstat.range = r.value; rerender(); });
+  if (b) b.addEventListener('change', () => { UI.pstat.basis = b.value; rerender(); });
+}
+function punchStatsWorkbook(items, scope) {
+  const P = UI.pstat || { range: '30', basis: 'work' };
+  const st = punchStats(items, P.range, P.basis), unit = BASIS[P.basis][0];
+  const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
+  const ws = wb.addWorksheet('By skid');
+  ws.columns = [{ width: 26 }, { width: 22 }, { width: 10 }, { width: 18 }, { width: 10 }, { width: 14 }, { width: 10 }, { width: 12 }];
+  ws.addRow([`Punch-list items per ${unit}, by equipment / skid`]).font = { bold: true, size: 14 };
+  ws.addRow([`${scope} · ${shortDate(st.start)} – ${shortDate(st.end)} · ${st.days} ${unit}s · ${st.total} items`]);
+  ws.addRow([]);
+  headerStyle(ws.addRow(['Equipment / Skid', 'Job #', 'Items', `Per ${unit}`, 'Open', 'To reinspect', 'Closed', '% of items']));
+  st.rows.forEach(r => { const row = ws.addRow([r.skid, r.jobs.join(', '), r.n, +r.avg.toFixed(3), r.open, r.corrected, r.closed, st.total ? r.n / st.total : 0]); row.getCell(4).numFmt = '0.00'; row.getCell(8).numFmt = '0%'; });
+  const sum = f => st.rows.reduce((a, r) => a + r[f], 0);
+  const tr = ws.addRow(['All equipment', '', st.total, +st.avg.toFixed(3), sum('open'), sum('corrected'), sum('closed'), 1]);
+  tr.font = { bold: true }; tr.getCell(4).numFmt = '0.00'; tr.getCell(8).numFmt = '0%';
+  const keys = st.rows.map(r => r.skid);
+  const wd = wb.addWorksheet('By day');
+  wd.columns = [{ width: 12 }, ...keys.map(() => ({ width: 16 })), { width: 10 }];
+  headerStyle(wd.addRow(['Date', ...keys, 'Total']));
+  const byDay = {}; st.items.forEach(({ p, j }) => { const d = pDate(p), k = pSkid(p, j) || NOSKID; byDay[d] ||= {}; byDay[d][k] = (byDay[d][k] || 0) + 1; });
+  Object.keys(byDay).sort().forEach(d => wd.addRow([d, ...keys.map(k => byDay[d][k] || 0), keys.reduce((a, k) => a + (byDay[d][k] || 0), 0)]));
+  wd.views = [{ state: 'frozen', ySplit: 1 }];
+  return wb;
+}
 
 // ----- JHAs covering this job (read-only list; JHAs live in Daily JHA)
 function renderJobJhas(j) {
@@ -3181,7 +3284,7 @@ function printPunch(j) {
 }
 function emailPunch(j) {
   const c = { open: [], corrected: [], closed: [] };
-  j.punch.forEach((p, i) => c[pStatus(p)].push(`${i + 1}. ${p.issue}${p.inspector ? ` (insp. ${p.inspector}${p.date ? ', ' + shortDate(p.date) : ''})` : ''}${p.corrBy ? ` – corrected by ${p.corrBy}${p.corrDate ? ' ' + shortDate(p.corrDate) : ''}` : ''}${p.reBy ? ` – reinspected by ${p.reBy}` : ''}`));
+  j.punch.forEach((p, i) => c[pStatus(p)].push(`${i + 1}. ${p.skid && p.skid !== j.skid ? '[' + p.skid + '] ' : ''}${p.issue}${p.inspector ? ` (insp. ${p.inspector}${p.date ? ', ' + shortDate(p.date) : ''})` : ''}${p.corrBy ? ` – corrected by ${p.corrBy}${p.corrDate ? ' ' + shortDate(p.corrDate) : ''}` : ''}${p.reBy ? ` – reinspected by ${p.reBy}` : ''}`));
   let body = `Testing Punch List – Job ${j.no}${j.project ? ' – ' + j.project : ''}${j.skid ? ' – ' + j.skid : ''}\n${c.open.length} open · ${c.corrected.length} awaiting reinspection · ${c.closed.length} closed\n`;
   if (c.open.length) body += `\nOPEN\n${c.open.join('\n')}\n`;
   if (c.corrected.length) body += `\nAWAITING REINSPECTION\n${c.corrected.join('\n')}\n`;
@@ -3263,7 +3366,7 @@ function renderLookup() {
       ${lkTable('Component serials', ['Time', 'Skid', 'Designation', 'Serial', 'By'], comp.map(r => [r.ts.slice(0, 16), r.skid, r.name, `<span class="mono"><b>${esc(r.serial)}</b></span>`, r.by]))}
       ${lkTable('Cable insulation reports (QC281)', ['Date', 'Project', 'Readings', 'Technician'], S.megger.filter(m => keyOf(m.jobOrder) === k).map(m => [m.created.slice(0, 10), m.project, String(m.rows.length), m.tech.name]))}
       ${lkTable('Crew JHAs', ['Date', 'Crew', 'Jobs', 'Signed'], jhasForJob(k).map(h => { const sc = signedCount(h); return [h.date, h.crewName, h.jobs, `${sc.signed}/${sc.total}`]; }))}
-      ${job ? lkTable('Punch list', ['#', 'Issue', 'Inspector', 'Date', 'Status'], job.punch.map((p, i) => [i + 1, p.issue, p.inspector, shortDate(p.date), `<span class="pill ${pStatus(p)}">${STATUS_LABEL[pStatus(p)]}</span>`]), `<button class="btn sm" type="button" data-act="job-open" data-key="${esc(k)}">Open test packet</button>`) : ''}
+      ${job ? lkTable('Punch list', ['#', 'Issue', 'Inspector', 'Date', 'Status'], job.punch.map((p, i) => [i + 1, (p.skid && p.skid !== job.skid ? '[' + p.skid + '] ' : '') + p.issue, p.inspector, shortDate(p.date), `<span class="pill ${pStatus(p)}">${STATUS_LABEL[pStatus(p)]}</span>`]), `<button class="btn sm" type="button" data-act="job-open" data-key="${esc(k)}">Open test packet</button>`) : ''}
       `}
     </div>`;
   $('#lookupForm').addEventListener('submit', e => { e.preventDefault(); UI.lookup = $('#lkJob').value.trim(); renderLookup(); });
@@ -3336,6 +3439,7 @@ const ACT = {
   'log-import': b => { const f = $('#fileImport'); f.dataset.kind = b.dataset.kind; f.value = ''; f.click(); },
   'dup-add': b => addLog(b.dataset.kind, true),
   'dup-cancel': b => { UI.pendingDup = null; $(b.dataset.kind === 'qr' ? '#qrDup' : '#compDup').innerHTML = ''; const i = $(b.dataset.kind === 'qr' ? '#qrSerial' : '#compSerial'); i.value = ''; i.focus(); },
+  'pstat-dl': b => { if (!window.ExcelJS) return; const onJob = !b.dataset.scope.startsWith('All jobs'); const j = onJob && UI.testJob && S.jobs[UI.testJob]; download(punchStatsWorkbook(punchItems(j || null), b.dataset.scope), `Punch_Summary_${safeName(j ? j.no : 'All_Jobs')}_${today()}.xlsx`); },
   'catalog-save': () => { S.catalog = [...new Set($('#catalogEdit').value.split('\n').map(s => s.trim()).filter(Boolean))]; commit('comp'); renderActive(); toast('Designation list saved.', { kind: 'ok' }); },
   'job-open': b => { UI.testJob = b.dataset.key; UI.testTab = 'punch'; const j = S.jobs[UI.testJob]; if (j) { S.active.job = j.no; if (j.skid) S.active.skid = j.skid; persistLocal(); renderActive(); } if (location.hash !== '#test') location.hash = '#test'; else renderTest(); },
   'job-back': (b, e) => { e.preventDefault(); UI.testJob = null; renderTest(); },
