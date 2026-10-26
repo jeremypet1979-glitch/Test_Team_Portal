@@ -1,0 +1,18 @@
+{
+  "requireLogin": true,
+  "updated": "2026-10-26 10:40:08",
+  "users": [
+    {
+      "name": "Admin",
+      "salt": "sfp-admin-7Qk2",
+      "hash": "fbe2dc49d65320d326b2d1523e3c3d52f26703b68b7fb38780b157a10195601f",
+      "role": "admin"
+    },
+    {
+      "name": "Jeremy petersen",
+      "salt": "sfp-wqafyp77",
+      "hash": "05925e225800ec18661c1ea5e3ffce8c6378b7eb14a91a353076e99f8c1d4bef",
+      "role": "admin"
+    }
+  ]
+}
