@@ -1,6 +1,6 @@
 {
   "requireLogin": true,
-  "updated": "2026-10-27 12:34:23",
+  "updated": "2026-11-09 09:53:14",
   "users": [
     {
       "name": "Admin",
@@ -79,6 +79,12 @@
       "salt": "sfp-y4c0ta5z",
       "hash": "f30b9147276af00bac935d89266f85b50dd4cda3707dc817217e8ec64154b098",
       "role": "user"
+    },
+    {
+      "name": "Mitchial Stones",
+      "salt": "sfp-jf3knsg9",
+      "hash": "566291100e2bce746addb5b8af05187f8a8b8aeb162f5d853a53095e86aeef6f",
+      "role": "admin"
     },
     {
       "name": "Norm John",
