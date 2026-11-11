@@ -461,6 +461,23 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .jp-sig td{border:1px solid #999;padding:0 5pt;height:24pt;font-size:10pt}
 .jp-sig td.s img{max-height:21pt;display:block}
 .jp-keep{break-inside:auto}
+.ncp-sh h3{margin:2px 0 6px}
+.ncp-list{display:flex;flex-direction:column;gap:2px}
+.ncp-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto minmax(110px,190px);gap:10px;align-items:center;padding:7px 4px;border-bottom:1px solid var(--line)}
+.ncp-row .n{color:var(--muted);text-align:right}
+.ncp-row.na .t{color:var(--muted)}
+.ncp-row.bad{background:color-mix(in srgb,#c0392b 9%,transparent)}
+.ncp-seg{display:flex;gap:4px}
+.ncp-seg button{min-width:64px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit;font-weight:600;cursor:pointer}
+.ncp-seg button.on.v-P{background:#1e7a46;border-color:#1e7a46;color:#fff}
+.ncp-seg button.on.v-F{background:#c0392b;border-color:#c0392b;color:#fff}
+.ncp-seg button.on.v-NA{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.ncp-nt{font-size:13px;padding:6px 8px}
+.ncp-note{padding:6px 10px 6px 42px;font-size:13px;color:var(--muted);background:var(--panel-2);border-radius:4px}
+.ncp-na{margin:8px 0 0;font-size:13px}
+.ncp-sum{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ncp-sum b.bad{color:#c0392b}
+@media (max-width:760px){.ncp-row{grid-template-columns:24px minmax(0,1fr)}.ncp-row .ncp-seg,.ncp-row .ncp-nt{grid-column:2}.ncp-seg button{flex:1}[data-view=ncp] .form-grid{grid-template-columns:1fr!important}}
 /* Print */
 #printRoot{display:none}
 @media print{
@@ -524,6 +541,51 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .qes-wrap .hp-ph.hp-w img{height:49.7pt!important;width:auto}
   .hp-ph.hp-w .addr{font:italic 11pt/1.2 Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .hp-wtitle{font:bold 24pt/1.15 Calibri,Carlito,Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;text-decoration:underline;margin:4pt 0 10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ncp-print{display:flex;flex-direction:column;min-height:9.75in;box-sizing:border-box;font:10pt/1.25 "Times New Roman",serif}
+  .ncp-print .hp-ph img{height:50pt}
+  .ncp-print .hp-ph .addr{font:10pt/1.25 Arial,sans-serif}
+  .ncp-title{text-align:center;font-weight:bold;font-size:12.5pt;margin:2pt 0 6pt}
+  .ncp-status{display:flex;gap:6pt;align-items:center;font-size:10.5pt;margin-bottom:4pt}
+  .ncp-fields{font-size:12pt;margin-bottom:10pt}
+  .ncp-fields .two{display:flex;justify-content:space-between;margin-top:2pt}
+  .ncp-fields u{text-decoration:none;border-bottom:1px solid #000;padding:0 4pt;display:inline-block;min-width:1.8in}
+  .ncp-g{font-weight:bold;font-size:10pt;margin:6pt 0 1pt 0.4in}
+  .ncp-t{width:100%;border-collapse:collapse}
+  .ncp-t th,.ncp-t td{border:1px solid #000;padding:0 4pt;height:12pt;font-size:9.5pt;text-align:center;font-weight:normal}
+  .ncp-t th{border-top-width:2px}
+  .ncp-t .n{width:22pt}
+  .ncp-t .c{width:36pt}
+  .ncp-t .nt{width:92pt;text-align:left;font-size:8pt}
+  .ncp-print.dense .ncp-t th,.ncp-print.dense .ncp-t td{height:10.5pt;font-size:8.5pt;line-height:1.1}
+  .ncp-print.dense .ncp-g{margin-top:3pt}
+  .ncp-print.dense .ncp-fields{margin-bottom:5pt}
+  .ncp-print.dense .hp-ph img{height:40pt}
+  .ncp-print.dense .ncp-title{margin:0 0 3pt}
+  .ncp-print.dense .ncp-fields{font-size:11pt}
+  .ncp-print.dense .ncp-sign{padding-top:6pt}
+  .ncp-print.dense .ncp-pf{margin-top:6pt}
+  .ncp-t tr.gn td.n,.ncp-t tr.gn td.c,.ncp-t tr.gn td.nt{background:#bfbfbf!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ncp-cb{display:inline-flex;align-items:center;justify-content:center;width:9pt;height:9pt;border:1px solid #000;font-size:8pt;line-height:1;vertical-align:-1pt}
+  .ncp-foot{margin:1pt 0 0 .4in;font-size:9.5pt}
+  .ncp-sign{margin-top:auto;display:flex;justify-content:space-between;font-size:10pt;padding-top:14pt}
+  .ncp-sign i{font-style:normal;display:inline-block;min-width:3.4in;border-bottom:1px solid #000;padding:0 4pt;position:relative}
+  .ncp-sign span:last-child i{min-width:1.4in}
+  .ncp-sign i{display:inline-flex!important;align-items:flex-end;gap:10pt}
+  .ncp-sign img{height:22pt}
+  .ncp-sign em{font-style:normal}
+  .ncp-pf{display:flex;justify-content:space-between;font:9.5pt "Times New Roman",serif;margin-top:16pt}
+  .ncpg-print{font:11pt/1.2 "Aptos Narrow",Calibri,Arial,sans-serif;min-height:auto}
+  .ncpg-print .g-logo{width:2.54in;height:auto;display:block;margin-bottom:6pt}
+  .ncpg-print .g-title{width:2.7in;margin:0 auto 12pt;text-align:center;font-weight:bold;font-size:12pt;border:1px solid #000;background:#dae9f8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ncpg-print .g-sec{margin-bottom:12pt}
+  .ncpg-print .g-row{display:flex}
+  .ncpg-print .g-lbl{width:2in;flex:none;border:1px solid #000;padding:0 3pt;font-size:10.5pt}
+  .ncpg-print .g-ln{flex:1;border-bottom:1px solid #000;padding:0 4pt;min-height:14pt}
+  .ncpg-print .g-ln.full{display:block}
+  .ncpg-print .g-disp{display:flex;justify-content:space-around;border-top:1px solid #000;border-bottom:1px solid #000;padding:2pt 0;margin:4pt 0 14pt}
+  .ncpg-print .g-sign{display:flex;align-items:flex-end;gap:0}
+  .ncpg-print .g-sign .g-lbl{width:.7in}
+  .ncpg-print .g-sign .g-ln img{height:22pt;vertical-align:bottom;margin-right:8pt}
   .qes-wrap{width:100%;border-collapse:collapse}
   .qes-wrap .hp-ph{margin-bottom:2pt}
   .qes-wrap .hp-ph img{height:36pt!important}
@@ -552,6 +614,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
       <a href="#jha">Daily JHA</a>
       <a href="#megger">Megger</a>
       <a href="#hipot">Hi-Pot</a>
+      <a href="#ncp">NCP</a>
       <a href="#lookup">Lookup</a>
       <a href="#study">Study Guide</a>
       <a href="#labels">Labels</a>
@@ -582,6 +645,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   <section data-view="jha" hidden></section>
   <section data-view="megger" hidden></section>
   <section data-view="hipot" hidden></section>
+  <section data-view="ncp" hidden></section>
   <section data-view="lookup" hidden></section>
   <section data-view="labels" hidden></section>
   <section data-view="study" hidden></section>
@@ -646,7 +710,7 @@ const ICON = {
 };
 
 // ---------- constants
-const FILES = { data: 'portal_data.json', qr: 'PowerApps_Job_Equipment_QR_Log.xlsx', comp: 'Job_Component_Serial_Log.xlsx', testDir: 'Test_Packets', jhaDir: 'Daily_JHAs', megDir: 'Megger_Reports', hpDir: 'HiPot_Reports', training: 'Training_Log.xlsx' };
+const FILES = { data: 'portal_data.json', qr: 'PowerApps_Job_Equipment_QR_Log.xlsx', comp: 'Job_Component_Serial_Log.xlsx', testDir: 'Test_Packets', jhaDir: 'Daily_JHAs', megDir: 'Megger_Reports', hpDir: 'HiPot_Reports', ncpDir: 'NCP_Reports', training: 'Training_Log.xlsx' };
 const jhaFileName = h => `${h.date || 'undated'}_${safeName(h.crewName)}_JHA.xlsx`;
 const DEFAULT_CATALOG = ['Main Breaker', 'Feeder Breaker', 'Protective Relay', 'Power Meter', 'Control Power Transformer (CPT)', 'Surge Protective Device (SPD)', 'MOXA ioLogik E1210 I/O Module', 'Juniper EX4100-H Network Switch', 'PLC / Controller', 'UPS'];
 const JHA_Q = [
@@ -664,7 +728,7 @@ const STOP_TEXT = 'If the following conditions are encountered, stop immediately
 const AUDITORS = [['lead', 'Team Leads'], ['sup', 'Supervisors'], ['mgr', 'Managers'], ['safety', 'Safety Rep']];
 
 // ---------- state
-const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], forms: {}, apps: [], deleted: {}, updated: 0 });
+const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], ncp: [], forms: {}, apps: [], deleted: {}, updated: 0 });
 let S = blankState();
 const UI = { view: 'home', skidAll: false, compAll: false, skidQ: '', compQ: '', testJob: null, testTab: 'punch', punchFilter: 'all', jha: null, jhaDate: today(), crewEdit: null, studyMod: null, studyName: '', quiz: null, lookup: '', compName: '', labelText: '', labelSize: 's1', labelMeta: true, flash: null, pendingDup: null };
 
@@ -672,7 +736,7 @@ function normalize(o) {
   const s = Object.assign(blankState(), o || {});
   s.active = Object.assign({ job: '', skid: '', tech: '' }, s.active);
   for (const k of Object.keys(s.jobs)) { const j = s.jobs[k]; j.punch ||= []; }
-  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.forms ||= {}; s.deleted ||= {};
+  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.ncp ||= []; s.forms ||= {}; s.deleted ||= {};
   liftJobJhas(s);
   s.jhas.forEach(jhaRowsMigrate);
   return s;
@@ -780,6 +844,7 @@ function mergeState(o) {
   S.training = mergeList(S.training, o.training);
   S.megger = mergeList(S.megger, o.megger);
   S.hipot = mergeList(S.hipot || [], o.hipot);
+  S.ncp = mergeList(S.ncp || [], o.ncp);
   if (o.forms && (o.forms.updatedAt || 0) > ((S.forms || {}).updatedAt || 0)) { S.forms = o.forms; changed = true; }
   if (o.reasonCodes && (o.reasonCodes.updatedAt || 0) > ((S.reasonCodes || {}).updatedAt || 0)) { S.reasonCodes = o.reasonCodes; changed = true; }
   for (const [k, tj] of Object.entries(o.jobs || {})) {
@@ -843,6 +908,7 @@ async function afterConnect() {
   S.jhas.forEach(h => FS.dirty.add('jha:' + h.id));
   S.megger.forEach(m => FS.dirty.add('meg:' + m.id));
   S.hipot.forEach(h => FS.dirty.add('hp:' + h.id));
+  S.ncp.forEach(r => FS.dirty.add('ncp:' + r.id));
   flushSoon(100);
 }
 
@@ -914,6 +980,7 @@ function fileSpec(k) {
   if (k === 'qr') return { name: FILES.qr, build: () => qrWorkbook(S.qr) };
   if (k === 'comp') return { name: FILES.comp, build: () => compWorkbook(S.comp) };
   if (k === 'training') return { name: FILES.training, build: () => trainingWorkbook() };
+  if (k.startsWith('ncp:')) { const r = S.ncp.find(x => x.id === k.slice(4)); return r ? (r.kind === 'general' ? { name: ncpFile(r), sub: FILES.ncpDir, blob: () => ncpGeneralBlob(r) } : { name: ncpFile(r), sub: FILES.ncpDir, build: () => ncpWorkbook(r) }) : null; }
   if (k.startsWith('hp:')) { const h = S.hipot.find(x => x.id === k.slice(3)); return h ? { name: hpFile(h), sub: FILES.hpDir, blob: () => hipotBlob(h) } : null; }
   if (k.startsWith('meg:')) { const m = S.megger.find(x => x.id === k.slice(4)); return m ? { name: megFile(m), sub: FILES.megDir, build: () => meggerWorkbook(m) } : null; }
   if (k.startsWith('job:')) {
@@ -1229,7 +1296,7 @@ function printHTML(html) {
 // ============================================================
 //  Routing and shared header
 // ============================================================
-const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'lookup', 'labels', 'study'];
+const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'ncp', 'lookup', 'labels', 'study'];
 function route() {
   const v = (location.hash || '#home').slice(1);
   UI.view = VIEWS.includes(v) ? v : 'home';
@@ -1263,7 +1330,7 @@ function renderActive() {
 
 function renderAll() { renderActive(); renderCurrent(); renderFolder(); }
 function renderCurrent() {
-  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
+  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, ncp: renderNcp, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
 }
 
 // ============================================================
@@ -1282,6 +1349,7 @@ function renderHome() {
     ['punch-app', 'QC169', 'Testing Punch List', 'Straight to the active job’s punch list. Inspector and supervisor on every line; prints 22 lines a page, landscape.', `${open} open item${open === 1 ? '' : 's'}`],
     ['jha', 'JH-04', 'Daily JHA', 'One JHA per crew each day, with the jobs it covers and crew sign-in.', `${S.crews.length ? `${S.crews.length - noJha} of ${S.crews.length} crews done today` : 'Add your crews'}`],
     ['megger', 'QC281', 'Cable Insulation (Megger)', 'QC281 cable insulation test report with readings in GΩ, low-reading flags, and technician and witness signatures.', `${S.megger.length} report${S.megger.length === 1 ? '' : 's'}`],
+    ['ncp', 'NCP', 'NCP Inspections', 'Non Conforming Parts: Breaker Inspection & Operation Test, Breaker Cradle NCP Inspection and NCP General Inspection, saved as Excel files.', `${S.ncp.length} inspection${S.ncp.length === 1 ? '' : 's'}`],
     ['hipot', 'QC217 · 218 · 273', 'Hi-Pot Test', 'High potential test reports on the QC217 (2-pole / DC), QC218 (3-phase) and QC273 (3-phase 4-wire) forms, with the testing-voltage formula, neutral checkboxes and signatures.', `${S.hipot.length} report${S.hipot.length === 1 ? '' : 's'}`],
     ['lookup', 'JL-05', 'Job Lookup', 'Everything recorded for one job, exported as a single packet.', 'Search by job #'],
     ['labels', 'LB-06', 'QR Labels', 'Print QR tags for serials, skids or anything you need to scan later.', 'Print-ready sheets'],
@@ -3694,6 +3762,8 @@ const FORM_CTRL_DEFAULT = {
   QC217: { title: 'Hi-Pot Report, 2-Pole Power or Control', no: 'QC217', date: '4/15/2026', rev: 'REV B' },
   QC218: { title: 'Hi-Pot Report, 3-Phase Power', no: 'QC218', date: '4/15/2026', rev: 'REV B' },
   QC273: { title: 'Hi-Pot Test, 3-Phase 4-Wire', no: 'QC273', date: '6/11/2026', rev: 'REV A' },
+  NCPB: { title: 'NCP Breaker Inspection & Operation Test', no: 'NCP Breaker Inspection', date: '', rev: 'Rev.X' },
+  NCPC: { title: 'NCP Breaker Cradle Inspection', no: 'NCP Cradle Inspection', date: '', rev: 'Rev.X' },
 };
 const fc = k => Object.assign({}, FORM_CTRL_DEFAULT[k], (S.forms || {})[k] || {});
 const fcMissing = () => Object.keys(FORM_CTRL_DEFAULT).filter(k => { const f = fc(k); return !f.no || !f.rev; });
@@ -3768,7 +3838,7 @@ const qesPrintFoot = k => { const f = fc(k); return `<div class="hp-pf"><span>${
 /** wrap every .pr-sheet in a printout with the QES header and the form footer */
 function qesWrapPrint(html, k) {
   const box = document.createElement('div'); box.innerHTML = html;
-  if (box.querySelector('.q169')) return box.innerHTML;
+  if (box.querySelector('.q169, .ncp-print')) return box.innerHTML;
   box.querySelectorAll('.pr-sheet').forEach(sh => { if (!sh.querySelector('.hp-ph') && !sh.classList.contains('jp')) sh.insertAdjacentHTML('afterbegin', qesPrintHead()); sh.querySelectorAll('.hp-pf').forEach(f => f.remove()); });
   // footer on every printed page: fixed to the page bottom, with a repeating table footer reserving its space
   return `<div class="qes-fixfoot">${qesPrintFoot(k)}</div><table class="qes-wrap"><tfoot><tr><td><div class="qes-footspace"></div></td></tr></tfoot><tbody><tr><td>${box.innerHTML}</td></tr></tbody></table>`;
@@ -3791,6 +3861,426 @@ function bindFormCtrl(root) {
     clearTimeout(t); t = setTimeout(() => commit(...Object.keys(S.jobs).map(x => 'job:' + x), ...S.jhas.map(h => 'jha:' + h.id), ...S.megger.map(m => 'meg:' + m.id), ...S.hipot.map(h => 'hp:' + h.id)), 800);
   }));
 }
+
+
+// ============================================================
+//  Non Conforming Parts (NCP): Breaker Inspection & Operation Test, Breaker Cradle NCP Inspection
+//  Built from the scanned forms with the handwritten changes applied.
+// ============================================================
+const FILES_NCP = 'NCP_Reports';
+const NCP_STATUS = [['new', 'Receiving New'], ['inventory', 'Current Inventory'], ['ncp', 'NCP']];
+// item flags: rk = racking/cradle step (defaults to N/A on a non-racking breaker); fx = non-racking only; fxT = wording on a non-racking breaker
+const NCP_FORMS = {
+  breaker: {
+    title: 'Breaker Inspection & Operation Test', short: 'Breaker', serialLabel: 'Breaker Serial #', partLabel: 'Breaker Part #', status: true, btype: true,
+    footer: 'NCP Breaker Inspection', fc: 'NCPB',
+    pages: [
+      [{ id: 's1', group: 'Breaker', head: 'Verify the presence/functionality of all the following components:', cols: ['Present', 'Missing'], naNote: true, items: [
+        { t: 'Breaker face plate w/ serial/part numbers and AF Rating w/ correct info' },
+        { t: 'Trip unit correct size' },
+        { t: 'Open and close buttons' },
+        { t: 'Open and close button covers w/ LOTO' },
+        { t: 'Spring charge handle' },
+        { t: 'Racking handle', rk: 1 },
+        { t: 'LOTO mechanism' },
+        { t: 'Ekip plastic cover' },
+        { t: 'Ekip display' },
+        { t: 'Front cover + four black screws that secure it' },
+        { t: 'Solenoids for open/close electrical operation - cover will need to be removed' },
+        { t: 'Spring Motor Charge + wiring on inside of front cover' },
+        { t: 'Grounding tab on bottom of breaker that goes into the guiding clip in cradle', rk: 1 },
+        { t: 'Black component on each side of breaker that rests on top of breaker cradle arms', rk: 1 },
+        { t: 'Gears on both sides of the breaker that allow racking the breaker in and out', rk: 1 },
+        { t: 'Fingers on the back of the breaker that connect to the bussing in the cradle', fxT: 'Bus connection on the back of the breaker' },
+        { t: 'Dielectric grease on breaker fingers', rk: 1 },
+        { t: 'Terminal pins on top of breaker that plug into the female terminals on the breaker cradle', rk: 1 },
+        { t: 'Springs for flexibility of the breaker control wiring pins x 4', rk: 1 },
+        { t: 'Bezel', fx: 1 },
+      ] }],
+      [{ id: 's2', group: 'Breaker', head: 'Verify there is no damage and check functionality of the above components:', cols: ['Pass', 'Fail'], naNote: true, items: [
+        { t: 'Face plate has the correct information' },
+        { t: 'Trip unit is the correct size' },
+        { t: 'Spring charge handle charges the spring to allow mechanical operation of the breaker' },
+        { t: 'Breaker opens and closes mechanically' },
+        { t: 'Mechanical operation of breaker is impossible while button covers are closed' },
+        { t: 'Bottom LOTO mechanism prevents push button from operating' },
+        { t: 'When the push to operate button is in, the racking handle inserts into hole and breaker racks in/out', rk: 1 },
+        { note: 'Note 1: Breaker must be in cradle to do this step' },
+        { note: 'Note 2: Racking handle should not be able to go into hole if button is not pushed' },
+        { note: 'Note 3: You should not be able to push the button in if LOTO is activated' },
+        { t: 'Ekip plastic cover has hole that allows you to operate the screen' },
+        { t: 'Ekip display works (Electrical test to be provided in this form).' },
+        { t: 'All screws for the front cover of breaker are not stripped and hold cover secure' },
+        { t: 'Solenoids are the correct size/voltage - cover will need to be removed' },
+        { t: 'Motorized spring charge present & no damage to wiring/fuse - cover will need to be removed' },
+        { note: 'After above steps with cover off, place the cover back on/reverify all components are put back together' },
+        { t: 'Grounding tab on bottom of breaker for racking is not bent/damaged to prevent going into grounding clip in cradle', rk: 1 },
+        { t: 'Black components on side of breaker rest on cradle arms', rk: 1 },
+        { t: 'Gears on each side of breaker are free from debris', rk: 1 },
+        { t: 'Breaker racks in/out smoothly with no skipping, popping, or grinding', rk: 1 },
+        { t: 'Fingers on back of breaker are not bent or damaged in ways that prevent connection to bus in cradle', fxT: 'Bus connection on back of breaker is not bent or damaged' },
+        { t: 'Verify there is dielectric grease on breaker fingers', rk: 1 },
+        { t: 'None of the pins on the terminals are bent/missing', rk: 1 },
+        { t: 'Terminal strip on top of breaker has flexibility with the help of the springs (x 4)', rk: 1 },
+        { t: 'Upper contacts not missing covers/components' },
+        { t: 'Bezel is not damaged and fits correctly', fx: 1 },
+      ] },
+      { id: 'e', group: 'Breaker', head: 'Electrical Test', cols: ['Pass', 'Fail'], items: [
+        { t: 'Verify fuse is installed and closed in PLC panel on side of enclosure' },
+        { t: 'Push E-Stop in prior to energizing' },
+        { t: 'Plug in the PLC to a 120VAC receptacle' },
+        { t: 'Pull E-Stop to energize' },
+        { t: 'All Ekip power supplies are energized (even without having a breaker installed)' },
+        { t: 'Install a breaker into one of the cradles and rack the breaker into the "Test" position', fxT: 'Fixed breaker: connect the breaker using the fixed breaker wiring terminal set up' },
+        { t: 'When a breaker is installed, verify the Ekip Touch display is on' },
+        { t: 'On the PLC, select the breaker you are trying to test (2000A, 3200A, or 5000A)' },
+        { t: 'Verify the spring is not already charged in the breaker' },
+        { t: 'Press button that says "Spring Motor Charge" - spring charges, yellow light on' },
+        { t: 'Press green button on PLC that says "Breaker Close" - breaker should close' },
+        { t: 'Press red button on PLC that says "Breaker Open" - breaker should open' },
+        { t: 'Trip breaker using Ekip Touch screen' },
+        { t: 'Reset breaker using reset button' },
+        { t: 'Racked in, racked out, tripped signaling contacts verified', fxT: 'Tripped signaling contacts verified' },
+      ] }],
+      [{ id: 'e', group: 'Breaker', head: 'Electrical Test', cols: ['Pass', 'Fail'], start: 15, items: [
+        { t: 'Plug the ABB Ekip T&P tester into the Ekip display from your laptop' },
+        { t: 'Open the Ekip Connect 3 Software and "Scan for devices" - scan with T&P' },
+        { t: 'After connecting to device, go to the "Tools" tab at the bottom left of your screen' },
+        { t: 'Open "Reports"' },
+        { t: 'Click "New Report"' },
+        { t: 'Name the report the serial number of the breaker you are downloading from' },
+        { t: 'The report will generate on your screen' },
+        { t: 'On the first page, verify the Ekip Touch "Type" says Ekip Touch LSI (or LSIG) whichever it is supposed to be' },
+        { t: 'Click "Download" on the top of the screen' },
+        { t: 'Save the PDF to a safe location in your laptop *' },
+        { t: 'Ekip is free from all errors & alarms' },
+      ], foot: '* - Network drive path to save all NCP Breaker documents' }],
+    ],
+  },
+  cradle: {
+    title: 'Breaker Cradle NCP Inspection Process', short: 'Cradle', serialLabel: 'Cradle Serial #', partLabel: 'Cradle Part #', status: false, btype: false,
+    footer: 'NCP Cradle Inspection', fc: 'NCPC',
+    pages: [[
+      { id: 'c1', group: 'Breaker Cradle', head: 'Verify the presence of all the following components:', cols: ['Present', 'Missing'], naNote: true, items: [
+        { t: 'Shutters' },
+        { t: 'AUP Lever, terminals, and associated wiring' },
+        { t: 'Breaker stabs (Bussing on the back side of cradle) and torqued screws' },
+        { t: 'Heat shields' },
+        { t: 'Metal guiding clip' },
+        { t: 'Breaker holding arms' },
+        { t: 'Terminals for breaker pins' },
+        { t: 'Serial number sticker is present on inside of cradle, left side' },
+        { t: 'Bezel included in kit' },
+      ] },
+      { id: 'c2', group: 'Breaker Cradle', head: 'Verify there is no damage and check functionality of all components:', cols: ['Pass', 'Fail'], naNote: true, items: [
+        { t: 'Shutters open and close as intended (open when pushed in/closed while pulled out)' },
+        { t: 'AUP Lever spring works/auxiliary contacts open/close between positions' },
+        { t: 'Breaker stabs are not bent, corroded, or broken in any way/all screws torqued' },
+        { t: 'Heat shields are not chipped, cracked, or broken in any way' },
+        { t: 'Metal guiding clip is not bent/damaged in way that would prevent breaker from racking in' },
+        { t: 'Breaker holding arms pull out and push back in without getting stuck on anything' },
+        { t: 'Terminals for breaker pins are free from debris or anything that would prevent breaker pins from connecting' },
+        { t: 'Serial number sticker is not scratched, peeled, or illegible' },
+      ] },
+    ]],
+  },
+};
+const ncpForm = r => r.kind === 'general' ? { title: 'NCP General Inspection', short: 'General', pages: [] } : (NCP_FORMS[r.kind] || NCP_FORMS.breaker);
+const ncpFixed = r => r.kind === 'breaker' && r.btype === 'fixed';
+/** every numbered item on the form, in order, with its key, number and wording for this report */
+function ncpItems(r) {
+  const out = [], F = ncpForm(r);
+  F.pages.forEach((secs, pi) => secs.forEach(sec => {
+    let n = sec.start || 0;
+    sec.items.forEach(it => {
+      if (it.note) { out.push({ page: pi, sec, note: it.note }); return; }
+      n++;
+      const fixed = ncpFixed(r), key = `${sec.id}:${n}`;
+      const auto = (fixed && it.rk) || (!fixed && it.fx) || (r.kind === 'breaker' && !r.btype && it.fx) ? 'NA' : '';
+      out.push({ page: pi, sec, n, key, it, text: fixed && it.fxT ? it.fxT : it.t, auto, val: (r.res || {})[key] || auto, note: (r.notes || {})[key] || '' });
+    });
+  }));
+  return out;
+}
+function ncpTally(r) {
+  const t = { pass: 0, fail: 0, na: 0, open: 0 };
+  ncpItems(r).forEach(x => { if (x.note && !x.key) return; if (x.val === 'P') t.pass++; else if (x.val === 'F') t.fail++; else if (x.val === 'NA') t.na++; else t.open++; });
+  return t;
+}
+const ncpFile = r => `NCP_${ncpForm(r).short}_${safeName(r.serial || r.dispatch || 'NoSerial')}_${(r.created || '').slice(0, 10)}_${r.id.slice(-4)}.xlsx`;
+function newNcp(kind) {
+  const last = [...S.ncp].filter(x => x.kind === kind).sort((a, b) => b.created.localeCompare(a.created))[0];
+  if (kind === 'general') return { id: uid(), created: stamp(), kind, dispatch: '', part: '', serial: '', desc: '', issue: '', proc: last ? last.proc : '', results: '', concl: '', disp: '', tester: { name: (UI.user && UI.user.name) || '', sig: '', date: today() }, updatedAt: Date.now() };
+  return { id: uid(), created: stamp(), kind, dispatch: '', serial: '', part: last ? last.part : '', status: '', btype: kind === 'breaker' ? 'racking' : '', res: {}, notes: {}, tester: { name: (UI.user && UI.user.name) || '', sig: '', date: today() }, updatedAt: Date.now() };
+}
+
+// ---------- screens
+function renderNcp() {
+  const el = $('[data-view=ncp]');
+  const r = UI.ncp && S.ncp.find(x => x.id === UI.ncp);
+  if (!r) {
+    UI.ncp = null;
+    const list = [...S.ncp].sort((a, b) => b.created.localeCompare(a.created));
+    el.innerHTML = `
+      <div class="view-head"><div class="grow"><span class="eyebrow">Non Conforming Parts</span><h1>NCP Inspections</h1><p>Breaker Inspection & Operation Tests, Breaker Cradle NCP Inspections and NCP General Inspections (the NCP Equipment Testing Sheet). Each one saves to an Excel file in your data folder.</p></div>
+        <div class="row"><button class="btn primary big" type="button" data-act="ncp-new" data-kind="breaker">${ICON.plus} Breaker inspection</button><button class="btn big" type="button" data-act="ncp-new" data-kind="cradle">${ICON.plus} Cradle inspection</button><button class="btn big" type="button" data-act="ncp-new" data-kind="general">${ICON.plus} General inspection</button></div></div>
+      ${list.length ? `<div class="jobs-grid">${list.map(x => { if (x.kind === 'general') return `<button class="jobcard" type="button" data-act="ncp-open" data-id="${x.id}"><span class="no">${esc(x.serial || 'No serial yet')}</span><span class="meta">${esc(['General', x.dispatch && 'NCP ' + x.dispatch, x.part, x.created.slice(0, 10)].filter(Boolean).join(' · '))}</span><span class="chips">${x.disp ? `<span class="pill ${x.disp === 'inventory' ? 'closed' : 'open'}">${esc(NCPG_DISP.find(d => d[0] === x.disp)[1])}</span>` : '<span class="pill">No disposition yet</span>'}${x.tester.sig ? '<span class="pill closed">Signed</span>' : ''}</span></button>`; const t = ncpTally(x); return `<button class="jobcard" type="button" data-act="ncp-open" data-id="${x.id}">
+        <span class="no">${esc(x.serial || 'No serial yet')}</span><span class="meta">${esc([ncpForm(x).short, x.dispatch && 'NCP ' + x.dispatch, x.part, x.created.slice(0, 10)].filter(Boolean).join(' · '))}</span>
+        <span class="chips">${x.kind === 'breaker' && x.status ? `<span class="pill info">${esc((NCP_STATUS.find(s => s[0] === x.status) || [])[1] || '')}</span>` : ''}${x.kind === 'breaker' ? `<span class="pill info">${x.btype === 'fixed' ? 'Non-racking' : 'Racking'}</span>` : ''}
+        ${t.fail ? `<span class="pill open">${t.fail} fail/missing</span>` : ''}${t.open ? `<span class="pill">${t.open} to check</span>` : `<span class="pill ${t.fail ? 'open' : 'closed'}">${t.fail ? 'Non-conforming' : 'All checks done'}</span>`}${x.tester.sig ? '<span class="pill closed">Signed</span>' : ''}</span></button>`; }).join('')}</div>`
+      : `<div class="panel empty"><b>No NCP inspections yet</b>Start a breaker inspection (3 pages: presence, damage/function and electrical test), a cradle inspection (1 page) or a general inspection for any other part (the NCP Equipment Testing Sheet).</div>`}`;
+    return;
+  }
+  if (r.kind === 'general') return renderNcpGeneral(el, r);
+  const F = ncpForm(r), items = ncpItems(r), t = ncpTally(r);
+  const fld = (id, k, label, ph = '') => `<label class="field" for="${id}"><span>${label}</span><input id="${id}" type="text" data-ncp="${k}" value="${esc(r[k])}" placeholder="${esc(ph)}" autocomplete="off"></label>`;
+  let html = '', lastSec = null;
+  items.forEach(x => {
+    if (x.sec !== lastSec) {
+      if (lastSec) html += `</div>${lastSec.naNote ? '<p class="muted ncp-na">Note: If not applicable, mark N/A.</p>' : ''}${lastSec.foot ? `<p class="muted ncp-na">${esc(lastSec.foot)}</p>` : ''}</div>`;
+      const cont = lastSec && lastSec.id === x.sec.id;
+      html += `<div class="panel ncp-sec"><div class="ncp-sh"><span class="eyebrow">${esc(x.sec.group)}${cont ? ' · continued' : ''}</span><h3>${esc(x.sec.head)}</h3></div><div class="ncp-list">`;
+      lastSec = x.sec;
+    }
+    if (!x.key) { html += `<div class="ncp-note">${esc(x.note)}</div>`; return; }
+    const [a, b] = x.sec.cols;
+    html += `<div class="ncp-row ${x.val === 'F' ? 'bad' : ''} ${x.val === 'NA' ? 'na' : ''}">
+      <span class="n num">${x.n}</span><span class="t">${esc(x.text)}${x.auto && x.val === 'NA' ? `<small class="muted"> · N/A for a ${ncpFixed(r) ? 'non-racking' : 'racking'} breaker</small>` : ''}</span>
+      <div class="seg ncp-seg" role="radiogroup" aria-label="${esc(x.text)}">${[['P', a], ['F', b], ['NA', 'N/A']].map(([v, l]) => `<button type="button" class="${x.val === v ? 'on' : ''} v-${v}" data-ncpv="${x.key}" data-v="${v}" aria-pressed="${x.val === v}">${l}</button>`).join('')}</div>
+      <input type="text" class="ncp-nt" data-ncpn="${x.key}" value="${esc(x.note)}" placeholder="Note" aria-label="Note for ${x.n}"></div>`;
+  });
+  if (lastSec) html += `</div>${lastSec.naNote ? '<p class="muted ncp-na">Note: If not applicable, mark N/A.</p>' : ''}${lastSec.foot ? `<p class="muted ncp-na">${esc(lastSec.foot)}</p>` : ''}</div>`;
+  el.innerHTML = `
+    <div class="view-head"><div class="grow"><button class="btn ghost sm" type="button" data-act="ncp-back" style="align-self:flex-start">${ICON.back} All NCP inspections</button><span class="eyebrow">${esc(F.title)}</span><h1 class="mono" style="font-family:var(--f-mono);font-size:26px">${esc(r.serial || 'New inspection')}</h1></div>
+      <div class="row"><button class="btn" type="button" data-act="ncp-print">${ICON.print} Print</button><button class="btn" type="button" data-act="ncp-dl">${ICON.dl} Excel</button><button class="btn" type="button" data-act="ncp-del">Delete</button></div></div>
+    <div class="stack">
+      <div class="panel form-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        ${fld('nDisp', 'dispatch', 'NCP Dispatch #')}${fld('nSer', 'serial', F.serialLabel)}${fld('nPart', 'part', F.partLabel)}
+        ${F.status ? `<fieldset class="hp-type"><legend>Breaker status</legend><div class="seg">${NCP_STATUS.map(([v, l]) => `<label><input type="radio" name="ncpStatus" value="${v}" ${r.status === v ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div></fieldset>` : ''}
+        ${F.btype ? `<fieldset class="hp-type"><legend>Breaker type</legend><div class="seg">${[['racking', 'Racking'], ['fixed', 'Non-racking (fixed)']].map(([v, l]) => `<label><input type="radio" name="ncpType" value="${v}" ${r.btype === v ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div></fieldset>
+        <p class="muted" style="margin:0;font-size:13px;align-self:center">Racking: no bezel. Non-racking: bezel, bus connection, no grease. Cradle and racking steps default to N/A on a non-racking breaker.</p>` : ''}
+      </div>
+      <div class="panel ncp-sum"><b class="num">${t.pass}</b> pass/present · <b class="num ${t.fail ? 'bad' : ''}">${t.fail}</b> fail/missing · <b class="num">${t.na}</b> N/A · <b class="num">${t.open}</b> to check
+        ${t.open ? '' : `<span class="pill ${t.fail ? 'open' : 'closed'}" style="margin-left:8px">${t.fail ? 'Non-conforming' : 'All checks passed'}</span>`}
+        <button class="btn sm ghost" type="button" data-act="ncp-allp" style="margin-left:auto">Mark the rest Present / Pass</button></div>
+      ${html}
+      <fieldset class="panel"><legend>Tester</legend><div class="crewrow" style="grid-template-columns:minmax(0,1fr) 150px">
+        <input type="text" data-ncpt="name" value="${esc(r.tester.name)}" placeholder="Name" list="peopleList" aria-label="Tester name">
+        <input type="date" data-ncpt="date" value="${esc(r.tester.date)}" aria-label="Date"></div>
+        <button class="sigbox" type="button" data-act="ncp-sign" style="margin-top:8px;width:100%">${r.tester.sig ? `<img src="${r.tester.sig}" alt="Tester signature">` : 'Tap to sign'}</button></fieldset>
+    </div>`;
+  const save = () => { r.updatedAt = Date.now(); commit('ncp:' + r.id); };
+  $$('[data-ncp]', el).forEach(i => i.addEventListener('input', () => { r[i.dataset.ncp] = i.value; save(); }));
+  $$('[name=ncpStatus]', el).forEach(i => i.addEventListener('change', () => { r.status = i.value; save(); }));
+  $$('[name=ncpType]', el).forEach(i => i.addEventListener('change', () => {
+    r.btype = i.value;
+    // checks that depend on the breaker type go back to their default (N/A where they don't apply)
+    ncpItems(r).forEach(x => { if (x.key && (x.it.rk || x.it.fx || x.it.fxT)) { delete r.res[x.key]; } });
+    save(); renderNcpKeep();
+  }));
+  $$('[data-ncpv]', el).forEach(bn => bn.addEventListener('click', () => {
+    const k = bn.dataset.ncpv, v = bn.dataset.v, cur = ncpItems(r).find(x => x.key === k);
+    if (cur && cur.val === v) delete r.res[k]; else r.res[k] = v;
+    if (cur && cur.auto && r.res[k] === cur.auto) delete r.res[k];
+    save(); renderNcpKeep();
+  }));
+  $$('[data-ncpn]', el).forEach(i => i.addEventListener('input', () => { r.notes[i.dataset.ncpn] = i.value; save(); }));
+  $$('[data-ncpt]', el).forEach(i => i.addEventListener('input', () => { r.tester[i.dataset.ncpt] = i.value; save(); }));
+}
+function renderNcpKeep() { const y = window.scrollY; renderNcp(); window.scrollTo(0, y); }
+
+// ---------- Excel (one sheet, a page per form page)
+function ncpWorkbook(r) {
+  const F = ncpForm(r), items = ncpItems(r);
+  const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
+  const ws = wb.addWorksheet(F.short + ' Inspection', { pageSetup: { orientation: 'portrait', paperSize: 1, fitToPage: true, fitToWidth: 1, fitToHeight: 0, margins: { left: .5, right: .5, top: 1, bottom: .75, header: .3, footer: .3 } } });
+  qesSheet(ws, F.fc);
+  ws.pageSetup.margins = { left: .4, right: .4, top: .95, bottom: .55, header: .25, footer: .25 };
+  const f = fc(F.fc);
+  ws.headerFooter.oddFooter = `&L&"Arial,Regular"&9${xlEsc(f.no)}${f.rev ? ' - ' + xlEsc(f.rev) : ''}&C&"Arial,Regular"&9www.qualityelectricalsystems.net&R&"Arial,Regular"&9Page &P of &N`;
+  ws.columns = [{ width: 5 }, { width: 72 }, { width: 8 }, { width: 8 }, { width: 22 }];
+  const T = (b = false, sz = 11) => ({ name: 'Times New Roman', size: sz, bold: b });
+  const thin = { style: 'thin' }, box = { top: thin, left: thin, bottom: thin, right: thin };
+  const check = on => on ? '☒' : '☐';
+  const pages = F.pages.length;
+  let row = 1;
+  const add = vals => { const rr = ws.getRow(row++); vals.forEach((v, i) => { if (v !== undefined) rr.getCell(i + 1).value = v; }); return rr; };
+  for (let pi = 0; pi < pages; pi++) {
+    const top = add([]); ws.mergeCells(`A${top.number}:E${top.number}`); top.getCell(1).value = F.title; top.getCell(1).font = T(true, 13); top.getCell(1).alignment = { horizontal: 'center' }; top.height = 20;
+    if (F.status) { const s = add([]); ws.mergeCells(`A${s.number}:E${s.number}`); s.getCell(1).value = 'Breaker Status:   ' + NCP_STATUS.map(([v, l]) => `${check(r.status === v)} ${l}`).join('      '); s.getCell(1).font = T(false, 11); }
+    const d = add(['', 'NCP Dispatch #:  ' + (r.dispatch || '')]); d.getCell(2).font = T(true);
+    const sr = add(['', `${F.serialLabel}:  ${r.serial || ''}`, '', `${F.partLabel}:  ${r.part || ''}`]); sr.getCell(2).font = T(true); sr.getCell(4).font = T(true); ws.mergeCells(`D${sr.number}:E${sr.number}`);
+    if (F.btype) { const bt = add(['', `Breaker type:  ${check(r.btype !== 'fixed')} Racking     ${check(r.btype === 'fixed')} Non-racking (fixed)`]); bt.getCell(2).font = T(false, 10); }
+    add([]);
+    F.pages[pi].forEach(sec => {
+      const g = add(['', sec.group]); g.getCell(2).font = T(true, 10);
+      const h = add(['', sec.head, sec.cols[0], sec.cols[1], 'Note:']);
+      for (let c = 1; c <= 5; c++) { const cell = h.getCell(c); cell.border = box; cell.font = T(false, 10); cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }; }
+      items.filter(x => x.page === pi && x.sec === sec).forEach(x => {
+        if (!x.key) {
+          const nr = add(['', x.note]);
+          for (let c = 1; c <= 5; c++) { const cell = nr.getCell(c); cell.border = box; if (c !== 2) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFBFBFBF' } }; }
+          nr.getCell(2).font = T(false, 9); nr.getCell(2).alignment = { horizontal: 'center', wrapText: true };
+          return;
+        }
+        const nt = x.val === 'NA' ? ['N/A', x.note].filter(Boolean).join(' ') : x.note;
+        const rr = add([x.n, x.text, check(x.val === 'P'), check(x.val === 'F'), nt]);
+        for (let c = 1; c <= 5; c++) { const cell = rr.getCell(c); cell.border = box; cell.font = T(false, c === 3 || c === 4 ? 11 : 9.5); cell.alignment = { horizontal: c === 5 ? 'left' : 'center', vertical: 'middle', wrapText: c === 2 || c === 5 }; }
+        if (x.val === 'F') rr.getCell(4).font = Object.assign(T(true, 12), { color: { argb: 'FFC0392B' } });
+        rr.height = x.text.length > 95 ? 24 : 12.75;
+      });
+      if (sec.naNote) { const n = add(['', 'Note: If not applicable, write "N/A" in the "Note" box.']); n.getCell(2).font = T(false, 9); }
+      if (sec.foot) { const n = add(['', sec.foot]); n.getCell(2).font = T(false, 9); }
+      add([]);
+    });
+    add([]);
+    const tr = add(['', 'Tester:  ' + (r.tester.name || ''), '', 'Date:  ' + (r.tester.date ? shortDate(r.tester.date) : '')]); tr.getCell(2).font = T(); tr.getCell(4).font = T(); ws.mergeCells(`D${tr.number}:E${tr.number}`); tr.height = 30;
+    tr.getCell(2).alignment = { vertical: 'bottom' };
+    if (r.tester.sig && r.tester.sig.startsWith('data:image/png')) { const id = wb.addImage({ base64: r.tester.sig, extension: 'png' }); ws.addImage(id, { tl: { col: 1.42, row: tr.number - 2 + 0.25 }, ext: { width: 120, height: 34 }, editAs: 'oneCell' }); }
+    if (pi < pages - 1) tr.addPageBreak();
+  }
+  return wb;
+}
+
+// ---------- printout laid out like the scanned forms
+function printNcp(r) {
+  const F = ncpForm(r), items = ncpItems(r), f = fc(F.fc), pages = F.pages.length;
+  const cb = on => `<span class="ncp-cb">${on ? '✕' : ''}</span>`;
+  const sheets = F.pages.map((secs, pi) => `<div class="pr-sheet ncp-print ${items.filter(x => x.page === pi).length > 32 ? 'dense' : ''}">
+    <div class="hp-ph hp-x ncp-ph"><img src="${QES_LOGO_SRC()}" alt="QES"><span class="addr">6500 S. Airport Rd.<br>West Jordan, Utah 84084<br>Office: (801) 566-7200<br>Fax: (801) 255-0835</span></div>
+    <div class="ncp-title">${esc(F.title)}</div>
+    ${F.status ? `<div class="ncp-status"><b>Breaker Status:</b> ${NCP_STATUS.map(([v, l]) => `${cb(r.status === v)} ${l}`).join('&nbsp;&nbsp;&nbsp;&nbsp;')}${F.btype ? `<span style="margin-left:auto"><b>Type:</b> ${cb(r.btype !== 'fixed')} Racking &nbsp; ${cb(r.btype === 'fixed')} Non-racking</span>` : ''}</div>` : ''}
+    <div class="ncp-fields"><div><b>NCP Dispatch #:</b> <u>${esc(r.dispatch) || '&nbsp;'.repeat(40)}</u></div><div class="two"><span><b>${esc(F.serialLabel)}:</b> <u>${esc(r.serial) || '&nbsp;'.repeat(40)}</u></span><span><b>${esc(F.partLabel)}:</b> <u>${esc(r.part) || '&nbsp;'.repeat(30)}</u></span></div></div>
+    ${secs.map(sec => `<div class="ncp-g">${esc(sec.group)}</div><table class="ncp-t"><thead><tr><th class="n"></th><th>${esc(sec.head)}</th><th class="c">${esc(sec.cols[0])}</th><th class="c">${esc(sec.cols[1])}</th><th class="nt">Note:</th></tr></thead><tbody>
+      ${items.filter(x => x.page === pi && x.sec === sec).map(x => x.key
+        ? `<tr><td class="n">${x.n}</td><td>${esc(x.text)}</td><td class="c">${cb(x.val === 'P')}</td><td class="c">${cb(x.val === 'F')}</td><td class="nt">${esc(x.val === 'NA' ? ['N/A', x.note].filter(Boolean).join(' ') : x.note)}</td></tr>`
+        : `<tr class="gn"><td class="n"></td><td>${esc(x.note)}</td><td class="c"></td><td class="c"></td><td class="nt"></td></tr>`).join('')}
+      </tbody></table>${sec.naNote ? '<p class="ncp-foot">Note: If not applicable, write "N/A" in the "Note" box.</p>' : ''}${sec.foot ? `<p class="ncp-foot">${esc(sec.foot)}</p>` : ''}`).join('')}
+    <div class="ncp-sign"><span><b>Tester:</b> <i>${r.tester.sig ? `<img src="${r.tester.sig}" alt="">` : ''}<em>${esc(r.tester.name)}</em></i></span><span><b>Date:</b> <i>${esc(r.tester.date ? shortDate(r.tester.date) : '')}</i></span></div>
+    <div class="ncp-pf"><span>${esc(f.no)}${f.rev ? ' - ' + esc(f.rev) : ''}</span><span>www.qualityelectricalsystems.net</span><span>Page ${pi + 1} of ${pages}</span></div>
+  </div>`).join('');
+  printHTML(sheets);
+}
+
+const NCPG_TPL = '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';
+const NCPG_LOGO = 'iVBORw0KGgoAAAANSUhEUgAAAO4AAABBCAYAAADWpJgZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABVxSURBVHhe7Z0HfFTF9sdPCEgJvUt4CgiCgqCC8LEAQiCQUEIxEHogNOkQegggSgkdpYdeQ5MWQEhC8S+IKCigDwv4KKL0IpGikPzv7+yd3dnlZrPJJpvd9+b7+Uzu3H43d86cM2fOzPXK2zQyWYOSk5Io55NEKv/oHPl4PyKFQuG+ZNOXRMlPKN+TO0poFQoPIJvQtrkfJ1K55N/1zQqFwp3RNW4SFUy+a8oqFAq3x6xx8z9RgqtQeAomjasJbt7k+5xVKBTuDwuul1cyeXt78QaFQuH+WLzKCoXCY1CCq1B4IEpwFQoPRAmuQuGBKMFVKDwQrzyBEcn0+CHVfHxS36Sw5bPdsZQzZ059zRr0g4P6Dfx5eSAhjpfHjn1NI0aN5rxA7AP1/BrqOROjR42gBn5+nA9p14GuXb/OeYB7HNwfb86Lexkxe9YMqla1Kuf9GwfShx+Mo1q1avF6ahhdu0P7EOoeFsb5jp260OXfVXSdO6A0birUrVM7RaEFXl5enF5/7VV9S9rB+RBaca2Y9Wv1PWlHVCQCm1W74N6DBvTX10wIoU1KSlJC60YowU2FJoEBeo7o0aNHdO3aNXO6f98StBLUvLmeSzsdO7RnoREgny1bxryaK1eumJ/3zp07+laiu3fvWv2Wf/75h7cHBTU3P8uIYUN5CVq2DtZzCndACW5qSALVwL8xtdXMWJFaB7fR9zhH19AuvJS15d49u/Scc8z5ZK75eceNn6BvJZo0Jcrqt8CsFvefOX0aWxmNGzfi9QsXLtCff/7JeYV74FaCmydPHipf/gXq834v2rplE8Xu2MbtQuQXzJtLrVq2oLJly1hpp0xHEqbMuK23t7f598ye87FZK2bPnp2XmYaBCf3DD//m5auvVqPVK5dzHsLco9f7nFe4D24luDA9fXx8qEL5CpQjRw7OAwh0jhzZqUP7drRsSTQlxO3l1LCBX+YXcAdJb2XStEmgniOKi4undevW62vay8kgc9kQg8cdOHiIWesWK1aMl3geYUYr3IcsFVwIJARw88YYGjxoAHtDv//+BxocPpSaNm/B5tvx4ydYiEuUKEFdw3qwN9avYSPatHmLds5ANilnz5zB18pKbJ1CjjJQcgY9ePiQNm35VF8jWrNqhZ5zDXBAfayZ1jLRS5fpOYU7kWWCmzt3bjaFf/vtN/rxp59YaGfOmEbx+z6j/fH7qFnTJlzTDx0+gtuWN2/epG2fbmYNBSFZuGgxBTZtTu07dqLChQvxtXp0D0u3ADlNOhQurAWhqdfHxGi/ozAVLlSIHmoCDJ599lleupLYXbv1HNHhw0dc2yxROEyWCC4cH7t2bte06/fUpWsYjYkcR6HdurMmbdgogHbG7mJtivZt7549WBNg/+LoJRQ+ZDAN0fYJrl69Rp1Du1Hffv2pdauWLPiZR8qFOD0VxttvvanniNqFhNCWTRtoy+aNlCtXLn2rqQ2sUNiSJYIL7Xj+/HkaMGiIvsXC48ePadbsOWwSfzJ3HrVpE0xxe/dQ8eLFKWbDRho/4UNq1qypZmL2088wcebHn6hxYFMu6AULFtS3Oo89cfSSBNlWMzkiyOPGRuq5lJk5faqeUygsuFxw58/9hE3gbt176luMgSB8unUba+DfLl+mmHVryK9+PTp06HOa8OFH1CIoiF6tVk0/2gLOK1KkiL7mPLJA7tm1k/s2RVq5wtL+k4UY1Kz5htWxH4wbq+8xCbVsJv+oVTqTJk+xSkLwq1SpwksBzhkxfJjVtUUS+x0ii1oUiozBpYLrW6oUVapUkYLbttO3WPD1LcVt1MULF9C+z3azmYwE07fM889zgRwTMZqC32tNBw4eosNHjtAMA210LzGR8uQ2mZo5cz7DS2fYsWOnniP2cqNvUyTheQW7dlvahgDPKx9bp05tfQ9xxSVHWi1ZupTi4hOsEtr+AJ5leNRlDd64kb/VtUUCdjW9LNMOyrfCPXGp4K5auZydH3/99Revo3AjxA7OqDWrVmrtvLaUmHiP27JjIsdSxJhIGj5iFOfnzptPBw4cpLBuXelf/ypNkWPHc6GeMc1aeGFqi6K7Z1esnks/Xxw+Qn/88UeKAoHtV69epa+Ofc3rixZH2xUe7AtuE0JTJk8yrx8/8S3nZdCmF9eJjIig6TNm2b2uIJuXnVcqn576pRRujMsGGdSvV48ix4ymd+s3YIGFdoWgguglS7l7B0KXFipVrEjz533CTi1RqLdv3UIRmqCjWwka2zaYP6OYMmki1apVk65du04h7Ts4JFQKRUbhMo07auRwdjbBeYRunfbtQmjGzFk8GmV9zIY0Cy1ANxIYMdwSU5s3b15zwACEKUrXbBnNyNERmsB2pIGDBlOJ4sX1rQqFa3CJxkXwBJxL9TRtm6CZxYiQahPSjh48MPVXjo2MoDkfz+XA97Ti37AhC67Quhj+FtotjC5cuMga9++//6ZGAU30o9MH+py7dOqYYrvw4cNHtGLlKu66wjFPniSxFWEP9Ef/q3RpzuO5YYVAZ4tbLFi0mJcILOncsYNpv4FWf6T9vuUrVlLvXj3N54rriKNtz7U6Ttsn+Oefv7X2tinU8aVKlejdunW0Y5Jp+45Yc3OB7yOdI/L8G7SleG4ABxzisNGU2LHz6WZL7149tHO86I8rV2jb9h36VoUjuERwl0YvorLPP0fJ2bzp0sWL3H4Dr732Kk2LmsIC2zrYZDanFWhwOLBatQ7mQrxz+1b2RKPvd3/cXpQsu+NXU+OZZ55JNeAfbXZEeqGiAND4iPpKiVUrlnM73R4w8dHfjbHA9khMTKRmQS3ZTyALVHp58uQJB7ygYkGfOUAo5KlTpx26h2iawP+AbjwRtvnTTz9T7z59OS8Q/69/nzlDffsN4LzCMVxiKpctW5a8vLPzxOtCaIeFD+FRKBC8Dz78iLelBxQ0CGnLlkHUWdOKKFhYZw2gFRqsFylSWD867cDEz2hSE1pB/nz59JzrwPvw0bS8rW7HtrRUDFVfqWIVa12x4ot6TpERZLrgsgDpLxw1OZg+NYoCAwNo85YtLGSozZ0Bji04v1oENae9+/bxNv+GDXgJ+vXpo+fSDgqsoEev3myS2yZoPBnJKk0VWAdG1zRhuRBMSaPjmrdoxfvxvxXbZH+BfCwsD2Eyw8qR9yECzS6SzB44eNDqXDkJpmnv2JZaNd/QcwpnyXTBhecVhaVFq/d4HSN8qld/nYXAJ48Pt52c5fiJE+Tr68uDEUQbbdDAAXTu3Dk6ceJbrY2dMc4jBEqgorFNQhgEaVBMLGRG17QFg92NjhP3lrfJyNuRZK0pb0c71B5ygMlXXx2zOldOAmhucPz4cV6CkSMy3nr5XyXTBbexvz+d0dowqOHxMrt1DaUPJnxIZ8+eo4CAxrR123b9yPQjNPaDBw94MAJMNDh1UDlAO5TWnUDOgkAII2wF1zMQQmZ69sqVX+Ylk5aax4CKL75oriCmz5xlHudboEABXiqcJ9MFF9FFIiYZzgpEBB089Dm/WBT4I19+yfucQYym6dvf5ODAcDjU/pAn0TWUEeyPN0Vz2SYMmEgvRtdDymySk714SOWBhHi+n9CQAP87Z0QXfeuCK1eu0rLlJisI7/yllypxXuEcmS64v/zyCzuQenY3TTqG0UAgX758/CIvX3Z+AjJc5/Tp09wFVK5sGR4Oh+4m3udUEfzvBf3dsvNIgK46WC62oFvIUWRPMjjx7XdmqwS9CArnyXTBxZxHICSkLYUPHcZ5UKSwydNrVHjSA7Q6rrV0STSb5Tdv3uLtdevWphs3bnDeWerWq68lv6cSxgWnF6PrIWU2tsKJiDbct0mzIF5Pr/Ff8cUKeo6oQoXyT1kQWT3hwX8LmS640IYN/Orz8tvvLH3FGTmCB0Bo0Z8L7S7PSIg5hW/ftsxu6AxJScl8H6OUXoyuhWQi86yFpKQndPToUX2NOHDFct+ncdRymS7FjsvXw/sXSwwoUThHpgsu6PN+b3M3jUB/j8zQcFNHf3pBARED6OG9lp1FKCiYpTAjqPzyy9wWtE22BR7bEDVke5xIMgjwSPkYy+8oWaKE4XFI6SOJRkVEWvkAMOrIEerWqWP4HEgwwQHeATzmchLvZcUy66iyvD4+htdCUhjjksgpmErob7x3756+hXio3vJlSzjSBp31L2tCgYHyaSV//vw8CyQIatmKEhNNI48EuDf6OKGJ08O4yDH07rt19TVjbCOnMgL8X4oVK0obYyyTxxkhIqdk4AQUk+jJgywgOOKLCHfv3tYquTbchYZhlAL0K0PImjQJpKFS5NTZs2dp107HwxInTppM8Qn79TUTmEABQyPxHOhTduT/JT+/woJLNC5e+saYdfqaiRs3b/ILhEY8eeo09erZg8qVLavvdYw2wa15NBAqBAinrdB6e2fje6RXaMHEyY47U+QJ0jOCu3czfy5jaFx0mQk+3Wxced6//8CsMR3BVmhB7C5T6CjeOWYpcea9/K/jEo2LF47atVtYdzp/4aK+1aQN+w0YyP18qPVR+3cJ7UYXL13SjzCmWtVXaPasmdxtsWnzZlq4KFrfY0344EFUt24dc3SREejjrVL5Zfpsr7UpL5ND014IHEmJ+w8e0MZNmzmPSe6M2u+ijQeMBEBuQWIvBi0AmNLtMfxRPx9/5bMxiGLd+hh9zUSnjh3IWzffV6xazUtBaOdOvPxLq2QQcSYI7dLZlMG7OnSI38U7b73Fzx27ew9dv36dnzu0S6dU27tJ2nGrVq/R1yzg/K6hpvtggMmGjZuoXds2lDNXTusfJWH7/AoTLhuPi5Egwe+9ZxUWB9Ppi8OHaUrUNB7hgzYWxpgMGzaCo6Fk0I4MaNzIFPiuvWTMgBE5bry+1xqM5sFnPTB0EAPwt3y6Vd9jAV7tBfPn8cD91KbRUSjcDZcJLsDIHYD2IGpyfJmgX98+5hjaA/FxdO/WbcpftDBPDo7PZIAXypWjAf370StaWxjnQdMiGuvU6dP0++9/8DZMJlf99deoUqVKvI6gjDVr19FaaYJxgC8lTJ44kYoWLWJumyoUnoZLBRcChaFhmJ2i/8BBZm/woCHhHLaIwQcY6ter9/u0eNFCFmZo1SNHLNFVMB3RvQQh9i3ly4EcAO3c/5z/Dx079g1HY8nmKLyTMHVDQztq+tzkqcQsk5hg3RHQ7itUqJC+Zp/REWPoy6Nf6Wsm5OFwcLagvS/PV5VZ7IyNpZmz5lDLFkHUv19ffgb8X9p37MwfA5OZNnWKVvG9znk4vETzom2bYPY/iOd/mmR6t35D7f+aTD75fOjB/YfcbabIXFwquECMMT19+nsaMGgwfTB+LL3z9ttmExqF/Oeff6b3+/anSR9N4H5YFDa0x1avWaNpScccQKV9falhwwYUorWh4GG9fPky5cuVnQoWe5a/joCJ1h0Bn9kcL83QmBqwBuTmwLChQygwwPTFv9bvtdGKd7JWEZi84JlNbOwumjFr9lPeW1RycrsfMolwThnEkOOrBql7fpO1ysifcuXMQXny5qY7t+8pwXUBLhdcgC4BtG/h8OjUJZQndYuaOo327otjs3hJ9CKKHDuOJ2qDhoW2EJ+7RM2P82Ainz13jreB0qV9eaYNdDMJbXvx4kXuYoqPT6B58z6hCuXL07z5CwzbvCkxNWoyvVGjBuehiTBhnQB3EVoMSww+xzI+IYEmTprCFQa6ZgBitDt16Uo1qr9uHvKGCK/P/+8LzqdEwQIFqHbtdzh/5syP5t9c+523zfNHX7p0ib47eYrzJvjJ6OTJk5Sw/4Ch8Im5v4CYP0tmn/YuJkdNNZ+L34iJ6nGG1e/W8jNnz8EhCheSJYILoHnXr13Nhe9XrTC+oAkVwu3QpQJvcNOmTZ76Ajr6bGu+UYPeevNNbquWLFmSzeBbt27RHU0Izv5ylk6eOkXfHD9ON27c5HNgIncP60a3b9+msB69eJkWZMGtU7ceeev9o0YgaF8EY0Awli2N5i4uFPCAJs34+7qy4AZq2/C9IHtgOlt8qRDgsyvwxIIF8+fyZHkgtX5qI8GVvfdGX9w3ElxnZhJRZCwu6cc1AoW4lWY6bty0icppQgughVGTw7xDtNPqVSuoVCnL93PwjVb0D074aCJ/dgTTw8AsxTzNPXr2pqhp07lbB3HKaJfB7MYwwjGa9sa90iq0tmBGDXvIJvKmDTFUtkwZzm/dto1/ry258+TWc65BjtkOCLA8qxBaWBQKzyDLNK4MHEyYCL1kyRKsOcRMGcs1jVVGK/zDR4ykr7+xDMg2AgLfRGtLttXatIiFhYbA3MvODhuE06ZG9eqcR/vVNsji3Llf2bkmiBg9khr4WQYJ2GqqN2pU17S4KagD+8Qc0wDr589fYMedMGNT0rgL588zTweTksDt1SqxuVrTQGhNOOSee+45tgrEcxUrWpQ2bjB53sN69KSl0abJ3mw1LrC9D4IyBoeHc7NF4VqyTOPKwFnSrkNHCmrZmuLi49nTjH5WeH1379lDUVMm0+SJpnmpsmXz4rjdAH9/7vtduXyZ+Xu5Q4YMoqNfHaWQdh1Y+2XEWF98bFqAAo9YXDlVq1aVHVCCSZOjWCgE8vngxLeWyc8hnPK1UIHBW75QM4PTgnwNOdmav2CnPtsi7o3fM1KaU0s0L2RQWQlsr1+8eDGeyF7hetxCcAUwhaOmTmeN+4xW6NB+nTZ9JoUPHc7OE9T+CXH7aK3WNh46PJynZv31119pSPgwbh9Dg8ybv5CuXb+uX9F5MF4YUUCyMAJ5HUH3AtvjbKclxdStcJDZHicLCPqi04J8rj1wzz2f7dXXiF6pUoWqVK7MedvnEbTr0Mk8UYEAx4rjhWWgcC1uYSo7AoQ4j9YmRKgcguCzGjyPGJFkG8hh22/rKLJZKs7LSOeU6LsW6wkJ+8nPrz7nN6O7be06jv0GwlROifT+RkXG4FYa1x4omPfuJbqF0IKUNJQngG4oIIQWzF+4SM85htK0WYvHaNysAs6mqq9U1dcs4EuAYvKztGhcDGGMGD1aX7OAoP5ChSzf9U1N48rOKdzfXmAK2qJAaFyEmqJvXAb3Q3eb0LiYIQMVpRH4aRhIIbq+lMZ1PR6jcbOKggUKcsG3TfKMhRcv2h/NJAOHkdH1ZKE16jqy5eYtiyMJAS1G1xTJFgRSyBaDkfWAgRpG10JCuKYQWkXWoP77qWBvkjThpOnTr7++JXXsOZLE9RCskRoRY8babdcaIQQUY3AxiEOsY/B8esBvGT5ylL6mcCXKVFYoPBClcRUKD0QJrkLhgSjBVSg8ECW4CoUHogRXofBAlOAqFB6IElyFwgNRgqtQeBxE/w+4pCT1zadnXAAAAABJRU5ErkJggg==';
+// ---------- NCP General Inspection: your "NCP Equipment Testing Sheet" workbook, filled in
+const NCPG_SECTIONS = [
+  ['desc', 'Equipment Description', 12, 3, 'What the equipment is: make, model, rating, where it came from'],
+  ['issue', 'Reported NCP Issue', 17, 3, 'What was reported as non-conforming'],
+  ['proc', 'Testing Procedure', 22, 5, 'Steps and test equipment used'],
+  ['results', 'Test Results', 29, 5, 'What the testing found, with readings'],
+  ['concl', 'Conclusion', 36, 3, 'Your conclusion and the reason for the disposition'],
+];
+const NCPG_DISP = [['inventory', 'Return To Inventory', 'A42'], ['manufacturer', 'Return To Manufacturer', 'D42'], ['scrap', 'Scrap', 'H42']];
+const NCPG_FIRST = 64, NCPG_LINE = 94; // characters that fit on the first (short) line and on each full line
+function ncpgLines(text, extra) {
+  const words = String(text || '').replace(/\r/g, '').split(/(\n)/).flatMap(w => w === '\n' ? ['\n'] : w.split(/ +/)).filter(w => w !== '');
+  const lines = [''], caps = [NCPG_FIRST, ...Array(extra).fill(NCPG_LINE)];
+  for (const w of words) {
+    const i = lines.length - 1, cap = caps[Math.min(i, caps.length - 1)];
+    if (w === '\n') { lines.push(''); continue; }
+    if (!lines[i]) lines[i] = w; else if ((lines[i] + ' ' + w).length <= cap) lines[i] += ' ' + w; else lines.push(w);
+  }
+  const fit = lines.length <= extra + 1;
+  if (!fit) { const keep = lines.slice(0, extra); keep.push(lines.slice(extra).join(' ')); return { lines: keep, fit }; }
+  return { lines, fit };
+}
+async function ncpGeneralBlob(r) {
+  if (!window.JSZip) throw new Error('nolib');
+  const zip = await JSZip.loadAsync(b64bytes(NCPG_TPL));
+  const sheetPath = 'xl/worksheets/sheet1.xml';
+  const doc = new DOMParser().parseFromString(await zip.file(sheetPath).async('string'), 'application/xml');
+  const NS = doc.documentElement.namespaceURI, ws = doc.documentElement;
+  const sd = doc.getElementsByTagNameNS(NS, 'sheetData')[0];
+  const cell = ref => {
+    const [, col, rn] = ref.match(/^([A-Z]+)(\d+)$/);
+    let row = [...sd.children].find(x => x.getAttribute('r') === rn);
+    if (!row) { row = doc.createElementNS(NS, 'row'); row.setAttribute('r', rn); sd.insertBefore(row, [...sd.children].find(x => +x.getAttribute('r') > +rn) || null); }
+    let c = [...row.children].find(x => x.getAttribute('r') === ref);
+    if (!c) { c = doc.createElementNS(NS, 'c'); c.setAttribute('r', ref); row.insertBefore(c, [...row.children].find(x => colNum(x.getAttribute('r').replace(/\d+/g, '')) > colNum(col)) || null); }
+    return c;
+  };
+  const text = (ref, v) => {
+    v = v == null ? '' : String(v); if (!v.trim()) return;
+    const c = cell(ref); while (c.firstChild) c.removeChild(c.firstChild);
+    c.setAttribute('t', 'inlineStr'); const is = doc.createElementNS(NS, 'is'), t = doc.createElementNS(NS, 't');
+    t.setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:space', 'preserve'); t.textContent = v; is.appendChild(t); c.appendChild(is);
+  };
+  const bool = (ref, on) => { const c = cell(ref); while (c.firstChild) c.removeChild(c.firstChild); c.setAttribute('t', 'b'); const v = doc.createElementNS(NS, 'v'); v.textContent = on ? '1' : '0'; c.appendChild(v); };
+  text('D8', r.dispatch); text('D9', r.part); text('D10', r.serial);
+  NCPG_SECTIONS.forEach(([k, , row, extra]) => { ncpgLines(r[k], extra).lines.forEach((ln, i) => text(i === 0 ? `D${row}` : `A${row + i}`, ln)); });
+  NCPG_DISP.forEach(([v, , ref]) => bool(ref, r.disp === v));
+  text('B44', r.tester.name); text('G44', r.tester.date ? mdy(r.tester.date) : '');
+  // one page wide when printed
+  let sp = ws.getElementsByTagNameNS(NS, 'sheetPr')[0];
+  if (!sp) { sp = doc.createElementNS(NS, 'sheetPr'); ws.insertBefore(sp, ws.firstElementChild); }
+  let psp = sp.getElementsByTagNameNS(NS, 'pageSetUpPr')[0]; if (!psp) { psp = doc.createElementNS(NS, 'pageSetUpPr'); sp.appendChild(psp); }
+  psp.setAttribute('fitToPage', '1');
+  const ps = ws.getElementsByTagNameNS(NS, 'pageSetup')[0]; if (ps) { ps.setAttribute('fitToWidth', '1'); ps.setAttribute('fitToHeight', '1'); }
+  zip.file(sheetPath, new XMLSerializer().serializeToString(doc), { createFolders: false });
+  // tester signature on the existing drawing, over the Tester line
+  if (r.tester.sig && r.tester.sig.startsWith('data:image/png;base64,')) {
+    const E = 9525;
+    zip.file('xl/media/ncp_sig.png', r.tester.sig.split(',')[1], { base64: true, createFolders: false });
+    const dr = 'xl/drawings/_rels/drawing1.xml.rels';
+    zip.file(dr, (await zip.file(dr).async('string')).replace('</Relationships>', '<Relationship Id="rIdNcpSig" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/ncp_sig.png"/></Relationships>'), { createFolders: false });
+    const d = 'xl/drawings/drawing1.xml';
+    const anchor = `<xdr:oneCellAnchor><xdr:from><xdr:col>2</xdr:col><xdr:colOff>${8 * E}</xdr:colOff><xdr:row>42</xdr:row><xdr:rowOff>${6 * E}</xdr:rowOff></xdr:from><xdr:ext cx="${110 * E}" cy="${34 * E}"/><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="9" name="Tester signature"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rIdNcpSig"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${110 * E}" cy="${34 * E}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:oneCellAnchor>`;
+    zip.file(d, (await zip.file(d).async('string')).replace('</xdr:wsDr>', anchor + '</xdr:wsDr>'), { createFolders: false });
+  }
+  return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', compression: 'DEFLATE' });
+}
+function renderNcpGeneral(el, r) {
+  const fld = (id, k, label) => `<label class="field" for="${id}"><span>${label}</span><input id="${id}" type="text" data-ncp="${k}" value="${esc(r[k])}" autocomplete="off"></label>`;
+  el.innerHTML = `
+    <div class="view-head"><div class="grow"><button class="btn ghost sm" type="button" data-act="ncp-back" style="align-self:flex-start">${ICON.back} All NCP inspections</button><span class="eyebrow">NCP General Inspection · NCP Equipment Testing Sheet</span><h1 class="mono" style="font-family:var(--f-mono);font-size:26px">${esc(r.serial || 'New inspection')}</h1></div>
+      <div class="row"><button class="btn" type="button" data-act="ncp-print">${ICON.print} Print</button><button class="btn" type="button" data-act="ncp-dl">${ICON.dl} Excel</button><button class="btn" type="button" data-act="ncp-del">Delete</button></div></div>
+    <div class="stack">
+      <div class="panel form-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">${fld('nDisp', 'dispatch', 'NCP Dispatch #')}${fld('nPart', 'part', 'Part #')}${fld('nSer', 'serial', 'Serial #')}</div>
+      ${NCPG_SECTIONS.map(([k, l, , extra, ph]) => { const L = ncpgLines(r[k], extra); return `<div class="panel stack" style="gap:6px"><label class="field" for="g_${k}"><span>${l}</span><textarea id="g_${k}" data-ncpg="${k}" rows="${extra + 1}" placeholder="${esc(ph)}">${esc(r[k] || '')}</textarea></label>
+        <span class="muted ncpg-fit ${L.fit ? '' : 'bad'}" data-fit="${k}" style="font-size:12px">${L.fit ? `Fits the form: ${L.lines.filter(Boolean).length || 0} of ${extra + 1} lines used.` : `Longer than the ${extra + 1} lines on the form; the extra text runs onto the last line.`}</span></div>`; }).join('')}
+      <fieldset class="panel hp-type"><legend>Disposition</legend><div class="seg">${NCPG_DISP.map(([v, l]) => `<label><input type="radio" name="ncpgDisp" value="${v}" ${r.disp === v ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div></fieldset>
+      <fieldset class="panel"><legend>Tester</legend><div class="crewrow" style="grid-template-columns:minmax(0,1fr) 150px">
+        <input type="text" data-ncpt="name" value="${esc(r.tester.name)}" placeholder="Name" list="peopleList" aria-label="Tester name">
+        <input type="date" data-ncpt="date" value="${esc(r.tester.date)}" aria-label="Date"></div>
+        <button class="sigbox" type="button" data-act="ncp-sign" style="margin-top:8px;width:100%">${r.tester.sig ? `<img src="${r.tester.sig}" alt="Tester signature">` : 'Tap to sign'}</button></fieldset>
+    </div>`;
+  const save = () => { r.updatedAt = Date.now(); commit('ncp:' + r.id); };
+  $$('[data-ncp]', el).forEach(i => i.addEventListener('input', () => { r[i.dataset.ncp] = i.value; save(); }));
+  $$('[data-ncpg]', el).forEach(i => i.addEventListener('input', () => {
+    const k = i.dataset.ncpg; r[k] = i.value; save();
+    const extra = NCPG_SECTIONS.find(s => s[0] === k)[3], L = ncpgLines(r[k], extra), m = $(`[data-fit="${k}"]`, el);
+    m.classList.toggle('bad', !L.fit); m.textContent = L.fit ? `Fits the form: ${L.lines.filter(Boolean).length} of ${extra + 1} lines used.` : `Longer than the ${extra + 1} lines on the form; the extra text runs onto the last line.`;
+  }));
+  $$('[name=ncpgDisp]', el).forEach(i => i.addEventListener('change', () => { r.disp = i.value; save(); }));
+  $$('[data-ncpt]', el).forEach(i => i.addEventListener('input', () => { r.tester[i.dataset.ncpt] = i.value; save(); }));
+}
+function printNcpGeneral(r) {
+  const cb = on => `<span class="ncp-cb">${on ? '✕' : ''}</span>`;
+  const sec = ([k, l, , extra]) => { const L = ncpgLines(r[k], extra).lines; return `<div class="g-sec"><div class="g-row"><span class="g-lbl">${esc(l)}:</span><span class="g-ln">${esc(L[0] || '')}</span></div>${Array.from({ length: extra }, (_, i) => `<div class="g-ln full">${esc(L[i + 1] || '')}</div>`).join('')}</div>`; };
+  printHTML(`<div class="pr-sheet ncp-print ncpg-print"><img class="g-logo" src="data:image/png;base64,${NCPG_LOGO}" alt="Quality Electrical Systems">
+    <div class="g-title">NCP Equipment Testing Sheet</div>
+    <div class="g-sec">${[['NCP Dispatch #', r.dispatch], ['Part #', r.part], ['Serial #', r.serial]].map(([l, v]) => `<div class="g-row"><span class="g-lbl">${l}:</span><span class="g-ln">${esc(v || '')}</span></div>`).join('')}</div>
+    ${NCPG_SECTIONS.map(sec).join('')}
+    <div class="g-disp">${NCPG_DISP.map(([v, l]) => `<span>${cb(r.disp === v)} ${l}</span>`).join('')}</div>
+    <div class="g-sign"><span class="g-lbl">Tester:</span><span class="g-ln">${r.tester.sig ? `<img src="${r.tester.sig}" alt="">` : ''}${esc(r.tester.name)}</span><span class="g-lbl">Date:</span><span class="g-ln">${esc(r.tester.date ? mdy(r.tester.date) : '')}</span></div>
+  </div>`);
+}
+
+const NCP_ACT = {
+  'ncp-new': b => { const r = newNcp(b.dataset.kind); S.ncp.push(r); UI.ncp = r.id; commit('ncp:' + r.id); renderNcp(); window.scrollTo(0, 0); },
+  'ncp-open': b => { UI.ncp = b.dataset.id; renderNcp(); window.scrollTo(0, 0); },
+  'ncp-back': () => { UI.ncp = null; renderNcp(); },
+  'ncp-allp': () => { const r = S.ncp.find(x => x.id === UI.ncp); ncpItems(r).forEach(x => { if (x.key && !x.val) r.res[x.key] = 'P'; }); r.updatedAt = Date.now(); commit('ncp:' + r.id); renderNcpKeep(); },
+  'ncp-sign': () => { const r = S.ncp.find(x => x.id === UI.ncp); if (!r.tester.name.trim()) { toast('Enter the tester name first, then sign.'); return; } openSignature(`Signature · ${r.tester.name}`, data => { r.tester.sig = data; if (!r.tester.date) r.tester.date = today(); r.updatedAt = Date.now(); commit('ncp:' + r.id); renderNcpKeep(); }); },
+  'ncp-print': () => { const r = S.ncp.find(x => x.id === UI.ncp); if (r.kind === 'general') printNcpGeneral(r); else printNcp(r); },
+  'ncp-dl': async () => { const r = S.ncp.find(x => x.id === UI.ncp); if (r.kind === 'general') { if (!window.JSZip) return toast('The file library didn’t load. Check the internet connection and reload.', { kind: 'bad' }); return saveBlob(await ncpGeneralBlob(r), ncpFile(r)); } if (window.ExcelJS) download(ncpWorkbook(r), ncpFile(r)); else download(); },
+  'ncp-del': () => {
+    const i = S.ncp.findIndex(x => x.id === UI.ncp); const [r] = S.ncp.splice(i, 1); S.deleted[r.id] = Date.now(); FS.dirty.delete('ncp:' + r.id); UI.ncp = null; commit(); renderNcp();
+    toast('Deleted the inspection. Its Excel file stays in the folder.', { action: 'Undo', onAction: () => { S.ncp.splice(i, 0, r); delete S.deleted[r.id]; commit('ncp:' + r.id); renderNcp(); } });
+  },
+};
 
 // ============================================================
 //  Sign-in (PIN). A deterrent for a static site, not real security.
@@ -4179,7 +4669,7 @@ const ACT = {
   },
   'lbl-print': () => { const lines = UI.labelText.split('\n').map(s => s.trim()).filter(Boolean); printHTML(`<div class="pr-labels">${labelsHTML(lines)}</div>`); },
 };
-Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT);
+Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT, NCP_ACT);
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if (!b || b.disabled) return;
@@ -4189,7 +4679,7 @@ document.addEventListener('click', e => {
 
 $('#restoreFile').addEventListener('change', async e => {
   const f = e.target.files[0]; if (!f) return;
-  try { const o = JSON.parse(await f.text()); const before = JSON.stringify([S.qr.length, S.comp.length, Object.keys(S.jobs).length, S.jhas.length, S.megger.length, S.hipot.length]); mergeState(normalize(o)); commit('qr', 'comp', 'training', ...Object.keys(S.jobs).map(k => 'job:' + k), ...S.jhas.map(h => 'jha:' + h.id), ...S.megger.map(m => 'meg:' + m.id), ...S.hipot.map(h => 'hp:' + h.id)); renderAll(); toast(before === JSON.stringify([S.qr.length, S.comp.length, Object.keys(S.jobs).length, S.jhas.length, S.megger.length]) ? `Merged ${f.name}. Nothing new was in it.` : `Merged ${f.name} into this device’s records.`, { kind: 'ok' }); }
+  try { const o = JSON.parse(await f.text()); const before = JSON.stringify([S.qr.length, S.comp.length, Object.keys(S.jobs).length, S.jhas.length, S.megger.length, S.hipot.length, S.ncp.length]); mergeState(normalize(o)); commit('qr', 'comp', 'training', ...Object.keys(S.jobs).map(k => 'job:' + k), ...S.jhas.map(h => 'jha:' + h.id), ...S.megger.map(m => 'meg:' + m.id), ...S.hipot.map(h => 'hp:' + h.id), ...S.ncp.map(r => 'ncp:' + r.id)); renderAll(); toast(before === JSON.stringify([S.qr.length, S.comp.length, Object.keys(S.jobs).length, S.jhas.length, S.megger.length]) ? `Merged ${f.name}. Nothing new was in it.` : `Merged ${f.name} into this device’s records.`, { kind: 'ok' }); }
   catch { toast('That file isn’t a portal backup (portal_data.json).', { kind: 'bad' }); }
 });
 $('#appForm').addEventListener('submit', e => {
