@@ -858,6 +858,7 @@ function mergeState(o) {
   for (const k of Object.keys(S.jobs)) if (del['job:' + k]) { delete S.jobs[k]; changed = true; }
   for (const a of o.apps || []) if (a && !S.apps.some(b => b.file === a.file) && !del[a.id]) { S.apps.push(a); changed = true; }
   for (const c of o.catalog || []) if (!S.catalog.includes(c)) { S.catalog.push(c); changed = true; }
+  if (changed) setTimeout(clearOldSignatures, 0); // signatures merged in from another device may still be on white
   return changed;
 }
 
@@ -1275,7 +1276,7 @@ function openSignature(title, cb) {
   sig.cb = cb; sig.dirty = false;
   $('#sigTitle').textContent = title;
   const cv = $('#sigCanvas'), ctx = cv.getContext('2d');
-  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.clearRect(0, 0, cv.width, cv.height); // transparent, so form lines show through the signature
   ctx.lineWidth = 2.6; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#0b1f3a';
   $('#sigDlg').showModal();
 }
@@ -1286,6 +1287,40 @@ function openSignature(title, cb) {
   cv.addEventListener('pointermove', e => { if (!sig.drawing) return; const [x, y] = pt(e); ctx.lineTo(x, y); ctx.stroke(); });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, () => sig.drawing = false));
 })();
+
+// ---------- signatures with a transparent background (older ones were saved on solid white, which hid the form's lines)
+function sigTransparent(dataUrl) {
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => {
+      try {
+        const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
+        const g = c.getContext('2d'); g.drawImage(im, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height), px = d.data;
+        if (px[3] < 255) return res(dataUrl); // already transparent
+        for (let i = 0; i < px.length; i += 4) {
+          if (px[i + 3] === 0) continue;
+          const lum = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
+          // white becomes clear; anti-aliased edges keep their share of ink
+          const a = Math.max(0, Math.min(255, Math.round((255 - lum) * 255 / 200)));
+          px[i] = 11; px[i + 1] = 31; px[i + 2] = 58; px[i + 3] = Math.round(a * px[i + 3] / 255);
+        }
+        g.putImageData(d, 0, 0); res(c.toDataURL('image/png'));
+      } catch { res(dataUrl); }
+    };
+    im.onerror = () => res(dataUrl); im.src = dataUrl;
+  });
+}
+async function clearOldSignatures() {
+  if (clearOldSignatures.busy) return; clearOldSignatures.busy = true;
+  const holders = [];
+  const walk = o => { if (!o || typeof o !== 'object') return; for (const [k, v] of Object.entries(o)) { if (k === 'sig' && typeof v === 'string' && v.startsWith('data:image/png')) holders.push(o); else if (v && typeof v === 'object') walk(v); } };
+  walk(S);
+  let n = 0;
+  for (const o of holders) { const t = await sigTransparent(o.sig); if (t !== o.sig) { o.sig = t; n++; } }
+  clearOldSignatures.busy = false;
+  if (n) commit(...Object.keys(S.jobs).map(k => 'job:' + k), ...S.jhas.map(h => 'jha:' + h.id), ...S.megger.map(m => 'meg:' + m.id), ...S.hipot.map(h => 'hp:' + h.id), ...S.ncp.map(r => 'ncp:' + r.id));
+}
 
 function printHTML(html) {
   if (UI.printKey) { html = qesWrapPrint(html, UI.printKey); UI.printKey = null; }
@@ -4716,7 +4751,7 @@ const ACT = {
     commit('training'); renderStudy(); $('#quiz') && $('#quiz').scrollIntoView({ block: 'start' });
   },
   'quiz-retry': () => { UI.quiz = null; renderStudy(); $('#quiz') && $('#quiz').scrollIntoView({ block: 'start' }); },
-  'sig-clear': () => { const cv = $('#sigCanvas'), ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height); sig.dirty = false; },
+  'sig-clear': () => { const cv = $('#sigCanvas'), ctx = cv.getContext('2d'); ctx.clearRect(0, 0, cv.width, cv.height); sig.dirty = false; },
   'sig-cancel': () => $('#sigDlg').close(),
   'sig-save': () => { if (!sig.dirty) return toast('Sign in the box first.'); const data = $('#sigCanvas').toDataURL('image/png'); $('#sigDlg').close(); sig.cb && sig.cb(data); },
   'lookup-dl': () => { const q = UI.lookup || S.active.job; if (window.ExcelJS) download(packetWorkbook(q), `${safeName(q)}_Job_Packet.xlsx`); else download(); },
@@ -4777,6 +4812,7 @@ $('#fileImport').addEventListener('change', async e => {
     else { const n = migrateOldPortal(); if (n) { persistLocal(); setTimeout(() => toast(`Brought over ${n} records from the earlier portal in this browser.`, { kind: 'ok' }), 600); } }
   }
   if (UI.user) { UI.studyName ||= UI.user.name; if (!S.active.tech) S.active.tech = UI.user.name.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 4); }
+  await clearOldSignatures();
   renderActive();
   route();
   await initFolder();
