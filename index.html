@@ -423,6 +423,32 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .hp-formula b{color:var(--ink)}
 .hp-test.off{opacity:.55}
 @media (max-width:700px){.hp-test .form-grid,[data-view=hipot] .form-grid{grid-template-columns:1fr!important}}
+/* Hi-Pot printout (outside @media print so it can be measured before printing) */
+.hp-print{font:9.5pt/1.2 Calibri,Arial,sans-serif}
+.hp-ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6pt}
+.hp-ph .addr{text-align:right;font-size:8pt;line-height:1.25}
+.hp-band{background:#d9d9d9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:center;padding:8pt 0 6pt;margin-bottom:6pt}
+.hp-band b{display:block;font-size:17pt}
+.hp-band span{font-size:9pt}
+.hp-pt{width:100%;border-collapse:collapse}
+.hp-pt th{width:30%;text-align:left;font-weight:bold;border-left:1px solid #000;border-bottom:1px solid #000;border-top:1px solid #000;padding:1pt 3pt;white-space:nowrap}
+.hp-pt td{border:1px solid #000;padding:0 4pt;height:11pt}
+.hp-pt th{padding:0 3pt!important}
+.hp-pt th.d{width:auto;border:1px solid #000;text-align:center}
+.hp-pt td.dv{width:12%}
+.hp-pt td.sg{height:20pt}
+.hp-pt td.sg img{max-height:18pt;display:block}
+.hp-sub{background:#d9d9d9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-weight:bold;font-size:11.5pt;padding:5pt 12pt;margin-top:8pt}
+.hp-formulas{display:flex;gap:30pt;margin:4pt 0 6pt}
+.hp-tl{display:flex;gap:18pt;margin:5pt 0 1pt}
+.qes-wrap .hp-ph.hp-x img{height:50.25pt!important;width:auto}
+.hp-ph.hp-x .addr{font:10pt/1.25 Calibri,Carlito,Arial,sans-serif;color:#000}
+.qes-wrap .hp-ph.hp-w img{height:49.7pt!important;width:auto}
+.hp-ph.hp-w .addr{font:italic 11pt/1.2 Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.hp-wtitle{font:bold 24pt/1.15 Calibri,Carlito,Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;text-decoration:underline;margin:4pt 0 10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.qes-wrap .hp-ph{margin-bottom:2pt}
+.qes-wrap .hp-ph img{height:36pt!important}
+.hp-pf{display:flex;justify-content:space-between;font:10pt "Times New Roman",serif;margin-top:14pt}
 /* JHA printout (outside @media print so it can be measured before printing) */
 .jp{font:9.5pt/1.3 Calibri,Carlito,Arial,sans-serif;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .jp .hp-ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4pt}
@@ -509,23 +535,6 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .pr-study li{margin-bottom:3pt}
   .pr-labels{display:flex;flex-wrap:wrap;gap:.08in}
   .pr-labels .qlabel{break-inside:avoid;border:1px dashed #999}
-  .hp-print{font:9.5pt/1.2 Calibri,Arial,sans-serif}
-  .hp-ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6pt}
-  .hp-ph .addr{text-align:right;font-size:8pt;line-height:1.25}
-  .hp-band{background:#d9d9d9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:center;padding:8pt 0 6pt;margin-bottom:6pt}
-  .hp-band b{display:block;font-size:17pt}
-  .hp-band span{font-size:9pt}
-  .hp-pt{width:100%;border-collapse:collapse}
-  .hp-pt th{width:30%;text-align:left;font-weight:bold;border-left:1px solid #000;border-bottom:1px solid #000;border-top:1px solid #000;padding:1pt 3pt;white-space:nowrap}
-  .hp-pt td{border:1px solid #000;padding:0 4pt;height:11pt}
-  .hp-pt th{padding:0 3pt!important}
-  .hp-pt th.d{width:auto;border:1px solid #000;text-align:center}
-  .hp-pt td.dv{width:12%}
-  .hp-pt td.sg{height:20pt}
-  .hp-pt td.sg img{max-height:18pt;display:block}
-  .hp-sub{background:#d9d9d9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-weight:bold;font-size:11.5pt;padding:5pt 12pt;margin-top:8pt}
-  .hp-formulas{display:flex;gap:30pt;margin:4pt 0 6pt}
-  .hp-tl{display:flex;gap:18pt;margin:5pt 0 1pt}
   .q169{display:flex;flex-direction:column;min-height:7.55in;box-sizing:border-box}
   .q169 .pr-punch td,.q169 .pr-punch tbody th{height:12pt;padding:0 4pt;line-height:1.15}
   .q169 .pr-punch thead th{padding:1pt 4pt}
@@ -536,11 +545,6 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .q169-head .addr{text-align:right;font:9pt/1.3 "Times New Roman",serif;color:#5b9bd5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .q169 .pr-title{margin:0 0 4pt}
   .q169-foot{margin-top:auto;display:flex;justify-content:space-between;font:10pt Arial,sans-serif;padding-top:6pt}
-  .qes-wrap .hp-ph.hp-x img{height:50.25pt!important;width:auto}
-  .hp-ph.hp-x .addr{font:10pt/1.25 Calibri,Carlito,Arial,sans-serif;color:#000}
-  .qes-wrap .hp-ph.hp-w img{height:49.7pt!important;width:auto}
-  .hp-ph.hp-w .addr{font:italic 11pt/1.2 Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .hp-wtitle{font:bold 24pt/1.15 Calibri,Carlito,Arial,sans-serif;font-variant:small-caps;color:#1f497d!important;text-decoration:underline;margin:4pt 0 10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .ncp-print{display:flex;flex-direction:column;min-height:9.75in;box-sizing:border-box;font:10pt/1.25 "Times New Roman",serif}
   .ncp-print .hp-ph img{height:50pt}
   .ncp-print .hp-ph .addr{font:10pt/1.25 Arial,sans-serif}
@@ -587,8 +591,6 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .ncpg-print .g-sign .g-lbl{width:.7in}
   .ncpg-print .g-sign .g-ln img{height:22pt;vertical-align:bottom;margin-right:8pt}
   .qes-wrap{width:100%;border-collapse:collapse}
-  .qes-wrap .hp-ph{margin-bottom:2pt}
-  .qes-wrap .hp-ph img{height:36pt!important}
   .qes-wrap .pr-table td{height:13pt}
   .qes-wrap .pr-punch td,.qes-wrap .pr-punch tbody th{height:12pt;padding:0 4pt;line-height:1.15}
   .qes-wrap .pr-title{margin-top:0}
@@ -597,7 +599,6 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .qes-footspace{height:18pt}
   .qes-fixfoot{position:fixed;left:0;right:0;bottom:0}
   .qes-fixfoot .hp-pf{margin:0}
-  .hp-pf{display:flex;justify-content:space-between;font:10pt "Times New Roman",serif;margin-top:14pt}
 }
 </style>
 </head>
@@ -3545,6 +3546,42 @@ function renderHipot() {
 }
 function renderHpKeep() { const y = window.scrollY; renderHipot(); window.scrollTo(0, y); }
 
+
+// ---------- fixed print scale so each form page fits one printed page in Excel (fit-to-page ignores the form's page breaks)
+const XL_PX = w => Math.round(w * 7) + 5; // column width (characters) to pixels, at the widest common default font
+function xlFitScale(colWidths, pageHeights, m) {
+  const pageW = (8.5 - m.left - m.right) * 72, pageH = (11 - m.top - m.bottom) * 72;
+  const wPt = colWidths.reduce((a, w) => a + XL_PX(w), 0) * 0.75;
+  const s = Math.min(pageW / wPt, ...pageHeights.map(h => pageH / Math.max(h, 1)), 1);
+  return Math.max(40, Math.floor(s * 100) - 3);
+}
+/** template sheet (DOM): use a fixed scale instead of fit-to-page; pages = [[firstRow, lastRow], ...] */
+function xlTemplateScale(doc, NS, pages) {
+  const ws = doc.documentElement;
+  const fmt = ws.getElementsByTagNameNS(NS, 'sheetFormatPr')[0], defH = parseFloat(fmt && fmt.getAttribute('defaultRowHeight')) || 15, defW = parseFloat(fmt && fmt.getAttribute('defaultColWidth')) || 8.43;
+  const heights = {}; [...ws.getElementsByTagNameNS(NS, 'row')].forEach(r => { const h = parseFloat(r.getAttribute('ht')); if (h) heights[+r.getAttribute('r')] = h; });
+  const widths = []; let last = 0;
+  [...ws.getElementsByTagNameNS(NS, 'col')].forEach(c => { const a = +c.getAttribute('min'), b = +c.getAttribute('max'), w = parseFloat(c.getAttribute('width')) || defW; for (let i = a; i <= b && i <= 60; i++) { widths[i] = w; last = Math.max(last, i); } });
+  const cols = Array.from({ length: last }, (_, i) => widths[i + 1] ?? defW);
+  const pm = ws.getElementsByTagNameNS(NS, 'pageMargins')[0], mg = k => parseFloat(pm && pm.getAttribute(k));
+  const m = { left: mg('left') || .7, right: mg('right') || .7, top: mg('top') || .75, bottom: mg('bottom') || .75 };
+  const ph = pages.map(([a, b]) => { let t = 0; for (let r = a; r <= b; r++) t += heights[r] ?? defH; return t; });
+  const scale = xlFitScale(cols, ph, m);
+  const sp = ws.getElementsByTagNameNS(NS, 'sheetPr')[0], psp = sp && sp.getElementsByTagNameNS(NS, 'pageSetUpPr')[0];
+  if (psp) psp.removeAttribute('fitToPage');
+  const ps = ws.getElementsByTagNameNS(NS, 'pageSetup')[0];
+  if (ps) { ps.removeAttribute('fitToWidth'); ps.removeAttribute('fitToHeight'); ps.setAttribute('scale', String(scale)); ps.setAttribute('paperSize', '1'); }
+  return scale;
+}
+/** ExcelJS sheet: same idea; breaks = last row of each page */
+function xlSheetScale(ws, breaks) {
+  const m = ws.pageSetup.margins || { left: .7, right: .7, top: .75, bottom: .75 };
+  const cols = []; for (let c = 1; c <= ws.columnCount; c++) cols.push(ws.getColumn(c).width || 9);
+  const ends = [...breaks, ws.rowCount], ph = []; let start = 1;
+  ends.forEach(e => { let t = 0; for (let r = start; r <= e; r++) t += ws.getRow(r).height || 15; ph.push(t); start = e + 1; });
+  ws.pageSetup.fitToPage = false; delete ws.pageSetup.fitToWidth; delete ws.pageSetup.fitToHeight;
+  ws.pageSetup.scale = xlFitScale(cols, ph, m);
+}
 // ---------- fill the original form file
 const b64bytes = b64 => { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; };
 const colNum = c => [...c].reduce((n, ch) => n * 26 + ch.charCodeAt(0) - 64, 0);
@@ -3605,7 +3642,10 @@ async function hipotBlob(h) {
   if (!psp) { psp = doc.createElementNS(NS, 'pageSetUpPr'); sp.appendChild(psp); }
   psp.setAttribute('fitToPage', '1');
   const ps = ws.getElementsByTagNameNS(NS, 'pageSetup')[0];
-  if (ps) { ps.setAttribute('fitToWidth', '1'); ps.setAttribute('fitToHeight', '0'); }
+  if (ps) { ps.setAttribute('fitToWidth', '1'); ps.setAttribute('fitToHeight', '0'); ps.setAttribute('paperSize', '1'); }
+  // a little more room top and bottom so page 1 (through the first signatures) never spills
+  const pm = ws.getElementsByTagNameNS(NS, 'pageMargins')[0];
+  if (pm) { pm.setAttribute('top', '0.9'); pm.setAttribute('bottom', '0.55'); pm.setAttribute('header', '0.15'); pm.setAttribute('footer', '0.15'); }
   // QC218: the continuation page (test 5) starts on its own sheet
   if (h.form === 'QC218' && !ws.getElementsByTagNameNS(NS, 'rowBreaks')[0]) {
     const rb = doc.createElementNS(NS, 'rowBreaks'); rb.setAttribute('count', '1'); rb.setAttribute('manualBreakCount', '1');
@@ -3745,7 +3785,12 @@ async function printHipot(h) {
     : `<table class="hp-pt">${L('Testing Voltage:', h.testV)}</table>
     <div class="hp-formulas"><span>${esc(F.fAC)}</span><span>${esc(F.fDC)}</span></div>`}
     ${page1Tests.map(t => test(t, F.tests.indexOf(t))).join('')}${sig()}${foot}</div>`;
-  if (cont) html += `<div class="pr-sheet hp-print" style="page-break-before:always">${head}${band(F.title)}<div class="hp-sub">High Potential Test Report (cont.):</div><div style="height:8pt"></div>${test(cont, F.tests.indexOf(cont))}${sig()}${foot}</div>`;
+  if (cont && hpNeutral(h)) html += `<div class="pr-sheet hp-print" style="page-break-before:always">${head}${band(F.title)}<div class="hp-sub">High Potential Test Report (cont.):</div><div style="height:8pt"></div>${test(cont, F.tests.indexOf(cont))}${sig()}${foot}</div>`;
+  // each sheet must fit one printed page: measure at print width and shrink a sheet that would run long
+  const probe = document.createElement('div'); probe.className = 'qes-wrap'; probe.style.cssText = 'position:absolute;left:-9999px;top:0;width:7in;visibility:hidden';
+  document.body.appendChild(probe); probe.innerHTML = html;
+  probe.querySelectorAll('.hp-print').forEach(sh => { const hgt = sh.getBoundingClientRect().height, max = 8.6 * 96; if (hgt > max) sh.style.zoom = (max / hgt).toFixed(3); });
+  html = probe.innerHTML; probe.remove();
   UI.printKey = h.form;
   printHTML(html);
 }
@@ -4116,7 +4161,7 @@ function ncpWorkbook(r) {
   const T = (b = false, sz = 11) => ({ name: 'Times New Roman', size: sz, bold: b });
   const thin = { style: 'thin' }, box = { top: thin, left: thin, bottom: thin, right: thin };
   const check = on => on ? '☒' : '☐';
-  const pages = F.pages.length;
+  const pages = F.pages.length, breakRows = [];
   let row = 1;
   const add = vals => { const rr = ws.getRow(row++); vals.forEach((v, i) => { if (v !== undefined) rr.getCell(i + 1).value = v; }); return rr; };
   for (let pi = 0; pi < pages; pi++) {
@@ -4151,7 +4196,7 @@ function ncpWorkbook(r) {
     const tr = add(['', 'Tester:  ' + (r.tester.name || ''), '', 'Date:  ' + (r.tester.date ? shortDate(r.tester.date) : '')]); tr.getCell(2).font = T(); tr.getCell(4).font = T(); ws.mergeCells(`D${tr.number}:E${tr.number}`); tr.height = 30;
     tr.getCell(2).alignment = { vertical: 'bottom' };
     if (r.tester.sig && r.tester.sig.startsWith('data:image/png')) { const id = wb.addImage({ base64: r.tester.sig, extension: 'png' }); ws.addImage(id, { tl: { col: 1.42, row: tr.number - 2 + 0.25 }, ext: { width: 120, height: 34 }, editAs: 'oneCell' }); }
-    if (pi < pages - 1) tr.addPageBreak();
+    if (pi < pages - 1) { tr.addPageBreak(); breakRows.push(tr.number); }
   }
   return wb;
 }
