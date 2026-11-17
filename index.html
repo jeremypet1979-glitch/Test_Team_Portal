@@ -504,6 +504,55 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .ncp-sum{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .ncp-sum b.bad{color:#c0392b}
 @media (max-width:760px){.ncp-row{grid-template-columns:24px minmax(0,1fr)}.ncp-row .ncp-seg,.ncp-row .ncp-nt{grid-column:2}.ncp-seg button{flex:1}[data-view=ncp] .form-grid{grid-template-columns:1fr!important}}
+/* Planner */
+.pl-bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end;margin-bottom:8px}
+.pl-mode{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;align-self:end}
+.pl-mode button{border:0;background:transparent;padding:8px 16px;font-weight:700;color:var(--ink);cursor:pointer}
+.pl-mode button.on{background:var(--ink);color:var(--bg)}
+.pl-nav{align-items:center;gap:6px}
+.pl-nav input{padding:6px 8px}
+.pl-title{font:700 18px var(--f-display);align-self:center;flex:1;min-width:200px}
+.pl-opts{align-items:end;gap:8px}
+.pl-opts .field select{padding:6px 8px}
+.pl-sum{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:14px;margin:4px 0 8px}
+.pl-sum .warn-t{color:var(--warn);font-weight:600}
+.pl-wrap{max-height:calc(100vh - 230px);min-height:360px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel);overscroll-behavior:contain}
+.pl-cal{display:grid;grid-template-columns:64px repeat(var(--days),minmax(var(--colmin,120px),1fr));position:relative}
+.pl-cal.day{--colmin:200px}
+.pl-corner,.pl-dh{position:sticky;top:0;z-index:3;background:var(--panel-2);border-bottom:1px solid var(--line);height:40px}
+.pl-corner{left:0;z-index:4}
+.pl-dh{display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:14px;border-left:1px solid var(--line)}
+.pl-dh span{font-size:12px;color:var(--muted)}
+.pl-dh.is-today b{color:var(--accent)}
+.pl-times{position:sticky;left:0;z-index:2;background:var(--panel);border-right:1px solid var(--line)}
+.pl-times span{display:block;height:var(--row);font-size:11px;line-height:1;text-align:right;padding:0 6px;color:var(--muted);transform:translateY(-5px);font-variant-numeric:tabular-nums}
+.pl-times span.t60{color:var(--ink);font-weight:700}
+.pl-times span:first-child{transform:translateY(2px)}
+.pl-col{position:relative;height:calc(var(--rows) * var(--row));border-left:1px solid var(--line);cursor:cell;touch-action:pan-x pan-y;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(color-mix(in srgb,var(--line) 70%,transparent) 1px,transparent 1px),linear-gradient(color-mix(in srgb,var(--line) 35%,transparent) 1px,transparent 1px);
+  background-size:100% calc(var(--row) * 6),100% calc(var(--row) * 3),100% var(--row)}
+.pl-col.is-today{background-color:color-mix(in srgb,var(--accent-soft) 35%,transparent)}
+.pl-task{position:absolute;z-index:1;box-sizing:border-box;border-radius:5px;border-left:4px solid var(--c);background:var(--cs);color:var(--ink);padding:2px 6px 6px;overflow:hidden;cursor:grab;font-size:13px;line-height:1.25;box-shadow:0 1px 2px rgba(0,0,0,.12);user-select:none;-webkit-user-select:none;touch-action:pan-x pan-y}
+.pl-task:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.pl-task .pl-tt{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-task .pl-tm{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-task.tiny{padding-top:0}
+.pl-task.tiny .pl-tm{display:none}
+.pl-task.done{opacity:.6}
+.pl-task.done .pl-tt{text-decoration:line-through}
+.pl-task .pl-rs{position:absolute;left:0;right:0;bottom:0;height:10px;cursor:ns-resize;touch-action:none}
+.pl-task .pl-rs::after{content:"";position:absolute;left:50%;bottom:3px;width:22px;margin-left:-11px;height:2px;border-radius:2px;background:var(--c);opacity:.6}
+.pl-ghost{position:absolute;left:2px;right:2px;z-index:2;border:2px dashed var(--accent);border-radius:5px;background:color-mix(in srgb,var(--accent-soft) 70%,transparent);font-size:12px;font-weight:700;padding:2px 6px;pointer-events:none}
+.pl-now{position:absolute;left:0;right:0;height:2px;background:var(--stop);z-index:2;pointer-events:none}
+.pl-now::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--stop)}
+.pl-dl{margin-top:12px}
+.pl-dl ul{list-style:none;margin:8px 0 0;padding:0}
+.pl-dl li{display:grid;grid-template-columns:28px 150px minmax(0,auto) minmax(0,1fr);gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.pl-dl li.done .linkish{text-decoration:line-through;color:var(--muted)}
+.pl-dl .linkish{background:none;border:0;padding:0;color:var(--ink);font-weight:700;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.pl-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin-top:10px}
+.pl-legend i{display:inline-block;width:14px;height:12px;border-left:4px solid var(--c);background:var(--cs);margin-right:6px;vertical-align:-1px;border-radius:2px}
+@media (max-width:760px){.pl-cal.day{--colmin:0px}.pl-cal{grid-template-columns:52px repeat(var(--days),minmax(var(--colmin,96px),1fr))}.pl-dl li{grid-template-columns:28px minmax(0,1fr)}.pl-dl li{gap:2px 8px;align-items:start}.pl-dl li>label{grid-row:1/span 3;align-self:center}.pl-dl li>span.muted,.pl-dl li>.pl-dl-t,.pl-dl li>.linkish{grid-column:2}.pl-dl li>.pl-dl-t{font-size:13px;color:var(--muted)}.pl-title{min-width:0;flex-basis:100%}}
 /* Print */
 #printRoot{display:none}
 @media print{
@@ -590,6 +639,16 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .ncpg-print .g-sign{display:flex;align-items:flex-end;gap:0}
   .ncpg-print .g-sign .g-lbl{width:.7in}
   .ncpg-print .g-sign .g-ln img{height:22pt;vertical-align:bottom;margin-right:8pt}
+  .plan-print{font:10pt/1.3 Arial,sans-serif}
+  .plp-head{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:4pt;margin-bottom:8pt;font-size:12pt}
+  .plp-day{break-inside:avoid;margin-bottom:10pt}
+  .plp-day h3{font-size:11pt;margin:0 0 3pt}
+  .plp-t{width:100%;border-collapse:collapse}
+  .plp-t th,.plp-t td{border:1px solid #888;padding:2pt 4pt;text-align:left;vertical-align:top;font-size:9pt}
+  .plp-t th{background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .plp-t .c{width:14pt;text-align:center}
+  .plp-t .nw{white-space:nowrap;width:1%}
+  .plp-none{margin:0;color:#555}
   .qes-wrap{width:100%;border-collapse:collapse}
   .qes-wrap .pr-table td{height:13pt}
   .qes-wrap .pr-punch td,.qes-wrap .pr-punch tbody th{height:12pt;padding:0 4pt;line-height:1.15}
@@ -616,6 +675,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
       <a href="#megger">Megger</a>
       <a href="#hipot">Hi-Pot</a>
       <a href="#ncp">NCP</a>
+      <a href="#planner">Planner</a>
       <a href="#lookup">Lookup</a>
       <a href="#study">Study Guide</a>
       <a href="#labels">Labels</a>
@@ -647,6 +707,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   <section data-view="megger" hidden></section>
   <section data-view="hipot" hidden></section>
   <section data-view="ncp" hidden></section>
+  <section data-view="planner" hidden></section>
   <section data-view="lookup" hidden></section>
   <section data-view="labels" hidden></section>
   <section data-view="study" hidden></section>
@@ -677,6 +738,28 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
       <p class="muted" style="margin:0;font-size:13px">Put the file in the same folder as this portal, then type its file name here.</p>
     </div>
     <div class="dlg-foot"><button class="btn" type="button" data-act="app-cancel">Cancel</button><button class="btn primary" type="submit">Add app</button></div>
+  </form>
+</dialog>
+
+<dialog id="plDlg">
+  <form id="plForm">
+    <div class="dlg-head"><h3 id="plDlgTitle">Add a task</h3><button class="btn ghost sm" type="button" data-act="pl-cancel">Cancel</button></div>
+    <div class="dlg-body">
+      <label class="field" for="plT"><span>Task</span><input id="plT" type="text" required placeholder="e.g. Primary injection, MAIN-A breaker" autocomplete="off"></label>
+      <div class="form-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <label class="field" for="plD"><span>Date</span><input id="plD" type="date" required></label>
+        <label class="field" for="plS"><span>Start</span><select id="plS"></select></label>
+        <label class="field" for="plDur"><span>Length</span><select id="plDur"></select></label>
+      </div>
+      <div class="row" style="align-items:center"><button class="btn sm" type="button" data-act="pl-nudge" data-d="-10">− 10 min</button><button class="btn sm" type="button" data-act="pl-nudge" data-d="10">+ 10 min</button><span class="muted" id="plEndNote" style="font-size:13px"></span></div>
+      <div class="form-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <label class="field" for="plTy"><span>Type</span><select id="plTy"></select></label>
+        <label class="field" for="plJob"><span>Job # (optional)</span><input id="plJob" type="text" list="plJobs" autocomplete="off"><datalist id="plJobs"></datalist></label>
+      </div>
+      <label class="field" for="plN"><span>Notes</span><input id="plN" type="text" placeholder="Optional"></label>
+      <label class="check"><input type="checkbox" id="plDone"> Done</label>
+    </div>
+    <div class="dlg-foot"><button class="btn pl-only-edit" type="button" data-act="pl-del">Delete</button><button class="btn pl-only-edit" type="button" data-act="pl-dup">Copy to next workday</button><button class="btn primary" type="submit">Save</button></div>
   </form>
 </dialog>
 
@@ -729,7 +812,7 @@ const STOP_TEXT = 'If the following conditions are encountered, stop immediately
 const AUDITORS = [['lead', 'Team Leads'], ['sup', 'Supervisors'], ['mgr', 'Managers'], ['safety', 'Safety Rep']];
 
 // ---------- state
-const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], ncp: [], forms: {}, apps: [], deleted: {}, updated: 0 });
+const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], ncp: [], plans: [], forms: {}, apps: [], deleted: {}, updated: 0 });
 let S = blankState();
 const UI = { view: 'home', skidAll: false, compAll: false, skidQ: '', compQ: '', testJob: null, testTab: 'punch', punchFilter: 'all', jha: null, jhaDate: today(), crewEdit: null, studyMod: null, studyName: '', quiz: null, lookup: '', compName: '', labelText: '', labelSize: 's1', labelMeta: true, flash: null, pendingDup: null };
 
@@ -737,7 +820,7 @@ function normalize(o) {
   const s = Object.assign(blankState(), o || {});
   s.active = Object.assign({ job: '', skid: '', tech: '' }, s.active);
   for (const k of Object.keys(s.jobs)) { const j = s.jobs[k]; j.punch ||= []; }
-  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.ncp ||= []; s.forms ||= {}; s.deleted ||= {};
+  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.ncp ||= []; s.plans ||= []; s.forms ||= {}; s.deleted ||= {};
   liftJobJhas(s);
   s.jhas.forEach(jhaRowsMigrate);
   return s;
@@ -846,6 +929,7 @@ function mergeState(o) {
   S.megger = mergeList(S.megger, o.megger);
   S.hipot = mergeList(S.hipot || [], o.hipot);
   S.ncp = mergeList(S.ncp || [], o.ncp);
+  S.plans = mergeList(S.plans || [], o.plans);
   if (o.forms && (o.forms.updatedAt || 0) > ((S.forms || {}).updatedAt || 0)) { S.forms = o.forms; changed = true; }
   if (o.reasonCodes && (o.reasonCodes.updatedAt || 0) > ((S.reasonCodes || {}).updatedAt || 0)) { S.reasonCodes = o.reasonCodes; changed = true; }
   for (const [k, tj] of Object.entries(o.jobs || {})) {
@@ -1332,7 +1416,7 @@ function printHTML(html) {
 // ============================================================
 //  Routing and shared header
 // ============================================================
-const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'ncp', 'lookup', 'labels', 'study'];
+const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'ncp', 'planner', 'lookup', 'labels', 'study'];
 function route() {
   const v = (location.hash || '#home').slice(1);
   UI.view = VIEWS.includes(v) ? v : 'home';
@@ -1366,7 +1450,7 @@ function renderActive() {
 
 function renderAll() { renderActive(); renderCurrent(); renderFolder(); }
 function renderCurrent() {
-  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, ncp: renderNcp, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
+  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, ncp: renderNcp, planner: renderPlanner, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
 }
 
 // ============================================================
@@ -1385,6 +1469,7 @@ function renderHome() {
     ['punch-app', 'QC169', 'Testing Punch List', 'Straight to the active job’s punch list. Inspector and supervisor on every line; prints 22 lines a page, landscape.', `${open} open item${open === 1 ? '' : 's'}`],
     ['jha', 'JH-04', 'Daily JHA', 'One JHA per crew each day, with the jobs it covers and crew sign-in.', `${S.crews.length ? `${S.crews.length - noJha} of ${S.crews.length} crews done today` : 'Add your crews'}`],
     ['megger', 'QC281', 'Cable Insulation (Megger)', 'QC281 cable insulation test report with readings in GΩ, low-reading flags, and technician and witness signatures.', `${S.megger.length} report${S.megger.length === 1 ? '' : 's'}`],
+    ['planner', 'PL-01', 'Planner', 'Your day and week in 10-minute blocks: add, move and resize tasks, check them off, and print or export to Excel.', (() => { const n = S.plans.filter(t => t.owner === plMe() && t.date === today()); return n.length ? `${n.filter(t => t.done).length}/${n.length} done today` : 'Nothing planned today'; })()],
     ['ncp', 'NCP', 'NCP Inspections', 'Non Conforming Parts: Breaker Inspection & Operation Test, Breaker Cradle NCP Inspection and NCP General Inspection, saved as Excel files.', `${S.ncp.length} inspection${S.ncp.length === 1 ? '' : 's'}`],
     ['hipot', 'QC217 · 218 · 273', 'Hi-Pot Test', 'High potential test reports on the QC217 (2-pole / DC), QC218 (3-phase) and QC273 (3-phase 4-wire) forms, with the testing-voltage formula, neutral checkboxes and signatures.', `${S.hipot.length} report${S.hipot.length === 1 ? '' : 's'}`],
     ['lookup', 'JL-05', 'Job Lookup', 'Everything recorded for one job, exported as a single packet.', 'Search by job #'],
@@ -4305,7 +4390,7 @@ const qesPrintFoot = k => { const f = fc(k); return `<div class="hp-pf"><span>${
 /** wrap every .pr-sheet in a printout with the QES header and the form footer */
 function qesWrapPrint(html, k) {
   const box = document.createElement('div'); box.innerHTML = html;
-  if (box.querySelector('.q169, .ncp-print')) return box.innerHTML;
+  if (box.querySelector('.q169, .ncp-print, .plan-print')) return box.innerHTML;
   box.querySelectorAll('.pr-sheet').forEach(sh => { if (!sh.querySelector('.hp-ph') && !sh.classList.contains('jp')) sh.insertAdjacentHTML('afterbegin', qesPrintHead()); sh.querySelectorAll('.hp-pf').forEach(f => f.remove()); });
   // footer on every printed page: fixed to the page bottom, with a repeating table footer reserving its space
   return `<div class="qes-fixfoot">${qesPrintFoot(k)}</div><table class="qes-wrap"><tfoot><tr><td><div class="qes-footspace"></div></td></tr></tfoot><tbody><tr><td>${box.innerHTML}</td></tr></tbody></table>`;
@@ -4749,6 +4834,289 @@ const NCP_ACT = {
   },
 };
 
+
+// ============================================================
+//  Planner: personal day / week schedule on a 10-minute grid
+// ============================================================
+const PL_TYPES = [
+  ['test', 'Testing', 'var(--info)', 'var(--info-soft)'],
+  ['build', 'Build / shop work', 'var(--ok)', 'var(--ok-soft)'],
+  ['meet', 'Meeting', 'var(--accent)', 'var(--accent-soft)'],
+  ['admin', 'Paperwork / admin', 'var(--warn)', 'var(--warn-soft)'],
+  ['train', 'Training / study', 'var(--teal)', '#dff1ef'],
+  ['travel', 'Travel / site', 'var(--muted)', 'var(--panel-2)'],
+  ['break', 'Break / lunch', '#7a7f83', '#eceeef'],
+  ['other', 'Other', 'var(--bad)', 'var(--bad-soft)'],
+];
+const plType = k => PL_TYPES.find(t => t[0] === k) || PL_TYPES[PL_TYPES.length - 1];
+const PL_STEP = 10;
+const plMe = () => ((UI.user && UI.user.name) || UI.studyName || 'Me').trim();
+const fmtT = m => { m = ((m % 1440) + 1440) % 1440; const h = Math.floor(m / 60), mm = m % 60; return `${h % 12 || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
+const fmtDur = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ' ' + (m % 60) + ' min' : ''}`;
+const plDate = iso => new Date(iso + 'T12:00:00');
+const plDow = iso => plDate(iso).toLocaleDateString('en-US', { weekday: 'short' });
+const plLong = iso => plDate(iso).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+const plMonday = iso => { const d = plDate(iso), w = (d.getDay() + 6) % 7; return shiftDay(iso, -w); };
+function plState() {
+  if (!UI.pl) {
+    let pref = {}; try { pref = JSON.parse(localStorage.getItem('sfp_planner') || '{}'); } catch { }
+    UI.pl = { mode: pref.mode || 'day', date: today(), owner: plMe(), from: pref.from ?? 6, to: pref.to ?? 18, week7: pref.week7 ?? false };
+  }
+  return UI.pl;
+}
+function plSavePref() { const P = plState(); try { localStorage.setItem('sfp_planner', JSON.stringify({ mode: P.mode, from: P.from, to: P.to, week7: P.week7 })); } catch { } }
+const plFor = (owner, date) => S.plans.filter(t => t.owner === owner && t.date === date).sort((a, b) => a.start - b.start || b.dur - a.dur);
+/** side-by-side columns for tasks that overlap */
+function plLayout(tasks) {
+  const out = []; let cluster = [], end = -1;
+  const flush = () => {
+    const cols = [];
+    cluster.forEach(t => { let c = cols.findIndex(e => e <= t.start); if (c < 0) { c = cols.length; cols.push(0); } cols[c] = t.start + t.dur; out.push({ t, col: c }); });
+    out.filter(o => cluster.includes(o.t)).forEach(o => o.cols = cols.length);
+    cluster = []; end = -1;
+  };
+  tasks.forEach(t => { if (cluster.length && t.start >= end) flush(); cluster.push(t); end = Math.max(end, t.start + t.dur); });
+  if (cluster.length) flush();
+  return out;
+}
+function plDays() { const P = plState(); if (P.mode === 'day') return [P.date]; const m = plMonday(P.date); return Array.from({ length: P.week7 ? 7 : 5 }, (_, i) => shiftDay(m, i)); }
+function renderPlanner() {
+  const el = $('[data-view=planner]'), P = plState();
+  const days = plDays(), ROW = P.mode === 'day' ? 18 : 14, from = P.from * 60, to = P.to * 60, rows = (to - from) / PL_STEP;
+  const owners = [...new Set([plMe(), ...S.plans.map(t => t.owner)])].sort((a, b) => (a !== plMe()) - (b !== plMe()) || a.localeCompare(b));
+  const mine = P.owner === plMe();
+  const all = days.flatMap(d => plFor(P.owner, d));
+  const total = all.filter(t => t.type !== 'break').reduce((a, t) => a + t.dur, 0), done = all.filter(t => t.done).length;
+  const outside = all.filter(t => t.start < from || t.start + t.dur > to).length;
+  const hourOpts = (sel, a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i).map(h => `<option value="${h}" ${h === sel ? 'selected' : ''}>${fmtT(h * 60).replace(':00', '')}</option>`).join('');
+  const title = P.mode === 'day' ? plLong(P.date) : `Week of ${plDate(days[0]).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} – ${plDate(days[days.length - 1]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+  el.innerHTML = `
+    <div class="view-head"><div class="grow"><span class="eyebrow">PL-01 · Planner</span><h1>Planner</h1><p>Plan your day and week in 10-minute blocks. Tap an empty slot to add a task (or drag down with a mouse to pick a time span), tap a task to edit it, and drag a task or its bottom edge to move or resize it.</p></div>
+      <div class="row"><button class="btn primary big" type="button" data-act="pl-add">${ICON.plus} Add task</button></div></div>
+    <div class="panel pl-bar">
+      <div class="seg pl-mode" role="tablist">${[['day', 'Day'], ['week', 'Week']].map(([v, l]) => `<button type="button" role="tab" aria-selected="${P.mode === v}" class="${P.mode === v ? 'on' : ''}" data-act="pl-mode" data-m="${v}">${l}</button>`).join('')}</div>
+      <div class="row pl-nav"><button class="btn sm" type="button" data-act="pl-step" data-d="-1" aria-label="Previous">‹</button><button class="btn sm" type="button" data-act="pl-today">Today</button><button class="btn sm" type="button" data-act="pl-step" data-d="1" aria-label="Next">›</button>
+        <input type="date" id="plDate" value="${P.date}" aria-label="Go to date"></div>
+      <b class="pl-title">${esc(title)}</b>
+      <div class="row pl-opts">
+        ${owners.length > 1 ? `<label class="field" for="plOwner"><span>Plan for</span><select id="plOwner">${owners.map(o => `<option ${o === P.owner ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></label>` : ''}
+        <label class="field" for="plFrom"><span>From</span><select id="plFrom">${hourOpts(P.from, 0, 22)}</select></label>
+        <label class="field" for="plTo"><span>To</span><select id="plTo">${hourOpts(P.to, 2, 24)}</select></label>
+        ${P.mode === 'week' ? `<label class="check" style="align-self:end;padding-bottom:8px"><input type="checkbox" id="plW7" ${P.week7 ? 'checked' : ''}> Sat & Sun</label>` : ''}
+        <button class="btn sm" type="button" data-act="pl-print">${ICON.print} Print</button><button class="btn sm" type="button" data-act="pl-xlsx">${ICON.dl} Excel</button>
+      </div>
+    </div>
+    <div class="pl-sum muted"><span><b class="num">${fmtDur(total)}</b> planned${P.mode === 'week' ? ' this week' : ''}</span><span><b class="num">${done}</b> of ${all.length} done</span>${!mine ? `<span>Viewing ${esc(P.owner)}’s plan</span>` : ''}${outside ? `<span class="warn-t">${outside} task${outside === 1 ? '' : 's'} outside the hours shown; widen From/To to see ${outside === 1 ? 'it' : 'them'}</span>` : ''}
+      ${P.mode === 'day' && all.some(t => !t.done) && P.date <= today() ? `<button class="btn sm ghost" type="button" data-act="pl-carry">Move unfinished to next workday</button>` : ''}</div>
+    <div class="pl-wrap" id="plWrap"><div class="pl-cal ${P.mode}" style="--rows:${rows};--row:${ROW}px;--days:${days.length}">
+      <div class="pl-corner"></div>
+      ${days.map(d => { const ts = plFor(P.owner, d), mins = ts.filter(t => t.type !== 'break').reduce((a, t) => a + t.dur, 0); return `<div class="pl-dh ${d === today() ? 'is-today' : ''}"><b>${plDow(d)} ${plDate(d).getDate()}</b>${P.mode === 'week' ? `<span>${mins ? fmtDur(mins) : '–'}</span>` : ''}</div>`; }).join('')}
+      <div class="pl-times">${Array.from({ length: rows }, (_, i) => { const m = from + i * PL_STEP; return `<span class="${m % 60 ? (m % 30 ? 't10' : 't30') : 't60'}">${m % 60 === 0 ? fmtT(m).replace(':00', '') : m % 30 === 0 && P.mode === 'day' ? ':30' : ''}</span>`; }).join('')}</div>
+      ${days.map(d => `<div class="pl-col ${d === today() ? 'is-today' : ''}" data-date="${d}">
+        ${plLayout(plFor(P.owner, d).filter(t => t.start + t.dur > from && t.start < to)).map(({ t, col, cols }) => { const ty = plType(t.type), top = Math.max(0, (t.start - from) / PL_STEP), h = Math.min(rows - top, (Math.min(t.start + t.dur, to) - Math.max(t.start, from)) / PL_STEP);
+          return `<div class="pl-task ${t.done ? 'done' : ''} ${h <= 2 ? 'tiny' : ''}" data-id="${t.id}" role="button" tabindex="0" aria-label="${esc(t.title)}, ${fmtT(t.start)} to ${fmtT(t.start + t.dur)}${t.done ? ', done' : ''}"
+            style="top:calc(${top} * var(--row));height:calc(${h} * var(--row) - 2px);left:calc(${col} / ${cols} * 100% + 2px);width:calc(100% / ${cols} - 4px);--c:${ty[2]};--cs:${ty[3]}">
+            <span class="pl-tt">${t.done ? '✓ ' : ''}${esc(t.title)}</span><span class="pl-tm">${fmtT(t.start)}–${fmtT(t.start + t.dur)}${t.job ? ' · ' + esc(t.job) : ''}</span><i class="pl-rs" aria-hidden="true"></i></div>`; }).join('')}
+        ${d === today() ? `<div class="pl-now" style="display:none"></div>` : ''}
+      </div>`).join('')}
+    </div></div>
+    ${P.mode === 'day' ? plDayList(all) : ''}
+    <div class="pl-legend">${PL_TYPES.map(([, l, c, cs]) => `<span><i style="--c:${c};--cs:${cs}"></i>${l}</span>`).join('')}</div>`;
+  $('#plDate').addEventListener('change', e => { if (e.target.value) { P.date = e.target.value; renderPlanner(); } });
+  $('#plFrom').addEventListener('change', e => { P.from = +e.target.value; if (P.to <= P.from) P.to = Math.min(24, P.from + 2); plSavePref(); renderPlanner(); });
+  $('#plTo').addEventListener('change', e => { P.to = +e.target.value; if (P.to <= P.from) P.from = Math.max(0, P.to - 2); plSavePref(); renderPlanner(); });
+  if ($('#plW7')) $('#plW7').addEventListener('change', e => { P.week7 = e.target.checked; plSavePref(); renderPlanner(); });
+  if ($('#plOwner')) $('#plOwner').addEventListener('change', e => { P.owner = e.target.value; renderPlanner(); });
+  $$('.pl-dl input[type=checkbox]', el).forEach(c => c.addEventListener('change', () => { const t = S.plans.find(x => x.id === c.dataset.id); t.done = c.checked; t.updatedAt = Date.now(); commit(); plKeep(); }));
+  plBindGrid(from, to, ROW);
+  plNowLine(from, ROW);
+  // first look at a day or week: scroll to the current time (or the first task)
+  const wrap = $('#plWrap'), first = all.length ? Math.min(...all.map(t => t.start)) : null;
+  const target = days.includes(today()) ? nowMin() - 60 : first != null ? first - 30 : from;
+  if (!UI.plScrolled || UI.plScrolled !== days.join()) { wrap.scrollTop = Math.max(0, (target - from) / PL_STEP * ROW); UI.plScrolled = days.join(); }
+}
+const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
+function plNowLine(from, ROW) {
+  const ln = $('.pl-now'); if (!ln) return;
+  const m = nowMin(), P = plState();
+  if (m < from || m > P.to * 60) { ln.style.display = 'none'; return; }
+  ln.style.display = ''; ln.style.top = ((m - from) / PL_STEP * ROW) + 'px';
+}
+setInterval(() => { if (UI.view === 'planner') { const P = plState(); plNowLine(P.from * 60, P.mode === 'day' ? 18 : 14); } }, 60000);
+function plDayList(tasks) {
+  if (!tasks.length) return `<div class="panel empty" style="margin-top:12px"><b>Nothing planned for this day</b>Tap a time on the grid or use Add task.</div>`;
+  const byType = {}; tasks.forEach(t => byType[t.type] = (byType[t.type] || 0) + t.dur);
+  return `<div class="panel pl-dl"><h3>Task list</h3><ul>${tasks.map(t => `<li class="${t.done ? 'done' : ''}"><label class="check"><input type="checkbox" data-id="${t.id}" ${t.done ? 'checked' : ''} aria-label="Done: ${esc(t.title)}"></label>
+      <span class="pl-dl-t num">${fmtT(t.start)}–${fmtT(t.start + t.dur)}</span><button type="button" class="linkish" data-act="pl-edit" data-id="${t.id}">${esc(t.title)}</button><span class="muted">${esc(plType(t.type)[1])}${t.job ? ' · ' + esc(t.job) : ''}${t.notes ? ' · ' + esc(t.notes) : ''}</span></li>`).join('')}</ul>
+    <p class="muted" style="margin:6px 0 0;font-size:13px">${Object.entries(byType).map(([k, m]) => `${plType(k)[1]}: ${fmtDur(m)}`).join(' · ')}</p></div>`;
+}
+function plKeep() { const w = $('#plWrap'), y = w ? w.scrollTop : 0, sy = window.scrollY; renderPlanner(); const w2 = $('#plWrap'); if (w2) w2.scrollTop = y; window.scrollTo(0, sy); }
+/** pointer handling: tap/drag empty space to add, drag a task to move, drag its bottom edge to resize (all snap to 10 min) */
+function plBindGrid(from, to, ROW) {
+  const P = plState(), cols = $$('.pl-col');
+  const minAt = (col, y) => { const r = col.getBoundingClientRect(); return from + Math.floor(Math.max(0, Math.min(r.height - 1, y - r.top)) / ROW) * PL_STEP; };
+  const colAt = x => cols.find(c => { const r = c.getBoundingClientRect(); return x >= r.left && x < r.right; });
+  cols.forEach(col => col.addEventListener('pointerdown', e => {
+    if (e.target.closest('.pl-task') || e.button > 0) return;
+    const start = minAt(col, e.clientY), x0 = e.clientX, y0 = e.clientY;
+    let ghost = null, end = start + PL_STEP, moved = false;
+    const mouse = e.pointerType === 'mouse';
+    const move = ev => {
+      if (Math.abs(ev.clientY - y0) > 6 || Math.abs(ev.clientX - x0) > 6) moved = true;
+      if (!mouse || !moved) return;
+      end = Math.max(start + PL_STEP, minAt(col, ev.clientY) + PL_STEP);
+      if (!ghost) { ghost = document.createElement('div'); ghost.className = 'pl-ghost'; col.appendChild(ghost); }
+      ghost.style.top = ((start - from) / PL_STEP * ROW) + 'px'; ghost.style.height = ((end - start) / PL_STEP * ROW) + 'px';
+      ghost.textContent = `${fmtT(start)}–${fmtT(end)}`;
+    };
+    const up = () => {
+      document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', cancel);
+      if (ghost) ghost.remove();
+      if (mouse && moved) plOpen(null, { date: col.dataset.date, start, dur: end - start });
+      else if (!moved) plOpen(null, { date: col.dataset.date, start, dur: 30 });
+    };
+    const cancel = () => { moved = true; document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', cancel); if (ghost) ghost.remove(); };
+    document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', cancel);
+  }));
+  $$('.pl-task').forEach(bk => {
+    const t = S.plans.find(x => x.id === bk.dataset.id);
+    bk.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); plOpen(t); } });
+    bk.addEventListener('pointerdown', e => {
+      if (e.button > 0) return;
+      const resize = e.target.classList.contains('pl-rs'), touch = e.pointerType === 'touch';
+      const y0 = e.clientY, x0 = e.clientX, s0 = t.start, d0 = t.dur, date0 = t.date;
+      // touch: a tap opens the task (swipes keep scrolling the calendar); the bottom edge still resizes
+      let moved = false, armed = !touch || resize, timer = null;
+      const move = ev => {
+        const dy = ev.clientY - y0, dx = ev.clientX - x0;
+        if (!armed) { if (Math.abs(dy) > 8 || Math.abs(dx) > 8) finish(false); return; }
+        if (Math.abs(dy) < 4 && Math.abs(dx) < 4 && !moved) return;
+        moved = true; ev.preventDefault();
+        const steps = Math.round(dy / ROW) * PL_STEP;
+        if (resize) { t.dur = Math.max(PL_STEP, Math.min(to - s0, d0 + steps)); }
+        else {
+          t.start = Math.max(0, Math.min(1440 - t.dur, s0 + steps));
+          const c = colAt(ev.clientX); if (c && P.mode === 'week') t.date = c.dataset.date;
+        }
+        bk.style.top = `calc(${(t.start - from) / PL_STEP} * var(--row))`; bk.style.height = `calc(${t.dur / PL_STEP} * var(--row) - 2px)`;
+        const c = colAt(ev.clientX); if (P.mode === 'week' && c && c !== bk.parentElement && !resize) c.appendChild(bk);
+        bk.querySelector('.pl-tm').textContent = `${fmtT(t.start)}–${fmtT(t.start + t.dur)}`;
+      };
+      const finish = commitIt => {
+        document.removeEventListener('pointermove', move, { passive: false }); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', cancelIt);
+        if (commitIt) { t.updatedAt = Date.now(); commit(); plKeep(); }
+      };
+      const up = () => { const wasMoved = moved, wasArmed = armed; finish(wasMoved); if (!wasMoved && (wasArmed || touch)) plOpen(t); };
+      const cancelIt = () => { t.start = s0; t.dur = d0; t.date = date0; finish(false); plKeep(); };
+      document.addEventListener('pointermove', move, { passive: false }); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', cancelIt);
+    });
+  });
+}
+// ---------- add / edit dialog
+function plOpen(t, preset = {}) {
+  const P = plState(), f = $('#plForm');
+  const isNew = !t;
+  const v = t || { title: '', date: preset.date || P.date, start: preset.start ?? Math.max(P.from * 60, Math.ceil(nowMin() / PL_STEP) * PL_STEP), dur: preset.dur || 30, type: UI.plLastType || 'test', job: S.active.job || '', notes: '', done: false };
+  $('#plDlgTitle').textContent = isNew ? 'Add a task' : 'Edit task';
+  f.dataset.id = isNew ? '' : t.id;
+  $('#plT').value = v.title; $('#plD').value = v.date;
+  $('#plS').innerHTML = Array.from({ length: 144 }, (_, i) => i * PL_STEP).map(m => `<option value="${m}" ${m === v.start ? 'selected' : ''}>${fmtT(m)}</option>`).join('');
+  $('#plDur').innerHTML = [...Array.from({ length: 24 }, (_, i) => (i + 1) * PL_STEP), 270, 300, 360, 420, 480, 540, 600].map(m => `<option value="${m}" ${m === v.dur ? 'selected' : ''}>${fmtDur(m)}</option>`).join('') + (![...Array(24).keys()].map(i => (i + 1) * 10).concat([270, 300, 360, 420, 480, 540, 600]).includes(v.dur) ? `<option value="${v.dur}" selected>${fmtDur(v.dur)}</option>` : '');
+  $('#plTy').innerHTML = PL_TYPES.map(([k, l]) => `<option value="${k}" ${k === v.type ? 'selected' : ''}>${l}</option>`).join('');
+  $('#plJob').value = v.job || ''; $('#plN').value = v.notes || ''; $('#plDone').checked = !!v.done;
+  $('#plJobs').innerHTML = [...new Set([S.active.job, ...Object.values(S.jobs).map(j => j.no)].filter(Boolean))].map(j => `<option value="${esc(j)}">`).join('');
+  $$('.pl-only-edit').forEach(b => b.hidden = isNew);
+  $('#plEndNote').textContent = `Ends ${fmtT(v.start + v.dur)}`;
+  $('#plDlg').showModal(); setTimeout(() => $('#plT').focus(), 30);
+}
+function plFormVals() { return { title: $('#plT').value.trim(), date: $('#plD').value, start: +$('#plS').value, dur: +$('#plDur').value, type: $('#plTy').value, job: $('#plJob').value.trim(), notes: $('#plN').value.trim(), done: $('#plDone').checked }; }
+function plSubmit(e) {
+  e.preventDefault();
+  const v = plFormVals(), P = plState();
+  if (!v.title) { $('#plT').focus(); return; }
+  if (!v.date) v.date = P.date;
+  if (v.start + v.dur > 1440) v.dur = 1440 - v.start;
+  UI.plLastType = v.type;
+  const id = $('#plForm').dataset.id;
+  if (id) Object.assign(S.plans.find(x => x.id === id), v, { updatedAt: Date.now() });
+  else S.plans.push(Object.assign({ id: uid(), owner: P.owner || plMe(), created: stamp() }, v, { updatedAt: Date.now() }));
+  commit(); $('#plDlg').close();
+  if (!plDays().includes(v.date)) P.date = v.date;
+  if (v.start < P.from * 60 || v.start + v.dur > P.to * 60) { P.from = Math.min(P.from, Math.floor(v.start / 60)); P.to = Math.max(P.to, Math.ceil((v.start + v.dur) / 60)); plSavePref(); }
+  plKeep();
+}
+const plNextWork = iso => { let d = shiftDay(iso, 1); while ([0, 6].includes(plDate(d).getDay())) d = shiftDay(d, 1); return d; };
+// ---------- print and Excel
+function plPrint() {
+  const P = plState(), days = plDays();
+  const sheet = d => { const ts = plFor(P.owner, d); return `<div class="plp-day"><h3>${esc(plLong(d))}</h3>${ts.length ? `<table class="plp-t"><thead><tr><th>✓</th><th>Time</th><th>Task</th><th>Type</th><th>Job #</th><th>Notes</th></tr></thead><tbody>${ts.map(t => `<tr><td class="c">${t.done ? '☒' : '☐'}</td><td class="nw">${fmtT(t.start)}–${fmtT(t.start + t.dur)}</td><td><b>${esc(t.title)}</b></td><td>${esc(plType(t.type)[1])}</td><td>${esc(t.job || '')}</td><td>${esc(t.notes || '')}</td></tr>`).join('')}</tbody></table>` : '<p class="plp-none">Nothing planned.</p>'}</div>`; };
+  printHTML(`<div class="pr-sheet plan-print"><div class="plp-head"><b>Planner · ${esc(P.owner)}</b><span>${P.mode === 'day' ? esc(plLong(days[0])) : `Week of ${esc(plLong(days[0]))}`}</span></div>${days.map(sheet).join('')}</div>`);
+}
+function plWorkbook() {
+  const P = plState(), days = plDays();
+  const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
+  const ws = wb.addWorksheet('Tasks', { pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 } });
+  ws.columns = [{ header: 'Date', width: 12 }, { header: 'Day', width: 6 }, { header: 'Start', width: 10 }, { header: 'End', width: 10 }, { header: 'Minutes', width: 9 }, { header: 'Task', width: 40 }, { header: 'Type', width: 18 }, { header: 'Job #', width: 12 }, { header: 'Done', width: 7 }, { header: 'Notes', width: 40 }];
+  headerStyle(ws.getRow(1));
+  days.forEach(d => plFor(P.owner, d).forEach(t => ws.addRow([d, plDow(d), fmtT(t.start), fmtT(t.start + t.dur), t.dur, t.title, plType(t.type)[1], t.job || '', t.done ? 'Yes' : '', t.notes || ''])));
+  ws.views = [{ state: 'frozen', ySplit: 1 }];
+  // the grid: one row per 10 minutes, a column per day, each task shaded across its time
+  const g = wb.addWorksheet('Grid', { pageSetup: { orientation: days.length > 1 ? 'landscape' : 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 0 } });
+  const from = Math.min(P.from * 60, ...days.flatMap(d => plFor(P.owner, d).map(t => Math.floor(t.start / 60) * 60)));
+  const to = Math.max(P.to * 60, ...days.flatMap(d => plFor(P.owner, d).map(t => Math.ceil((t.start + t.dur) / 60) * 60)));
+  g.columns = [{ width: 10 }, ...days.map(() => ({ width: days.length > 1 ? 24 : 50 }))];
+  const hr = g.addRow(['Time', ...days.map(d => `${plDow(d)} ${d}`)]); headerStyle(hr);
+  for (let m = from; m < to; m += PL_STEP) { const r = g.addRow([m % 60 === 0 ? fmtT(m) : m % 30 === 0 ? ':30' : '']); r.height = 13; r.getCell(1).font = { size: 8, color: { argb: 'FF555555' } }; for (let c = 1; c <= days.length + 1; c++) r.getCell(c).border = { top: { style: m % 60 === 0 ? 'thin' : 'hair', color: { argb: m % 60 === 0 ? 'FF999999' : 'FFDDDDDD' } } }; }
+  const XL = { test: 'FFDDE9F3', build: 'FFDCEFE3', meet: 'FFF4E6DC', admin: 'FFF8ECD2', train: 'FFDFF1EF', travel: 'FFF3F5F6', break: 'FFECEEEF', other: 'FFF8DEDB' };
+  days.forEach((d, di) => {
+    const taken = new Set();
+    plFor(P.owner, d).forEach(t => {
+      const r1 = 2 + (t.start - from) / PL_STEP, r2 = r1 + t.dur / PL_STEP - 1, col = di + 2;
+      let clash = false; for (let r = r1; r <= r2; r++) if (taken.has(r)) clash = true;
+      const cell = g.getCell(r1, col);
+      if (clash) { cell.value = (cell.value ? cell.value + ' / ' : '') + t.title; return; }
+      for (let r = r1; r <= r2; r++) taken.add(r);
+      if (r2 > r1) g.mergeCells(r1, col, r2, col);
+      cell.value = `${t.done ? '✓ ' : ''}${t.title}\n${fmtT(t.start)}–${fmtT(t.start + t.dur)}${t.job ? ' · ' + t.job : ''}`;
+      cell.alignment = { vertical: 'top', wrapText: true }; cell.font = { size: 9, bold: true };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: XL[t.type] || XL.other } };
+      cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, left: { style: 'medium', color: { argb: 'FF555555' } }, right: { style: 'thin' } };
+    });
+  });
+  g.views = [{ state: 'frozen', ySplit: 1, xSplit: 1 }];
+  return wb;
+}
+const PL_ACT = {
+  'pl-add': () => plOpen(null),
+  'pl-edit': b => plOpen(S.plans.find(x => x.id === b.dataset.id)),
+  'pl-mode': b => { const P = plState(); P.mode = b.dataset.m; plSavePref(); UI.plScrolled = null; renderPlanner(); },
+  'pl-step': b => { const P = plState(); P.date = shiftDay(P.date, (+b.dataset.d) * (P.mode === 'day' ? 1 : 7)); renderPlanner(); },
+  'pl-today': () => { const P = plState(); P.date = today(); UI.plScrolled = null; renderPlanner(); },
+  'pl-cancel': () => $('#plDlg').close(),
+  'pl-del': () => {
+    const id = $('#plForm').dataset.id, i = S.plans.findIndex(x => x.id === id); if (i < 0) return;
+    const [t] = S.plans.splice(i, 1); S.deleted[t.id] = Date.now(); commit(); $('#plDlg').close(); plKeep();
+    toast('Task deleted.', { action: 'Undo', onAction: () => { S.plans.splice(i, 0, t); delete S.deleted[t.id]; commit(); plKeep(); } });
+  },
+  'pl-dup': () => {
+    const v = plFormVals(); if (!v.title) return;
+    const d = plNextWork(v.date);
+    S.plans.push(Object.assign({ id: uid(), owner: plState().owner || plMe(), created: stamp() }, v, { date: d, done: false, updatedAt: Date.now() }));
+    commit(); $('#plDlg').close(); plKeep(); toast(`Copied to ${plLong(d)}.`, { kind: 'ok' });
+  },
+  'pl-nudge': b => { const s = $('#plS'), v = Math.max(0, Math.min(1430, +s.value + (+b.dataset.d))); s.value = String(v); $('#plEndNote').textContent = `Ends ${fmtT(v + +$('#plDur').value)}`; },
+  'pl-carry': () => {
+    const P = plState(), d = plNextWork(P.date), open = plFor(P.owner, P.date).filter(t => !t.done);
+    open.forEach(t => { t.date = d; t.updatedAt = Date.now(); });
+    commit(); toast(`Moved ${open.length} unfinished task${open.length === 1 ? '' : 's'} to ${plLong(d)}.`, { kind: 'ok', action: 'Go there', onAction: () => { P.date = d; renderPlanner(); } }); plKeep();
+  },
+  'pl-print': () => plPrint(),
+  'pl-xlsx': () => { const P = plState(); if (!window.ExcelJS) return download(); download(plWorkbook(), `Planner_${safeName(P.owner)}_${P.mode === 'day' ? P.date : 'week_' + plDays()[0]}.xlsx`); },
+};
+
+$('#plForm').addEventListener('submit', plSubmit);
+['#plS', '#plDur'].forEach(sel => $(sel).addEventListener('change', () => { $('#plEndNote').textContent = `Ends ${fmtT(+$('#plS').value + +$('#plDur').value)}`; }));
+
 // ============================================================
 //  Sign-in (PIN). A deterrent for a static site, not real security.
 // ============================================================
@@ -5143,7 +5511,7 @@ const ACT = {
   },
   'lbl-print': () => { const lines = UI.labelText.split('\n').map(s => s.trim()).filter(Boolean); printHTML(`<div class="pr-labels">${labelsHTML(lines)}</div>`); },
 };
-Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT, NCP_ACT);
+Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT, NCP_ACT, PL_ACT);
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if (!b || b.disabled) return;
