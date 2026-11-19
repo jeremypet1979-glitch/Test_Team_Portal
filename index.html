@@ -507,6 +507,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .ncp-sum b.bad{color:#c0392b}
 @media (max-width:760px){.ncp-row{grid-template-columns:24px minmax(0,1fr)}.ncp-row .ncp-seg,.ncp-row .ncp-nt{grid-column:2}.ncp-seg button{flex:1}[data-view=ncp] .form-grid{grid-template-columns:1fr!important}}
 /* Planner */
+.job-grp td{background:var(--panel-2);font-weight:700;font-size:13px;padding-top:8px;padding-bottom:6px}
 .qr-desc{background:none;border:0;padding:2px 0;color:var(--ink);text-align:left;cursor:pointer;font:inherit;border-bottom:1px dashed var(--line);max-width:260px}
 .qr-desc-in{width:100%;min-width:180px;padding:4px 6px}
 .tq-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:0 0 14px}
@@ -1177,9 +1178,11 @@ function logSheet(wb, name, tableName, headers, widths, rows) {
   } else { ws.addRow(headers); headerStyle(ws.getRow(1)); }
   return ws;
 }
+/** job number order (24-1001 before 24-1187, numbers compared as numbers), then newest scan first */
+const qrOrder = (a, b) => String(a.job || '').trim().localeCompare(String(b.job || '').trim(), undefined, { numeric: true, sensitivity: 'base' }) || b.ts.localeCompare(a.ts);
 function qrWorkbook(list) {
   const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
-  const rows = [...list].sort((a, b) => a.ts.localeCompare(b.ts)).map(r => [r.ts, r.job, r.skid, r.serial, r.by || '', r.desc || '']);
+  const rows = [...list].sort((a, b) => String(a.job || '').trim().localeCompare(String(b.job || '').trim(), undefined, { numeric: true, sensitivity: 'base' }) || a.ts.localeCompare(b.ts)).map(r => [r.ts, r.job, r.skid, r.serial, r.by || '', r.desc || '']);
   logSheet(wb, 'Job_QR_Log', 'JobQRLogTable', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'QRSerial', 'ScannedBy', 'EquipmentDescription'], [20, 16, 24, 30, 12, 36], rows);
   return wb;
 }
@@ -1627,10 +1630,12 @@ function logTable(kind) {
   const all = isQ ? UI.skidAll : UI.compAll, q = (isQ ? UI.skidQ : UI.compQ).toLowerCase();
   const jk = keyOf(S.active.job);
   let list = (isQ ? S.qr : S.comp).filter(r => (all || !jk || keyOf(r.job) === jk) && (!q || JSON.stringify(r).toLowerCase().includes(q)));
-  list = [...list].sort((a, b) => b.ts.localeCompare(a.ts));
+  // skid serials: grouped by job number (in order), newest first within a job; components: newest first
+  list = [...list].sort(isQ ? qrOrder : (a, b) => b.ts.localeCompare(a.ts));
   const total = isQ ? S.qr.length : S.comp.length;
-  const rows = list.slice(0, 500).map((r, i) => `<tr class="${UI.flash === r.id ? 'flash' : ''}">
-      <td class="num muted">${list.length - i}</td><td class="num">${esc(r.ts.slice(5, 16).replace(' ', '  '))}</td><td>${esc(r.job)}</td><td>${esc(r.skid)}</td>
+  const perJob = {}; if (isQ) list.forEach(r => perJob[keyOf(r.job)] = (perJob[keyOf(r.job)] || 0) + 1);
+  const rows = list.slice(0, 500).map((r, i) => `${isQ && (i === 0 || keyOf(list[i - 1].job) !== keyOf(r.job)) ? `<tr class="job-grp"><td colspan="8">Job ${esc(r.job || '(no job #)')} <span class="muted">· ${perJob[keyOf(r.job)]} serial${perJob[keyOf(r.job)] > 1 ? 's' : ''}</span></td></tr>` : ''}<tr class="${UI.flash === r.id ? 'flash' : ''}">
+      <td class="num muted">${isQ ? i + 1 : list.length - i}</td><td class="num">${esc(r.ts.slice(5, 16).replace(' ', '  '))}</td><td>${esc(r.job)}</td><td>${esc(r.skid)}</td>
       ${isQ ? '' : `<td>${esc(r.name)}</td>`}<td class="mono"><b>${esc(r.serial)}</b></td>${isQ ? `<td class="qr-desc-cell"><button type="button" class="linkish qr-desc" data-act="qr-desc" data-id="${r.id}" title="Edit description">${r.desc ? esc(r.desc) : '<span class="muted">Add</span>'}</button></td>` : ''}<td class="muted">${esc(r.by || '')}</td>
       <td style="text-align:right"><button class="btn ghost sm danger" type="button" data-act="log-del" data-kind="${kind}" data-id="${r.id}" aria-label="Delete ${esc(r.serial)}">${ICON.x}</button></td></tr>`).join('');
   return `<div class="panel flush">
