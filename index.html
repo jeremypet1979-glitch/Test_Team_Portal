@@ -116,6 +116,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);outline:none;
 .pill.corrected{background:var(--warn-soft);color:var(--warn)}
 .pill.closed{background:var(--ok-soft);color:var(--ok)}
 .pill.info{background:var(--info-soft);color:var(--info)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
 .check{display:inline-flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
 .check input{width:17px;height:17px;accent-color:var(--accent)}
 
@@ -505,6 +507,18 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
 .ncp-sum b.bad{color:#c0392b}
 @media (max-width:760px){.ncp-row{grid-template-columns:24px minmax(0,1fr)}.ncp-row .ncp-seg,.ncp-row .ncp-nt{grid-column:2}.ncp-seg button{flex:1}[data-view=ncp] .form-grid{grid-template-columns:1fr!important}}
 /* Planner */
+.qr-desc{background:none;border:0;padding:2px 0;color:var(--ink);text-align:left;cursor:pointer;font:inherit;border-bottom:1px dashed var(--line);max-width:260px}
+.qr-desc-in{width:100%;min-width:180px;padding:4px 6px}
+.tq-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:0 0 14px}
+.tq-tabs button{border:0;background:none;padding:10px 16px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tq-tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent)}
+.tq-grid td{vertical-align:middle}
+.tq-act{display:flex;align-items:center;gap:6px}
+.tq-in{flex:0 0 88px;width:88px!important;padding:8px;font-size:16px;text-align:right}
+.tq-grid td:nth-child(3),.tq-log td{white-space:nowrap}
+.tq-log td:nth-child(5),.tq-log td:nth-child(6),.tq-log td:nth-child(4){white-space:normal;min-width:110px}
+.tq-live{min-height:18px;margin-top:2px}
+.small{font-size:12px}
 .pl-bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end;margin-bottom:8px}
 .pl-mode{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;align-self:end}
 .pl-mode button{border:0;background:transparent;padding:8px 16px;font-weight:700;color:var(--ink);cursor:pointer}
@@ -640,8 +654,22 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   .ncpg-print .g-sign .g-lbl{width:.7in}
   .ncpg-print .g-sign .g-ln img{height:22pt;vertical-align:bottom;margin-right:8pt}
   .plan-print{font:10pt/1.3 Arial,sans-serif}
+  .tq-print{font:9.5pt/1.3 Arial,sans-serif}
   .plp-head{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:4pt;margin-bottom:8pt;font-size:12pt}
   .plp-day{break-inside:avoid;margin-bottom:10pt}
+  .tqp-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #000;padding-bottom:4pt;margin-bottom:8pt}
+  .tqp-head b{font-size:15pt}
+  .tqp-h{font-size:11pt;margin:10pt 0 3pt;break-after:avoid}
+  .tqp-h span{font-weight:400}
+  .tqp,.tqp-info,.tqp-sign{width:100%;border-collapse:collapse;color:#000}
+  .tqp th,.tqp td,.tqp-info th,.tqp-info td{border:1px solid #777;padding:2pt 4pt;text-align:left;vertical-align:top;font-size:8.5pt}
+  .tqp th,.tqp-info th{background:#e6e6e6}
+  .tqp tr{break-inside:avoid}
+  .tqp-bad td{background:#f3f3f3;font-weight:700}
+  .tqp-note{font-size:8pt;margin:6pt 0 0}
+  .tqp-sign{margin-top:18pt;break-inside:avoid}
+  .tqp-sign td{padding:12pt 4pt 2pt;font-size:9pt;border-bottom:1px solid #000}
+  .tqp-sign td:nth-child(odd){border-bottom:0;width:12%;white-space:nowrap}
   .plp-day h3{font-size:11pt;margin:0 0 3pt}
   .plp-t{width:100%;border-collapse:collapse}
   .plp-t th,.plp-t td{border:1px solid #888;padding:2pt 4pt;text-align:left;vertical-align:top;font-size:9pt}
@@ -675,6 +703,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
       <a href="#megger">Megger</a>
       <a href="#hipot">Hi-Pot</a>
       <a href="#ncp">NCP</a>
+      <a href="#torque">Torque</a>
       <a href="#planner">Planner</a>
       <a href="#lookup">Lookup</a>
       <a href="#study">Study Guide</a>
@@ -707,6 +736,7 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   <section data-view="megger" hidden></section>
   <section data-view="hipot" hidden></section>
   <section data-view="ncp" hidden></section>
+  <section data-view="torque" hidden></section>
   <section data-view="planner" hidden></section>
   <section data-view="lookup" hidden></section>
   <section data-view="labels" hidden></section>
@@ -741,6 +771,38 @@ details.panel>summary{cursor:pointer;display:flex;gap:8px;align-items:center;fle
   </form>
 </dialog>
 
+<dialog id="tqDlg">
+  <form id="tqForm2">
+    <div class="dlg-head"><h3 id="tqDlgTitle">Add a device to the chart</h3><button class="btn ghost sm" type="button" data-act="tq-cancel">Cancel</button></div>
+    <div class="dlg-body">
+      <div class="form-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <label class="field" for="tqE"><span>Equipment type</span><input id="tqE" type="text" list="tqEquipList" required placeholder="e.g. LVSS skid, 480V switchboard" autocomplete="off"><datalist id="tqEquipList"></datalist></label>
+        <label class="field" for="tqDv"><span>Device</span><input id="tqDv" type="text" list="tqDevList" required placeholder="e.g. Main breaker, CT, bus splice" autocomplete="off"><datalist id="tqDevList"></datalist></label>
+      </div>
+      <div class="form-grid" style="grid-template-columns:2fr 1fr 1fr">
+        <label class="field" for="tqPt"><span>Connection / fastener</span><input id="tqPt" type="text" placeholder="e.g. Line lugs, mounting bolts" autocomplete="off"></label>
+        <label class="field" for="tqSz"><span>Bolt size</span><input id="tqSz" type="text" list="tqSizeList" placeholder="1/2-13" autocomplete="off"><datalist id="tqSizeList"></datalist></label>
+        <label class="field" for="tqQty"><span>Qty</span><input id="tqQty" type="text" inputmode="numeric" placeholder="per device"></label>
+      </div>
+      <div class="form-grid" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <label class="field" for="tqSp"><span>Spec</span><input id="tqSp" type="text" inputmode="decimal" required></label>
+        <label class="field" for="tqMin"><span>Min (optional)</span><input id="tqMin" type="text" inputmode="decimal"></label>
+        <label class="field" for="tqMax"><span>Max (optional)</span><input id="tqMax" type="text" inputmode="decimal"></label>
+        <label class="field" for="tqU"><span>Unit</span><select id="tqU"><option>in-lb</option><option>ft-lb</option><option>N·m</option></select></label>
+      </div>
+      <label class="field" for="tqNt"><span>Notes</span><input id="tqNt" type="text" placeholder="Optional: source, sequence, lubricant, hardware grade"></label>
+    </div>
+    <div class="dlg-foot"><button class="btn tq-only-edit" type="button" data-act="tq-del-spec">Delete</button><button class="btn" type="button" data-act="tq-again">Save &amp; add another</button><button class="btn primary" type="submit">Save</button></div>
+  </form>
+</dialog>
+<dialog id="tqGrpDlg">
+  <form id="tqGrpForm">
+    <div class="dlg-head"><h3 id="tqGrpTitle">Rename</h3><button class="btn ghost sm" type="button" data-act="tq-grp-cancel">Cancel</button></div>
+    <div class="dlg-body"><label class="field" for="tqGrpName"><span>Equipment type name</span><input id="tqGrpName" type="text" required autocomplete="off"></label></div>
+    <div class="dlg-foot"><button class="btn primary" type="submit">Save</button></div>
+  </form>
+</dialog>
+<input type="file" id="tqFile" accept=".xlsx" hidden>
 <dialog id="plDlg">
   <form id="plForm">
     <div class="dlg-head"><h3 id="plDlgTitle">Add a task</h3><button class="btn ghost sm" type="button" data-act="pl-cancel">Cancel</button></div>
@@ -794,7 +856,7 @@ const ICON = {
 };
 
 // ---------- constants
-const FILES = { data: 'portal_data.json', qr: 'PowerApps_Job_Equipment_QR_Log.xlsx', comp: 'Job_Component_Serial_Log.xlsx', testDir: 'Test_Packets', jhaDir: 'Daily_JHAs', megDir: 'Megger_Reports', hpDir: 'HiPot_Reports', ncpDir: 'NCP_Reports', training: 'Training_Log.xlsx' };
+const FILES = { data: 'portal_data.json', qr: 'PowerApps_Job_Equipment_QR_Log.xlsx', comp: 'Job_Component_Serial_Log.xlsx', testDir: 'Test_Packets', jhaDir: 'Daily_JHAs', megDir: 'Megger_Reports', hpDir: 'HiPot_Reports', ncpDir: 'NCP_Reports', training: 'Training_Log.xlsx', torque: 'Torque_Log.xlsx' };
 const jhaFileName = h => `${h.date || 'undated'}_${safeName(h.crewName)}_JHA.xlsx`;
 const DEFAULT_CATALOG = ['Main Breaker', 'Feeder Breaker', 'Protective Relay', 'Power Meter', 'Control Power Transformer (CPT)', 'Surge Protective Device (SPD)', 'MOXA ioLogik E1210 I/O Module', 'Juniper EX4100-H Network Switch', 'PLC / Controller', 'UPS'];
 const JHA_Q = [
@@ -812,7 +874,7 @@ const STOP_TEXT = 'If the following conditions are encountered, stop immediately
 const AUDITORS = [['lead', 'Team Leads'], ['sup', 'Supervisors'], ['mgr', 'Managers'], ['safety', 'Safety Rep']];
 
 // ---------- state
-const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], ncp: [], plans: [], forms: {}, apps: [], deleted: {}, updated: 0 });
+const blankState = () => ({ v: 1, active: { job: '', skid: '', tech: '' }, qr: [], comp: [], catalog: [...DEFAULT_CATALOG], jobs: {}, crews: [], jhas: [], training: [], megger: [], hipot: [], ncp: [], plans: [], torque: [], torqueSpecs: [], torqueCfg: {}, forms: {}, apps: [], deleted: {}, updated: 0 });
 let S = blankState();
 const UI = { view: 'home', skidAll: false, compAll: false, skidQ: '', compQ: '', testJob: null, testTab: 'punch', punchFilter: 'all', jha: null, jhaDate: today(), crewEdit: null, studyMod: null, studyName: '', quiz: null, lookup: '', compName: '', labelText: '', labelSize: 's1', labelMeta: true, flash: null, pendingDup: null };
 
@@ -820,7 +882,7 @@ function normalize(o) {
   const s = Object.assign(blankState(), o || {});
   s.active = Object.assign({ job: '', skid: '', tech: '' }, s.active);
   for (const k of Object.keys(s.jobs)) { const j = s.jobs[k]; j.punch ||= []; }
-  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.ncp ||= []; s.plans ||= []; s.forms ||= {}; s.deleted ||= {};
+  s.crews ||= []; s.jhas ||= []; s.training ||= []; s.megger ||= []; s.hipot ||= []; s.ncp ||= []; s.plans ||= []; s.torque ||= []; s.torqueSpecs ||= []; s.torqueCfg ||= {}; s.forms ||= {}; s.deleted ||= {};
   liftJobJhas(s);
   s.jhas.forEach(jhaRowsMigrate);
   return s;
@@ -930,6 +992,9 @@ function mergeState(o) {
   S.hipot = mergeList(S.hipot || [], o.hipot);
   S.ncp = mergeList(S.ncp || [], o.ncp);
   S.plans = mergeList(S.plans || [], o.plans);
+  S.torque = mergeList(S.torque || [], o.torque);
+  S.torqueSpecs = mergeList(S.torqueSpecs || [], o.torqueSpecs);
+  if (o.torqueCfg && (o.torqueCfg.updatedAt || 0) > ((S.torqueCfg || {}).updatedAt || 0)) { S.torqueCfg = o.torqueCfg; changed = true; }
   if (o.forms && (o.forms.updatedAt || 0) > ((S.forms || {}).updatedAt || 0)) { S.forms = o.forms; changed = true; }
   if (o.reasonCodes && (o.reasonCodes.updatedAt || 0) > ((S.reasonCodes || {}).updatedAt || 0)) { S.reasonCodes = o.reasonCodes; changed = true; }
   for (const [k, tj] of Object.entries(o.jobs || {})) {
@@ -1066,6 +1131,7 @@ function fileSpec(k) {
   if (k === 'qr') return { name: FILES.qr, build: () => qrWorkbook(S.qr) };
   if (k === 'comp') return { name: FILES.comp, build: () => compWorkbook(S.comp) };
   if (k === 'training') return { name: FILES.training, build: () => trainingWorkbook() };
+  if (k === 'torque') return { name: FILES.torque, build: () => torqueWorkbook() };
   if (k.startsWith('ncp:')) { const r = S.ncp.find(x => x.id === k.slice(4)); return r ? (r.kind === 'general' ? { name: ncpFile(r), sub: FILES.ncpDir, blob: () => ncpGeneralBlob(r) } : { name: ncpFile(r), sub: FILES.ncpDir, build: () => ncpWorkbook(r) }) : null; }
   if (k.startsWith('hp:')) { const h = S.hipot.find(x => x.id === k.slice(3)); return h ? { name: hpFile(h), sub: FILES.hpDir, blob: () => hipotBlob(h) } : null; }
   if (k.startsWith('meg:')) { const m = S.megger.find(x => x.id === k.slice(4)); return m ? { name: megFile(m), sub: FILES.megDir, build: () => meggerWorkbook(m) } : null; }
@@ -1113,8 +1179,8 @@ function logSheet(wb, name, tableName, headers, widths, rows) {
 }
 function qrWorkbook(list) {
   const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
-  const rows = [...list].sort((a, b) => a.ts.localeCompare(b.ts)).map(r => [r.ts, r.job, r.skid, r.serial, r.by || '']);
-  logSheet(wb, 'Job_QR_Log', 'JobQRLogTable', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'QRSerial', 'ScannedBy'], [20, 16, 24, 30, 12], rows);
+  const rows = [...list].sort((a, b) => a.ts.localeCompare(b.ts)).map(r => [r.ts, r.job, r.skid, r.serial, r.by || '', r.desc || '']);
+  logSheet(wb, 'Job_QR_Log', 'JobQRLogTable', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'QRSerial', 'ScannedBy', 'EquipmentDescription'], [20, 16, 24, 30, 12, 36], rows);
   return wb;
 }
 function compWorkbook(list) {
@@ -1262,12 +1328,14 @@ function packetWorkbook(jobNo) {
   const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
   const q = S.qr.filter(r => keyOf(r.job) === k).sort((a, b) => a.ts.localeCompare(b.ts));
   const c = S.comp.filter(r => keyOf(r.job) === k).sort((a, b) => a.ts.localeCompare(b.ts));
-  logSheet(wb, 'Skid QR Serials', 'SkidSerials', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'QRSerial', 'ScannedBy'], [20, 16, 24, 30, 12], q.map(r => [r.ts, r.job, r.skid, r.serial, r.by || '']));
+  logSheet(wb, 'Skid QR Serials', 'SkidSerials', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'QRSerial', 'ScannedBy', 'EquipmentDescription'], [20, 16, 24, 30, 12, 36], q.map(r => [r.ts, r.job, r.skid, r.serial, r.by || '', r.desc || '']));
   logSheet(wb, 'Component Serials', 'ComponentSerials', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'ComponentName', 'ComponentSerial', 'ScannedBy'], [20, 16, 24, 34, 30, 12], c.map(r => [r.ts, r.job, r.skid, r.name, r.serial, r.by || '']));
   const job = S.jobs[k];
   if (job) punchSheet(wb, job);
   const used = new Set(); jhasForJob(k).reverse().forEach(h => jhaSheet(wb, h, used));
   S.megger.filter(m => keyOf(m.jobOrder) === k).forEach(m => meggerSheet(wb, m, used));
+  const tq = S.torque.filter(e => keyOf(e.job) === k).sort((a, b) => a.ts.localeCompare(b.ts));
+  if (tq.length) logSheet(wb, 'Torque Log', 'JobTorque', ['Timestamp', 'EquipmentOrSkidNumber', 'EquipmentType', 'Device', 'Connection', 'BoltSize', 'Qty', 'Spec', 'Min', 'Max', 'Actual', 'Unit', 'Result', 'TorqueMarked', 'WrenchID', 'By'], [20, 20, 24, 28, 22, 10, 6, 8, 8, 8, 8, 8, 12, 12, 12, 8], tq.map(e => [e.ts, e.skid, e.equip, e.device, e.point || '', e.size || '', e.qty || '', tqNum(e.spec), tqNum(e.min), tqNum(e.max), tqNum(e.actual), e.unit || '', ({ ok: 'In spec', low: 'Under spec', high: 'Over spec', rec: 'Recorded' })[tqStatus(e)] || '', e.marked ? 'Yes' : 'No', e.wrench || '', e.by || '']));
   return wb;
 }
 
@@ -1297,7 +1365,7 @@ async function importXlsx(buf, kind, quiet) {
   const col = (...names) => names.map(n => head[n]).find(Boolean);
   const cTs = col('timestamp'), cJob = col('jobnumber'), cSkid = col('equipmentorskidnumber', 'skidnumber', 'equipmentnumber'), cBy = col('scannedby');
   const cSer = kind === 'qr' ? col('qrserial', 'qrserialnumber', 'serial') : col('componentserial', 'serial');
-  const cName = col('componentname', 'designation', 'name');
+  const cName = col('componentname', 'designation', 'name'), cDesc = col('equipmentdescription', 'description');
   if (!cSer) { if (!quiet) toast('Couldn’t find a serial number column in that sheet.', { kind: 'bad' }); return 0; }
   const list = kind === 'qr' ? S.qr : S.comp, sig = kind === 'qr' ? qrSig : compSig;
   const have = new Set(list.map(sig));
@@ -1307,6 +1375,8 @@ async function importXlsx(buf, kind, quiet) {
     const g = c => c ? cellText(row.getCell(c).value) : '';
     const rec = { id: uid(), ts: g(cTs) || stamp(), job: g(cJob), skid: g(cSkid), serial: g(cSer), by: g(cBy) };
     if (kind === 'comp') rec.name = g(cName);
+    if (kind === 'qr' && g(cDesc)) rec.desc = g(cDesc);
+    if (rec.serial && rec.desc && have.has(sig(rec))) { const m = list.find(x => sig(x) === sig(rec)); if (m && !m.desc) { m.desc = rec.desc; m.updatedAt = Date.now(); added++; } return; }
     if (!rec.serial || have.has(sig(rec))) return;
     list.push(rec); have.add(sig(rec)); added++;
   });
@@ -1416,7 +1486,7 @@ function printHTML(html) {
 // ============================================================
 //  Routing and shared header
 // ============================================================
-const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'ncp', 'planner', 'lookup', 'labels', 'study'];
+const VIEWS = ['home', 'skid', 'components', 'test', 'jha', 'megger', 'hipot', 'ncp', 'torque', 'planner', 'lookup', 'labels', 'study'];
 function route() {
   const v = (location.hash || '#home').slice(1);
   UI.view = VIEWS.includes(v) ? v : 'home';
@@ -1450,7 +1520,7 @@ function renderActive() {
 
 function renderAll() { renderActive(); renderCurrent(); renderFolder(); }
 function renderCurrent() {
-  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, ncp: renderNcp, planner: renderPlanner, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
+  ({ home: renderHome, skid: renderSkid, components: renderComp, test: renderTest, jha: renderDailyJha, megger: renderMegger, hipot: renderHipot, ncp: renderNcp, torque: renderTorque, planner: renderPlanner, lookup: renderLookup, labels: renderLabels, study: renderStudy })[UI.view]();
 }
 
 // ============================================================
@@ -1469,6 +1539,7 @@ function renderHome() {
     ['punch-app', 'QC169', 'Testing Punch List', 'Straight to the active job’s punch list. Inspector and supervisor on every line; prints 22 lines a page, landscape.', `${open} open item${open === 1 ? '' : 's'}`],
     ['jha', 'JH-04', 'Daily JHA', 'One JHA per crew each day, with the jobs it covers and crew sign-in.', `${S.crews.length ? `${S.crews.length - noJha} of ${S.crews.length} crews done today` : 'Add your crews'}`],
     ['megger', 'QC281', 'Cable Insulation (Megger)', 'QC281 cable insulation test report with readings in GΩ, low-reading flags, and technician and witness signatures.', `${S.megger.length} report${S.megger.length === 1 ? '' : 's'}`],
+    ['torque', 'TQ-08', 'Torque Log', 'Torque chart for each equipment type, and a torque value log for every connection on each job and skid.', (() => { const n = S.torque.filter(e => e.ts.slice(0, 10) === today()).length; return `${S.torqueSpecs.length} chart rows · ${n} logged today`; })()],
     ['planner', 'PL-01', 'Planner', 'Your day and week in 10-minute blocks: add, move and resize tasks, check them off, and print or export to Excel.', (() => { const n = S.plans.filter(t => t.owner === plMe() && t.date === today()); return n.length ? `${n.filter(t => t.done).length}/${n.length} done today` : 'Nothing planned today'; })()],
     ['ncp', 'NCP', 'NCP Inspections', 'Non Conforming Parts: Breaker Inspection & Operation Test, Breaker Cradle NCP Inspection and NCP General Inspection, saved as Excel files.', `${S.ncp.length} inspection${S.ncp.length === 1 ? '' : 's'}`],
     ['hipot', 'QC217 · 218 · 273', 'Hi-Pot Test', 'High potential test reports on the QC217 (2-pole / DC), QC218 (3-phase) and QC273 (3-phase 4-wire) forms, with the testing-voltage formula, neutral checkboxes and signatures.', `${S.hipot.length} report${S.hipot.length === 1 ? '' : 's'}`],
@@ -1516,7 +1587,7 @@ function renderHome() {
 }
 function renderFolderPanel() {
   const p = $('#folderPanel'); if (!p) return;
-  const files = [FILES.data, FILES.qr, FILES.comp, FILES.training, ...Object.values(S.jobs).map(j => `${FILES.testDir}/${safeName(j.no)}_Test_Packet.xlsx`), `${FILES.jhaDir}/${S.jhas.length ? jhaFileName([...S.jhas].sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0]) : 'one file per crew per day'}`];
+  const files = [FILES.data, FILES.qr, FILES.comp, FILES.torque, FILES.training, ...Object.values(S.jobs).map(j => `${FILES.testDir}/${safeName(j.no)}_Test_Packet.xlsx`), `${FILES.jhaDir}/${S.jhas.length ? jhaFileName([...S.jhas].sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0]) : 'one file per crew per day'}`];
   const errs = Object.values(FS.errors);
   let body;
   if (FS.status === 'connected') {
@@ -1560,14 +1631,14 @@ function logTable(kind) {
   const total = isQ ? S.qr.length : S.comp.length;
   const rows = list.slice(0, 500).map((r, i) => `<tr class="${UI.flash === r.id ? 'flash' : ''}">
       <td class="num muted">${list.length - i}</td><td class="num">${esc(r.ts.slice(5, 16).replace(' ', '  '))}</td><td>${esc(r.job)}</td><td>${esc(r.skid)}</td>
-      ${isQ ? '' : `<td>${esc(r.name)}</td>`}<td class="mono"><b>${esc(r.serial)}</b></td><td class="muted">${esc(r.by || '')}</td>
+      ${isQ ? '' : `<td>${esc(r.name)}</td>`}<td class="mono"><b>${esc(r.serial)}</b></td>${isQ ? `<td class="qr-desc-cell"><button type="button" class="linkish qr-desc" data-act="qr-desc" data-id="${r.id}" title="Edit description">${r.desc ? esc(r.desc) : '<span class="muted">Add</span>'}</button></td>` : ''}<td class="muted">${esc(r.by || '')}</td>
       <td style="text-align:right"><button class="btn ghost sm danger" type="button" data-act="log-del" data-kind="${kind}" data-id="${r.id}" aria-label="Delete ${esc(r.serial)}">${ICON.x}</button></td></tr>`).join('');
   return `<div class="panel flush">
     <div class="panel-head"><h3>${isQ ? 'Skid serials' : 'Component serials'} <span class="pill info num">${list.length}${list.length !== total ? ` of ${total}` : ''}</span></h3>
       <input type="search" id="${kind}Search" placeholder="Search serial, job, skid" value="${esc(isQ ? UI.skidQ : UI.compQ)}" style="width:220px">
       <button class="chip" type="button" data-act="log-scope" data-kind="${kind}" aria-pressed="${!all}">${jk ? 'This job only' : 'All jobs'}</button>
     </div>
-    <div class="table-wrap">${list.length ? `<table class="grid"><thead><tr><th>#</th><th>Time</th><th>Job #</th><th>Skid</th>${isQ ? '' : '<th>Designation</th>'}<th>Serial</th><th>By</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
+    <div class="table-wrap">${list.length ? `<table class="grid"><thead><tr><th>#</th><th>Time</th><th>Job #</th><th>Skid</th>${isQ ? '' : '<th>Designation</th>'}<th>Serial</th>${isQ ? '<th>Description</th>' : ''}<th>By</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
       : `<div class="empty"><b>No serials ${jk && !all ? `for job ${esc(S.active.job)} ` : ''}yet</b>Scan a QR code or type a serial and press Enter.</div>`}</div>
   </div>`;
 }
@@ -1577,13 +1648,21 @@ function loggerActions(kind) {
     <button class="btn" type="button" data-act="log-export" data-kind="${kind}">${ICON.dl} Download Excel</button>
   </div>`;
 }
+/** suggestions for the equipment description: past descriptions, then the torque chart's equipment types */
+function qrDescOptions() {
+  const seen = new Set(), out = [];
+  [...S.qr].reverse().map(r => r.desc).concat((S.torqueSpecs || []).map(t => t.equip)).forEach(d => { d = String(d || '').trim(); if (d && !seen.has(keyOf(d))) { seen.add(keyOf(d)); out.push(d); } });
+  return out.slice(0, 60);
+}
 function renderSkid() {
   $('[data-view=skid]').innerHTML = `
     <div class="view-head"><div class="grow"><span class="eyebrow">QR-01</span><h1>Skid QR Log</h1><p>Scan each skid or equipment QR serial. It’s tied to the active job and skid in the yellow bar.</p></div>${loggerActions('qr')}</div>
     <div class="stack">
       <form class="panel" id="qrForm" autocomplete="off">
         ${scanTarget()}
-        <div class="row"><label class="field grow" for="qrSerial"><span>QR serial number</span><input id="qrSerial" class="serial-input" type="text" placeholder="Scan or type, then Enter"></label>
+        <div class="row">
+        <label class="field" for="qrDesc" style="flex:1 1 260px"><span>Equipment description</span><input id="qrDesc" type="text" list="qrDescList" placeholder="e.g. 1200A switchboard section, 480V MCC" value="${esc(UI.qrDesc || '')}"><datalist id="qrDescList">${qrDescOptions().map(d => `<option value="${esc(d)}">`).join('')}</datalist></label>
+        <label class="field" for="qrSerial" style="flex:2 1 280px"><span>QR serial number</span><input id="qrSerial" class="serial-input" type="text" placeholder="Scan or type, then Enter"></label>
         <button class="btn big" type="button" data-act="cam" data-target="qrSerial">${ICON.cam} Camera</button>
         <button class="btn big primary" type="submit">${ICON.plus} Add</button></div>
         <div id="qrDup"></div>
@@ -1591,6 +1670,8 @@ function renderSkid() {
       ${logTable('qr')}
     </div>`;
   bindSearch('qr');
+  $('#qrDesc').addEventListener('input', e => UI.qrDesc = e.target.value);
+  $('#qrDesc').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#qrSerial').focus(); } });
   $('#qrForm').addEventListener('submit', e => { e.preventDefault(); addLog('qr'); });
   focusSoon('#qrSerial');
 }
@@ -1643,6 +1724,7 @@ function addLog(kind, force) {
     return;
   }
   const rec = { id: uid(), ts: stamp(), job: S.active.job, skid: S.active.skid, serial, by: S.active.tech };
+  if (isQ) { const d = ($('#qrDesc') ? $('#qrDesc').value : UI.qrDesc || '').trim(); UI.qrDesc = d; if (d) rec.desc = d; }
   if (!isQ) { rec.name = name; if (!S.catalog.some(c => keyOf(c) === keyOf(name)) && name.length > 2) { /* remember new designations */ S.catalog.push(name); } }
   list.push(rec);
   UI.pendingDup = null; UI.flash = rec.id;
@@ -4390,7 +4472,7 @@ const qesPrintFoot = k => { const f = fc(k); return `<div class="hp-pf"><span>${
 /** wrap every .pr-sheet in a printout with the QES header and the form footer */
 function qesWrapPrint(html, k) {
   const box = document.createElement('div'); box.innerHTML = html;
-  if (box.querySelector('.q169, .ncp-print, .plan-print')) return box.innerHTML;
+  if (box.querySelector('.q169, .ncp-print, .plan-print, .tq-print')) return box.innerHTML;
   box.querySelectorAll('.pr-sheet').forEach(sh => { if (!sh.querySelector('.hp-ph') && !sh.classList.contains('jp')) sh.insertAdjacentHTML('afterbegin', qesPrintHead()); sh.querySelectorAll('.hp-pf').forEach(f => f.remove()); });
   // footer on every printed page: fixed to the page bottom, with a repeating table footer reserving its space
   return `<div class="qes-fixfoot">${qesPrintFoot(k)}</div><table class="qes-wrap"><tfoot><tr><td><div class="qes-footspace"></div></td></tr></tfoot><tbody><tr><td>${box.innerHTML}</td></tr></tbody></table>`;
@@ -5118,6 +5200,323 @@ $('#plForm').addEventListener('submit', plSubmit);
 ['#plS', '#plDur'].forEach(sel => $(sel).addEventListener('change', () => { $('#plEndNote').textContent = `Ends ${fmtT(+$('#plS').value + +$('#plDur').value)}`; }));
 
 // ============================================================
+//  Torque: a torque chart per equipment type, and a torque value log per job / skid
+// ============================================================
+const TQ_UNITS = ['in-lb', 'ft-lb', 'N·m'];
+const TQ_SIZES = ['#8-32', '#10-32', '1/4-20', '5/16-18', '3/8-16', '7/16-14', '1/2-13', '9/16-12', '5/8-11', '3/4-10', 'M6', 'M8', 'M10', 'M12', 'M16'];
+const tqNum = v => { if (v === '' || v == null) return null; const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : null; };
+const tqFmt = n => n == null ? '' : String(Math.round(n * 10) / 10);
+const tqTol = () => { const t = tqNum((S.torqueCfg || {}).tol); return t == null ? 10 : t; };
+/** acceptable band: the chart's min / max when set, otherwise spec ± the tolerance % */
+function tqRange(s) {
+  const spec = tqNum(s.spec), t = tqTol() / 100;
+  const lo = tqNum(s.min) ?? (spec == null ? null : spec * (1 - t)), hi = tqNum(s.max) ?? (spec == null ? null : spec * (1 + t));
+  return { spec, lo, hi };
+}
+function tqStatus(e) {
+  const a = tqNum(e.actual), r = tqRange(e);
+  if (a == null) return '';
+  if (r.lo == null && r.hi == null) return 'rec';
+  if (r.lo != null && a < r.lo) return 'low';
+  if (r.hi != null && a > r.hi) return 'high';
+  return 'ok';
+}
+const TQ_ST = { ok: ['ok', 'In spec'], low: ['bad', 'Under spec'], high: ['bad', 'Over spec'], rec: ['info', 'Recorded'], '': ['', ''] };
+const tqPill = e => { const [c, t] = TQ_ST[tqStatus(e)]; return t ? `<span class="pill ${c}">${t}</span>` : ''; };
+const tqSpecText = s => { const r = tqRange(s); if (r.spec == null) return '–'; const band = r.lo != null && r.hi != null ? ` (${tqFmt(r.lo)}–${tqFmt(r.hi)})` : ''; return `${tqFmt(r.spec)} ${s.unit || ''}${band}`; };
+const tqEquipTypes = () => [...new Set((S.torqueSpecs || []).map(t => String(t.equip || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+const tqSpecsFor = equip => (S.torqueSpecs || []).filter(t => keyOf(t.equip) === keyOf(equip)).sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.device).localeCompare(String(b.device)) || String(a.point).localeCompare(String(b.point)));
+function tqState() {
+  if (!UI.tq) {
+    let pref = {}; try { pref = JSON.parse(localStorage.getItem('sfp_torque') || '{}'); } catch { }
+    UI.tq = { tab: 'log', equip: pref.equip || '', wrench: pref.wrench || '', cal: pref.cal || '', all: false, q: '', vals: {}, marks: {} };
+  }
+  if (!UI.tq.equip || !tqEquipTypes().some(e => keyOf(e) === keyOf(UI.tq.equip))) UI.tq.equip = tqEquipTypes()[0] || '';
+  return UI.tq;
+}
+function tqSavePref() { const T = tqState(); try { localStorage.setItem('sfp_torque', JSON.stringify({ equip: T.equip, wrench: T.wrench, cal: T.cal })); } catch { } }
+const tqLast = (specId, job, skid) => (S.torque || []).filter(e => e.specId === specId && keyOf(e.job) === keyOf(job) && keyOf(e.skid) === keyOf(skid)).sort((a, b) => b.ts.localeCompare(a.ts))[0];
+
+function renderTorque() {
+  const T = tqState();
+  const el = $('[data-view=torque]');
+  const head = `<div class="view-head"><div class="grow"><span class="eyebrow">TQ-08</span><h1>Torque Log</h1><p>Keep a torque chart for each type of equipment you build, then log the torque value on every connection against the active job and skid.</p></div>
+    <div class="row"><button class="btn" type="button" data-act="tq-print">${ICON.print} Print torque record</button><button class="btn" type="button" data-act="tq-xlsx">${ICON.dl} Download Excel</button></div></div>
+    <div class="tq-tabs" role="tablist"><button type="button" role="tab" data-act="tq-tab" data-tab="log" aria-selected="${T.tab === 'log'}">Log torque</button><button type="button" role="tab" data-act="tq-tab" data-tab="chart" aria-selected="${T.tab === 'chart'}">Torque chart <span class="pill info num">${(S.torqueSpecs || []).length}</span></button></div>`;
+  el.innerHTML = head + (T.tab === 'chart' ? tqChartHTML() : tqLogHTML());
+  if (T.tab === 'log') tqBindLog(); else tqBindChart();
+}
+
+// ---------- Log tab
+function tqLogHTML() {
+  const T = tqState(), types = tqEquipTypes();
+  if (!types.length) return `<div class="panel empty"><b>Start with the torque chart</b>Add the devices and connections for each type of equipment, with their torque values. Then they show up here to log against each job.<div class="row" style="justify-content:center;margin-top:12px"><button class="btn primary" type="button" data-act="tq-tab" data-tab="chart">Open the torque chart</button></div></div>${tqLogTable()}`;
+  const specs = tqSpecsFor(T.equip), j = S.active.job, sk = S.active.skid;
+  const rows = specs.map((s, i) => {
+    const last = j ? tqLast(s.id, j, sk) : null, v = T.vals[s.id] ?? '';
+    const live = v !== '' ? tqPill(Object.assign({}, s, { actual: v })) : '';
+    return `<tr data-id="${s.id}">
+      <td><b>${esc(s.device)}</b>${s.notes ? `<div class="muted small">${esc(s.notes)}</div>` : ''}</td><td>${esc(s.point || '')}</td><td class="num">${esc(s.size || '')}</td><td class="num">${esc(s.qty || '')}</td>
+      <td class="num">${esc(tqSpecText(s))}</td>
+      <td><div class="tq-act"><input class="tq-in num" type="text" inputmode="decimal" data-id="${s.id}" data-i="${i}" value="${esc(v)}" placeholder="${esc(tqFmt(tqNum(s.spec)))}" aria-label="Actual torque for ${esc(s.device)} ${esc(s.point || '')}"><span class="muted small">${esc(s.unit || '')}</span></div><div class="tq-live">${live}</div></td>
+      <td><label class="check"><input type="checkbox" class="tq-mk" data-id="${s.id}" ${T.marks[s.id] ? 'checked' : ''}> Marked</label></td>
+      <td class="small">${last ? `${tqPill(last)} <span class="num">${esc(tqFmt(tqNum(last.actual)))} ${esc(last.unit || '')}</span><div class="muted">${esc(last.ts.slice(5, 16))} · ${esc(last.by || '')}</div>` : '<span class="muted">Not logged</span>'}</td></tr>`;
+  }).join('');
+  return `<div class="stack">
+    <form class="panel" id="tqForm" autocomplete="off">
+      ${scanTarget()}
+      <div class="row">
+        <label class="field" for="tqEquip" style="flex:2 1 240px"><span>Equipment type</span><select id="tqEquip">${types.map(t => `<option ${keyOf(t) === keyOf(T.equip) ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>
+        <label class="field" for="tqWrench" style="flex:1 1 160px"><span>Torque wrench ID</span><input id="tqWrench" type="text" value="${esc(T.wrench)}" placeholder="e.g. TW-014"></label>
+        <label class="field" for="tqCal" style="flex:1 1 160px"><span>Wrench cal due</span><input id="tqCal" type="date" value="${esc(T.cal)}"></label>
+      </div>
+      ${T.cal && T.cal < today() ? `<div class="warnbar"><span>The calibration on ${esc(T.wrench || 'this wrench')} was due ${esc(mdy(T.cal))}. Use a wrench that’s in calibration.</span></div>` : ''}
+      <div class="table-wrap" style="margin-top:12px">${specs.length ? `<table class="grid tq-grid"><thead><tr><th>Device</th><th>Connection</th><th>Bolt</th><th>Qty</th><th>Spec</th><th>Actual</th><th>Torque mark</th><th>Last logged here</th></tr></thead><tbody>${rows}</tbody></table>` : `<div class="empty">No devices on the chart for ${esc(T.equip)} yet.</div>`}</div>
+      <div class="row" style="margin-top:12px;align-items:center">
+        <button class="btn big primary" type="submit">${ICON.plus} Log entered values</button>
+        <button class="btn" type="button" data-act="tq-fill">Fill blanks with spec</button>
+        <button class="btn ghost" type="button" data-act="tq-add-spec" data-equip="${esc(T.equip)}">Add a device to this chart</button>
+        <span class="muted small">Enter moves to the next connection. Readings save to the active job and skid.</span>
+      </div>
+    </form>
+    ${tqLogTable()}
+  </div>`;
+}
+function tqLogTable() {
+  const T = tqState(), jk = keyOf(S.active.job), q = T.q.toLowerCase();
+  let list = (S.torque || []).filter(e => (T.all || !jk || keyOf(e.job) === jk) && (!q || JSON.stringify(e).toLowerCase().includes(q)));
+  list = [...list].sort((a, b) => b.ts.localeCompare(a.ts));
+  const bad = list.filter(e => ['low', 'high'].includes(tqStatus(e))).length;
+  return `<div class="panel flush">
+    <div class="panel-head"><h3>Torque log <span class="pill info num">${list.length}</span>${bad ? ` <span class="pill bad num">${bad} out of spec</span>` : ''}</h3>
+      <input type="search" id="tqSearch" placeholder="Search job, skid, device" value="${esc(T.q)}" style="width:220px">
+      <button class="chip" type="button" data-act="tq-scope" aria-pressed="${!T.all}">${jk ? 'This job only' : 'All jobs'}</button></div>
+    <div class="table-wrap">${list.length ? `<table class="grid tq-log"><thead><tr><th>Time</th><th>Job #</th><th>Skid</th><th>Equipment</th><th>Device</th><th>Connection</th><th>Bolt</th><th>Spec</th><th>Actual</th><th>Status</th><th>Mark</th><th>Wrench</th><th>By</th><th></th></tr></thead><tbody>
+      ${list.slice(0, 500).map(e => `<tr class="${UI.flash === e.id ? 'flash' : ''}"><td class="num">${esc(e.ts.slice(5, 16))}</td><td>${esc(e.job)}</td><td>${esc(e.skid)}</td><td>${esc(e.equip)}</td><td>${esc(e.device)}</td><td>${esc(e.point || '')}</td><td class="num">${esc(e.size || '')}${e.qty ? ` ×${esc(e.qty)}` : ''}</td><td class="num">${esc(tqSpecText(e))}</td><td class="num"><b>${esc(tqFmt(tqNum(e.actual)))}</b> ${esc(e.unit || '')}</td><td>${tqPill(e)}</td><td>${e.marked ? '✓' : ''}</td><td>${esc(e.wrench || '')}</td><td class="muted">${esc(e.by || '')}</td>
+        <td style="text-align:right"><button class="btn ghost sm danger" type="button" data-act="tq-del" data-id="${e.id}" aria-label="Delete reading">${ICON.x}</button></td></tr>`).join('')}</tbody></table>`
+      : `<div class="empty"><b>No torque readings ${jk && !T.all ? `for job ${esc(S.active.job)} ` : ''}yet</b>Pick the equipment type, enter the actual values and press Log.</div>`}</div></div>`;
+}
+function tqBindLog() {
+  const T = tqState();
+  const f = $('#tqForm');
+  const s = $('#tqSearch'); if (s) s.addEventListener('input', () => { T.q = s.value; const pos = s.selectionStart; renderTorque(); const n = $('#tqSearch'); n.focus(); n.setSelectionRange(pos, pos); });
+  if (!f) return;
+  $('#tqEquip').addEventListener('change', e => { T.equip = e.target.value; T.vals = {}; T.marks = {}; tqSavePref(); renderTorque(); });
+  $('#tqWrench').addEventListener('change', e => { T.wrench = e.target.value.trim(); tqSavePref(); });
+  $('#tqCal').addEventListener('change', e => { T.cal = e.target.value; tqSavePref(); renderTorque(); });
+  $$('.tq-in', f).forEach(inp => {
+    inp.addEventListener('input', () => {
+      T.vals[inp.dataset.id] = inp.value;
+      const sp = S.torqueSpecs.find(x => x.id === inp.dataset.id);
+      inp.closest('td').querySelector('.tq-live').innerHTML = inp.value.trim() && sp ? tqPill(Object.assign({}, sp, { actual: inp.value })) : '';
+    });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); const nx = $(`.tq-in[data-i="${+inp.dataset.i + 1}"]`, f); if (nx) nx.focus(); else f.requestSubmit(); } });
+  });
+  $$('.tq-mk', f).forEach(c => c.addEventListener('change', () => { T.marks[c.dataset.id] = c.checked; }));
+  f.addEventListener('submit', e => { e.preventDefault(); tqLogEntered(); });
+}
+function tqLogEntered() {
+  const T = tqState();
+  if (!S.active.job) { beep(false); toast('Set the job # in the yellow bar first.', { kind: 'bad' }); return $('#actJob').focus(); }
+  const entries = [], badNum = [];
+  for (const s of tqSpecsFor(T.equip)) {
+    const v = String(T.vals[s.id] ?? '').trim(); if (!v) continue;
+    if (tqNum(v) == null) { badNum.push(s.device); continue; }
+    entries.push({ id: uid(), ts: stamp(), job: S.active.job, skid: S.active.skid, equip: s.equip, specId: s.id, device: s.device, point: s.point || '', size: s.size || '', qty: s.qty || '', spec: s.spec, min: s.min ?? '', max: s.max ?? '', unit: s.unit || '', tol: tqTol(), actual: tqNum(v), marked: !!T.marks[s.id], wrench: T.wrench, wrenchCal: T.cal, by: S.active.tech, updatedAt: Date.now() });
+  }
+  if (badNum.length) { beep(false); return toast(`Enter a number for ${badNum.join(', ')}.`, { kind: 'bad' }); }
+  if (!entries.length) { beep(false); return toast('Enter at least one actual torque value.', { kind: 'bad' }); }
+  // the band is fixed at the time of logging, so later chart edits don't change past results
+  entries.forEach(e => { const r = tqRange(e); e.min = r.lo == null ? '' : Math.round(r.lo * 100) / 100; e.max = r.hi == null ? '' : Math.round(r.hi * 100) / 100; });
+  S.torque.push(...entries);
+  const out = entries.filter(e => ['low', 'high'].includes(tqStatus(e)));
+  T.vals = {}; T.marks = {}; UI.flash = entries[0].id;
+  beep(!out.length);
+  commit('torque');
+  renderTorque();
+  setTimeout(() => { UI.flash = null; }, 1500);
+  toast(out.length ? `Logged ${entries.length}. ${out.length} out of spec: ${out.map(e => e.device + (e.point ? ' ' + e.point : '')).join(', ')}. Re-torque and log again.` : `Logged ${entries.length} torque reading${entries.length > 1 ? 's' : ''} to ${S.active.job}${S.active.skid ? ' · ' + S.active.skid : ''}.`, { kind: out.length ? 'bad' : 'ok', ms: out.length ? 9000 : 4200 });
+}
+
+// ---------- Chart tab
+function tqChartHTML() {
+  const types = tqEquipTypes();
+  const group = eq => {
+    const specs = tqSpecsFor(eq);
+    return `<div class="panel flush"><div class="panel-head"><h3>${esc(eq)} <span class="pill info num">${specs.length}</span></h3>
+      <div class="row"><button class="btn sm" type="button" data-act="tq-add-spec" data-equip="${esc(eq)}">${ICON.plus} Add device</button><button class="btn sm ghost" type="button" data-act="tq-grp" data-mode="rename" data-equip="${esc(eq)}">Rename</button><button class="btn sm ghost" type="button" data-act="tq-grp" data-mode="copy" data-equip="${esc(eq)}">Copy to a new type</button></div></div>
+      <div class="table-wrap"><table class="grid"><thead><tr><th>Device</th><th>Connection / fastener</th><th>Bolt</th><th>Qty</th><th>Spec</th><th>Min</th><th>Max</th><th>Unit</th><th>Notes</th><th></th></tr></thead><tbody>
+      ${specs.map(s => `<tr><td><b>${esc(s.device)}</b></td><td>${esc(s.point || '')}</td><td class="num">${esc(s.size || '')}</td><td class="num">${esc(s.qty || '')}</td><td class="num"><b>${esc(tqFmt(tqNum(s.spec)))}</b></td><td class="num">${esc(tqFmt(tqNum(s.min)))}</td><td class="num">${esc(tqFmt(tqNum(s.max)))}</td><td>${esc(s.unit || '')}</td><td class="muted">${esc(s.notes || '')}</td>
+        <td style="text-align:right"><button class="btn ghost sm" type="button" data-act="tq-edit-spec" data-id="${s.id}">Edit</button></td></tr>`).join('')}</tbody></table></div></div>`;
+  };
+  return `<div class="stack">
+    <div class="panel"><div class="row" style="align-items:end">
+      <div class="grow"><b>Torque values by equipment type</b><p class="muted small" style="margin:4px 0 0">Enter the values from the manufacturer’s instructions or your shop standard. When a row has no min or max, a reading counts as in spec within ±<input id="tqTol" class="num" type="text" inputmode="decimal" value="${esc(tqTol())}" style="width:56px;padding:4px 6px" aria-label="Tolerance percent">% of the spec.</p></div>
+      <button class="btn primary" type="button" data-act="tq-add-spec" data-equip="">${ICON.plus} Add device</button>
+      <button class="btn" type="button" data-act="tq-chart-import">${ICON.up} Load chart from Excel</button>
+      <button class="btn" type="button" data-act="tq-chart-print">${ICON.print} Print chart</button>
+    </div></div>
+    ${types.length ? types.map(group).join('') : `<div class="panel empty"><b>No torque chart yet</b>Add a device, or load a chart from Excel. Download Excel gives you the layout to fill in: one row per device connection, with the equipment type, device, connection, bolt size, quantity, spec, min, max, unit and notes.</div>`}
+  </div>`;
+}
+function tqBindChart() {
+  const t = $('#tqTol');
+  if (t) t.addEventListener('change', () => { const n = tqNum(t.value); if (n == null || n < 0 || n > 100) { t.value = tqTol(); return toast('Use a percentage between 0 and 100.', { kind: 'bad' }); } S.torqueCfg = { tol: n, updatedAt: Date.now() }; commit('torque'); toast(`Tolerance set to ±${n}%.`, { kind: 'ok' }); });
+}
+function tqOpenSpec(s, equip) {
+  const isNew = !s;
+  UI.tqEdit = isNew ? null : s.id;
+  s = s || { equip: equip || tqState().equip || '', unit: 'ft-lb' };
+  $('#tqDlgTitle').textContent = isNew ? 'Add a device to the chart' : 'Edit torque value';
+  $('#tqE').value = s.equip || ''; $('#tqDv').value = s.device || ''; $('#tqPt').value = s.point || ''; $('#tqSz').value = s.size || ''; $('#tqQty').value = s.qty || '';
+  $('#tqSp').value = s.spec ?? ''; $('#tqMin').value = s.min ?? ''; $('#tqMax').value = s.max ?? ''; $('#tqU').value = s.unit || 'ft-lb'; $('#tqNt').value = s.notes || '';
+  $('#tqEquipList').innerHTML = tqEquipTypes().map(e => `<option value="${esc(e)}">`).join('');
+  $('#tqDevList').innerHTML = [...new Set((S.torqueSpecs || []).map(x => x.device).filter(Boolean))].map(e => `<option value="${esc(e)}">`).join('');
+  $('#tqSizeList').innerHTML = TQ_SIZES.map(e => `<option value="${esc(e)}">`).join('');
+  $$('.tq-only-edit').forEach(b => b.hidden = isNew);
+  $('#tqDlg').showModal();
+  setTimeout(() => $(isNew && s.equip ? '#tqDv' : '#tqE').focus(), 30);
+}
+function tqSaveSpec(again) {
+  const g = id => $(id).value.trim();
+  const rec = { equip: g('#tqE'), device: g('#tqDv'), point: g('#tqPt'), size: g('#tqSz'), qty: g('#tqQty'), spec: tqNum(g('#tqSp')), min: tqNum(g('#tqMin')), max: tqNum(g('#tqMax')), unit: $('#tqU').value, notes: g('#tqNt') };
+  if (!rec.equip || !rec.device) return toast('Enter the equipment type and the device.', { kind: 'bad' });
+  if (rec.spec == null) return toast('Enter the torque spec as a number.', { kind: 'bad' });
+  if (rec.min != null && rec.max != null && rec.min > rec.max) return toast('Min is higher than max.', { kind: 'bad' });
+  if ((rec.min != null && rec.spec < rec.min) || (rec.max != null && rec.spec > rec.max)) return toast('The spec is outside its own min / max.', { kind: 'bad' });
+  rec.updatedAt = Date.now();
+  if (UI.tqEdit) Object.assign(S.torqueSpecs.find(x => x.id === UI.tqEdit), rec);
+  else S.torqueSpecs.push(Object.assign({ id: uid(), order: S.torqueSpecs.length }, rec));
+  const T = tqState(); T.equip = rec.equip; tqSavePref();
+  commit('torque');
+  renderTorque();
+  if (again) { UI.tqEdit = null; $('#tqDlgTitle').textContent = 'Add a device to the chart'; ['#tqPt', '#tqQty', '#tqNt'].forEach(i => $(i).value = ''); $$('.tq-only-edit').forEach(b => b.hidden = true); toast(`Saved ${rec.device}.`, { kind: 'ok' }); $('#tqPt').focus(); }
+  else $('#tqDlg').close();
+}
+function tqChartPrint() {
+  const types = tqEquipTypes();
+  if (!types.length) return toast('The torque chart is empty.', { kind: 'bad' });
+  printHTML(`<div class="pr-sheet tq-print"><div class="tqp-head"><b>Torque Chart</b><span>Printed ${esc(mdy(today()))}</span></div>
+    ${types.map(eq => `<h3 class="tqp-h">${esc(eq)}</h3><table class="tqp"><thead><tr><th>Device</th><th>Connection / fastener</th><th>Bolt</th><th>Qty</th><th>Spec</th><th>Min</th><th>Max</th><th>Unit</th><th>Notes</th></tr></thead><tbody>
+    ${tqSpecsFor(eq).map(s => `<tr><td>${esc(s.device)}</td><td>${esc(s.point || '')}</td><td>${esc(s.size || '')}</td><td>${esc(s.qty || '')}</td><td><b>${esc(tqFmt(tqNum(s.spec)))}</b></td><td>${esc(tqFmt(tqNum(s.min)))}</td><td>${esc(tqFmt(tqNum(s.max)))}</td><td>${esc(s.unit || '')}</td><td>${esc(s.notes || '')}</td></tr>`).join('')}</tbody></table>`).join('')}
+    <p class="tqp-note">Readings with no min / max are in spec within ±${esc(tqTol())}% of the spec value.</p></div>`);
+}
+/** printed torque record for the active job (and skid, when one is set) */
+function tqRecordPrint() {
+  const j = S.active.job, sk = S.active.skid;
+  if (!j) return toast('Set the job # in the yellow bar first.', { kind: 'bad' });
+  const list = (S.torque || []).filter(e => keyOf(e.job) === keyOf(j) && (!sk || keyOf(e.skid) === keyOf(sk))).sort((a, b) => (a.skid || '').localeCompare(b.skid || '') || a.equip.localeCompare(b.equip) || a.ts.localeCompare(b.ts));
+  if (!list.length) return toast(`No torque readings for ${j}${sk ? ' · ' + sk : ''} yet.`, { kind: 'bad' });
+  const groups = {}; list.forEach(e => { const k = `${e.skid || '—'}|${e.equip}`; (groups[k] ||= []).push(e); });
+  const wrenches = [...new Set(list.map(e => e.wrench ? e.wrench + (e.wrenchCal ? ` (cal due ${mdy(e.wrenchCal)})` : '') : '').filter(Boolean))];
+  const bad = list.filter(e => ['low', 'high'].includes(tqStatus(e))).length;
+  const stTxt = e => ({ ok: 'In spec', low: 'UNDER', high: 'OVER', rec: 'Recorded' })[tqStatus(e)] || '';
+  printHTML(`<div class="pr-sheet tq-print"><div class="tqp-head"><b>Torque Record</b><span>Printed ${esc(mdy(today()))}</span></div>
+    <table class="tqp-info"><tr><th>Job #</th><td>${esc(j)}</td><th>Skid</th><td>${esc(sk || 'All skids')}</td></tr><tr><th>Torque wrench</th><td>${esc(wrenches.join(', ') || '—')}</td><th>Readings</th><td>${list.length}${bad ? ` · ${bad} out of spec` : ''}</td></tr></table>
+    ${Object.entries(groups).map(([k, es]) => { const [s, eq] = k.split('|'); return `<h3 class="tqp-h">${esc(eq)} <span>· Skid ${esc(s)}</span></h3><table class="tqp"><thead><tr><th>Date / time</th><th>Device</th><th>Connection</th><th>Bolt</th><th>Qty</th><th>Spec</th><th>Actual</th><th>Result</th><th>Mark</th><th>By</th></tr></thead><tbody>
+    ${es.map(e => `<tr class="${['low', 'high'].includes(tqStatus(e)) ? 'tqp-bad' : ''}"><td>${esc(e.ts.slice(0, 16))}</td><td>${esc(e.device)}</td><td>${esc(e.point || '')}</td><td>${esc(e.size || '')}</td><td>${esc(e.qty || '')}</td><td>${esc(tqSpecText(e))}</td><td><b>${esc(tqFmt(tqNum(e.actual)))}</b> ${esc(e.unit || '')}</td><td>${stTxt(e)}</td><td>${e.marked ? '✓' : ''}</td><td>${esc(e.by || '')}</td></tr>`).join('')}</tbody></table>`; }).join('')}
+    <table class="tqp-sign"><tr><td>Torqued by</td><td></td><td>Date</td><td></td></tr><tr><td>Verified by</td><td></td><td>Date</td><td></td></tr></table></div>`);
+}
+
+// ---------- Excel
+function torqueWorkbook() {
+  const wb = new ExcelJS.Workbook(); wb.creator = 'Shop Floor Portal';
+  const stTxt = e => ({ ok: 'In spec', low: 'Under spec', high: 'Over spec', rec: 'Recorded' })[tqStatus(e)] || '';
+  const log = [...(S.torque || [])].sort((a, b) => a.ts.localeCompare(b.ts)).map(e => [e.ts, e.job, e.skid, e.equip, e.device, e.point || '', e.size || '', e.qty === '' || e.qty == null ? '' : (tqNum(e.qty) ?? e.qty), tqNum(e.spec), tqNum(e.min), tqNum(e.max), tqNum(e.actual), e.unit || '', stTxt(e), e.marked ? 'Yes' : 'No', e.wrench || '', e.wrenchCal || '', e.by || '']);
+  logSheet(wb, 'Torque_Log', 'TorqueLogTable', ['Timestamp', 'JobNumber', 'EquipmentOrSkidNumber', 'EquipmentType', 'Device', 'Connection', 'BoltSize', 'Qty', 'Spec', 'Min', 'Max', 'Actual', 'Unit', 'Result', 'TorqueMarked', 'WrenchID', 'WrenchCalDue', 'By'], [20, 14, 20, 24, 28, 22, 10, 6, 8, 8, 8, 8, 8, 12, 12, 12, 13, 8], log);
+  const chart = tqEquipTypes().flatMap(eq => tqSpecsFor(eq).map(s => [s.equip, s.device, s.point || '', s.size || '', s.qty === '' || s.qty == null ? '' : (tqNum(s.qty) ?? s.qty), tqNum(s.spec), tqNum(s.min), tqNum(s.max), s.unit || '', s.notes || '']));
+  const ws = logSheet(wb, 'Torque_Chart', 'TorqueChartTable', ['EquipmentType', 'Device', 'Connection', 'BoltSize', 'Qty', 'Spec', 'Min', 'Max', 'Unit', 'Notes'], [26, 30, 26, 10, 6, 8, 8, 8, 8, 40], chart);
+  ws.getCell(`L1`).value = 'Default tolerance %'; ws.getCell('L1').font = { bold: true }; ws.getCell('M1').value = tqTol(); ws.getColumn('L').width = 20;
+  return wb;
+}
+async function tqChartImport(file) {
+  const wb = new ExcelJS.Workbook();
+  try { await wb.xlsx.load(await file.arrayBuffer()); } catch { return toast('That file isn’t a readable .xlsx workbook.', { kind: 'bad' }); }
+  const ws = wb.getWorksheet('Torque_Chart') || wb.worksheets.find(w => /torque|chart/i.test(w.name)) || wb.worksheets[0];
+  if (!ws) return toast('No sheet found in that workbook.', { kind: 'bad' });
+  // header row: the first row in the top 10 that names a device and a torque value
+  let hr = 0, head = {};
+  for (let r = 1; r <= Math.min(10, ws.rowCount); r++) {
+    const h = {}; ws.getRow(r).eachCell((c, i) => { h[cellText(c.value).replace(/[\s_/().#-]/g, '').toLowerCase()] = i; });
+    const keys = Object.keys(h);
+    if (keys.some(k => /device|component|breaker/.test(k)) && keys.some(k => /spec|torque|value/.test(k))) { hr = r; head = h; break; }
+  }
+  if (!hr) return toast('Couldn’t find the header row. It needs at least a Device column and a Spec (torque) column.', { kind: 'bad', ms: 7000 });
+  const col = re => { const k = Object.keys(head).find(k => re.test(k)); return k ? head[k] : 0; };
+  const c = { equip: col(/^equip|equipmenttype|^type$|product/), device: col(/device|component|breaker/), point: col(/connection|point|location|fastener|terminal/), size: col(/bolt|size|thread/), qty: col(/^qty|quantity|count/), spec: col(/^spec|torquespec|^torque$|value|nominal/), min: col(/^min/), max: col(/^max/), unit: col(/^unit/), notes: col(/note|comment/) };
+  const unitOf = u => { u = String(u || '').toLowerCase().replace(/[\s.]/g, ''); if (/n.?m|newton/.test(u)) return 'N·m'; if (/in/.test(u)) return 'in-lb'; if (/ft|lb/.test(u)) return 'ft-lb'; return ''; };
+  const have = new Set(S.torqueSpecs.map(s => keyOf([s.equip, s.device, s.point, s.size].join('|'))));
+  let added = 0, skipped = 0, lastEquip = '';
+  ws.eachRow((row, i) => {
+    if (i <= hr) return;
+    const g = k => c[k] ? cellText(row.getCell(c[k]).value).trim() : '';
+    const equip = g('equip') || lastEquip || file.name.replace(/\.[^.]+$/, ''); if (g('equip')) lastEquip = g('equip');
+    const rec = { equip, device: g('device'), point: g('point'), size: g('size'), qty: g('qty'), spec: tqNum(g('spec')), min: tqNum(g('min')), max: tqNum(g('max')), unit: unitOf(g('unit')) || 'ft-lb', notes: g('notes') };
+    if (!rec.device || rec.spec == null) { if (rec.device || g('spec')) skipped++; return; }
+    const sig = keyOf([rec.equip, rec.device, rec.point, rec.size].join('|'));
+    if (have.has(sig)) return;
+    have.add(sig); S.torqueSpecs.push(Object.assign({ id: uid(), order: S.torqueSpecs.length, updatedAt: Date.now() }, rec)); added++;
+  });
+  if (added) { commit('torque'); tqState().tab = 'chart'; }
+  renderTorque();
+  toast(added ? `Added ${added} chart row${added > 1 ? 's' : ''} from ${file.name}.${skipped ? ` Skipped ${skipped} without a device or a number.` : ''}` : `Nothing new in ${file.name}.${skipped ? ` ${skipped} rows had no device or no number.` : ''}`, { kind: added ? 'ok' : '', ms: 6000 });
+}
+
+const TQ_ACT = {
+  'tq-tab': b => { tqState().tab = b.dataset.tab; renderTorque(); },
+  'tq-scope': () => { const T = tqState(); T.all = !T.all; renderTorque(); },
+  'tq-fill': () => { const T = tqState(); tqSpecsFor(T.equip).forEach(s => { if (!String(T.vals[s.id] ?? '').trim()) T.vals[s.id] = tqFmt(tqNum(s.spec)); }); renderTorque(); },
+  'tq-add-spec': b => tqOpenSpec(null, b.dataset.equip),
+  'tq-edit-spec': b => tqOpenSpec(S.torqueSpecs.find(x => x.id === b.dataset.id)),
+  'tq-cancel': () => $('#tqDlg').close(),
+  'tq-again': () => tqSaveSpec(true),
+  'tq-del-spec': () => {
+    const i = S.torqueSpecs.findIndex(x => x.id === UI.tqEdit); if (i < 0) return;
+    const [s] = S.torqueSpecs.splice(i, 1); S.deleted[s.id] = Date.now(); commit('torque'); $('#tqDlg').close(); renderTorque();
+    toast(`Removed ${s.device} from the chart. Past readings are kept.`, { action: 'Undo', onAction: () => { S.torqueSpecs.splice(i, 0, s); delete S.deleted[s.id]; s.updatedAt = Date.now(); commit('torque'); renderTorque(); } });
+  },
+  'tq-del': b => {
+    const i = S.torque.findIndex(x => x.id === b.dataset.id); if (i < 0) return;
+    const [e] = S.torque.splice(i, 1); S.deleted[e.id] = Date.now(); commit('torque'); renderTorque();
+    toast(`Deleted the ${e.device} reading.`, { action: 'Undo', onAction: () => { S.torque.splice(i, 0, e); delete S.deleted[e.id]; commit('torque'); renderTorque(); } });
+  },
+  'tq-grp': b => {
+    UI.tqGrp = { mode: b.dataset.mode, equip: b.dataset.equip };
+    $('#tqGrpTitle').textContent = b.dataset.mode === 'copy' ? `Copy ${b.dataset.equip} to a new equipment type` : `Rename ${b.dataset.equip}`;
+    $('#tqGrpName').value = b.dataset.mode === 'copy' ? '' : b.dataset.equip;
+    $('#tqGrpDlg').showModal(); setTimeout(() => $('#tqGrpName').focus(), 30);
+  },
+  'tq-grp-cancel': () => $('#tqGrpDlg').close(),
+  'tq-chart-print': () => tqChartPrint(),
+  'tq-print': () => tqRecordPrint(),
+  'tq-xlsx': () => download(torqueWorkbook(), FILES.torque),
+  'tq-chart-import': () => { const f = $('#tqFile'); f.value = ''; f.click(); },
+  'qr-desc': b => {
+    const r = S.qr.find(x => x.id === b.dataset.id); if (!r) return;
+    const td = b.closest('td');
+    td.innerHTML = `<input type="text" class="qr-desc-in" list="qrDescList" value="${esc(r.desc || '')}" aria-label="Description for ${esc(r.serial)}">`;
+    const inp = td.querySelector('input'); inp.focus(); inp.select();
+    let done = false;
+    const save = keep => { if (done) return; done = true; if (keep) { const v = inp.value.trim(); if (v !== (r.desc || '')) { if (v) r.desc = v; else delete r.desc; r.updatedAt = Date.now(); commit('qr'); } } renderCurrent(); };
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); save(true); } else if (e.key === 'Escape') save(false); });
+    inp.addEventListener('blur', () => save(true));
+  },
+};
+$('#tqForm2').addEventListener('submit', e => { e.preventDefault(); tqSaveSpec(false); });
+$('#tqGrpForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = $('#tqGrpName').value.trim(), G = UI.tqGrp; if (!name || !G) return;
+  if (keyOf(name) !== keyOf(G.equip) && tqEquipTypes().some(t => keyOf(t) === keyOf(name))) return toast(`${name} already has a chart. Pick another name.`, { kind: 'bad' });
+  const specs = tqSpecsFor(G.equip);
+  if (G.mode === 'copy') specs.forEach(s => S.torqueSpecs.push(Object.assign({}, s, { id: uid(), equip: name, order: S.torqueSpecs.length, updatedAt: Date.now() })));
+  else specs.forEach(s => { s.equip = name; s.updatedAt = Date.now(); });
+  const T = tqState(); T.equip = name; tqSavePref();
+  commit('torque'); $('#tqGrpDlg').close(); renderTorque();
+  toast(G.mode === 'copy' ? `Copied ${specs.length} rows to ${name}. Edit the values that differ.` : `Renamed to ${name}.`, { kind: 'ok' });
+});
+$('#tqFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) tqChartImport(f); });
+
+// ============================================================
 //  Sign-in (PIN). A deterrent for a static site, not real security.
 // ============================================================
 function sha256hex(str) {
@@ -5330,11 +5729,13 @@ function renderLookup() {
       <div class="summary">
         <div><b class="num">${qr.length}</b><span>Skid serials${skids.length ? ` · ${skids.length} skid${skids.length > 1 ? 's' : ''}` : ''}</span></div>
         <div><b class="num">${comp.length}</b><span>Component serials</span></div>
+        ${(() => { const t = S.torque.filter(e => keyOf(e.job) === k), b = t.filter(e => ['low', 'high'].includes(tqStatus(e))).length; return `<div class="${b ? 'attn' : ''}"><b class="num">${t.length}</b><span>Torque readings${b ? ` · ${b} out of spec` : ''}</span></div>`; })()}
         <div class="${c.open ? 'attn' : ''}"><b class="num">${job ? c.open : '–'}</b><span>${job ? `Open punch items · ${c.closed} closed` : 'No test packet'}</span></div>
         <div><b class="num">${jhasForJob(k).length}</b><span>Crew JHAs on file</span></div>
       </div>
-      ${lkTable('Skid serials', ['Time', 'Skid', 'Serial', 'By'], qr.map(r => [r.ts.slice(0, 16), r.skid, `<span class="mono"><b>${esc(r.serial)}</b></span>`, r.by]))}
+      ${lkTable('Skid serials', ['Time', 'Skid', 'Serial', 'Description', 'By'], qr.map(r => [r.ts.slice(0, 16), r.skid, `<span class="mono"><b>${esc(r.serial)}</b></span>`, r.desc || '', r.by]))}
       ${lkTable('Component serials', ['Time', 'Skid', 'Designation', 'Serial', 'By'], comp.map(r => [r.ts.slice(0, 16), r.skid, r.name, `<span class="mono"><b>${esc(r.serial)}</b></span>`, r.by]))}
+      ${lkTable('Torque log', ['Time', 'Skid', 'Equipment', 'Device', 'Connection', 'Spec', 'Actual', 'Result', 'By'], S.torque.filter(e => keyOf(e.job) === k).sort((a, b) => a.ts.localeCompare(b.ts)).map(e => [e.ts.slice(0, 16), e.skid, e.equip, e.device, e.point || '', tqSpecText(e), `${tqFmt(tqNum(e.actual))} ${e.unit || ''}`, tqPill(e) || '', e.by]))}
       ${lkTable('Cable insulation reports (QC281)', ['Date', 'Project', 'Readings', 'Technician'], S.megger.filter(m => keyOf(m.jobOrder) === k).map(m => [m.created.slice(0, 10), m.project, String(m.rows.length), m.tech.name]))}
       ${lkTable('Hi-Pot reports (QC217 / QC218 / QC273)', ['Date', 'Form', 'Type', 'Testing voltage', 'Technician'], S.hipot.filter(h => keyOf(h.jobOrder) === k).map(h => [h.created.slice(0, 10), h.form, h.kind, h.testV, h.tech.name]))}
       ${lkTable('Crew JHAs', ['Date', 'Crew', 'Jobs', 'Signed'], jhasForJob(k).map(h => { const sc = signedCount(h); return [h.date, h.crewName, h.jobs, `${sc.signed}/${sc.total}`]; }))}
@@ -5511,7 +5912,7 @@ const ACT = {
   },
   'lbl-print': () => { const lines = UI.labelText.split('\n').map(s => s.trim()).filter(Boolean); printHTML(`<div class="pr-labels">${labelsHTML(lines)}</div>`); },
 };
-Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT, NCP_ACT, PL_ACT);
+Object.assign(ACT, LIC_ACT, EXTRA_ACT, HP_ACT, NCP_ACT, PL_ACT, TQ_ACT);
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if (!b || b.disabled) return;
