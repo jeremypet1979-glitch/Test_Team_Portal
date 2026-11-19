@@ -1,12 +1,18 @@
 {
   "requireLogin": true,
-  "updated": "2026-10-27 12:34:23",
+  "updated": "2026-11-19 13:14:06",
   "users": [
     {
       "name": "Admin",
       "salt": "sfp-admin-7Qk2",
       "hash": "fbe2dc49d65320d326b2d1523e3c3d52f26703b68b7fb38780b157a10195601f",
       "role": "admin"
+    },
+    {
+      "name": "Aidan LaReaux",
+      "salt": "sfp-ia5zlnew",
+      "hash": "7adc0ecdc66ecc25d777a83ebd716c8fcd2618063feb0e8067badef72e7809f6",
+      "role": "user"
     },
     {
       "name": "Brandon Henexson",
@@ -79,6 +85,12 @@
       "salt": "sfp-y4c0ta5z",
       "hash": "f30b9147276af00bac935d89266f85b50dd4cda3707dc817217e8ec64154b098",
       "role": "user"
+    },
+    {
+      "name": "Mitchial Stones",
+      "salt": "sfp-jf3knsg9",
+      "hash": "566291100e2bce746addb5b8af05187f8a8b8aeb162f5d853a53095e86aeef6f",
+      "role": "admin"
     },
     {
       "name": "Norm John",
