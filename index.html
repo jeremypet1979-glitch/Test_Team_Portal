@@ -66,8 +66,11 @@ nav.tabs a[aria-current="page"]{color:var(--plate-ink);background:rgba(255,255,2
 .tag{background:var(--hazard);color:var(--hazard-ink);background-image:repeating-linear-gradient(-45deg,transparent 0 14px,rgba(0,0,0,.05) 14px 28px)}
 .tag .wrap{display:flex;gap:14px;align-items:end;padding-block:10px;flex-wrap:wrap}
 .tag label{display:flex;flex-direction:column;gap:2px;font:700 11px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase}
-.tag input{background:#fffef6;border:1.5px solid var(--hazard-ink);border-radius:4px;padding:6px 9px;width:170px;font:600 15px var(--f-body);color:#15191b}
-.tag input.short{width:90px}
+.tag .wrap input{-webkit-appearance:none;appearance:none;color-scheme:light;background:#fff;background-color:#fff;border:2px solid var(--hazard-ink);border-radius:4px;padding:6px 9px;width:170px;font:700 17px var(--f-body);color:#000;-webkit-text-fill-color:#000;caret-color:#000;opacity:1}
+.tag .wrap input::placeholder{color:#6b7378;-webkit-text-fill-color:#6b7378;font-weight:500;opacity:1}
+.tag .wrap input:focus{outline:3px solid #15191b;outline-offset:1px;background:#fff}
+.tag .wrap input:-webkit-autofill,.tag .wrap input:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 40px #fff inset;-webkit-text-fill-color:#000}
+.tag .wrap input.short{width:90px}
 .tag .tag-title{font:700 15px/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;align-self:center;margin-right:4px}
 .folder-btn{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--hazard-ink);color:#f6f1d6;border:0;border-radius:4px;padding:8px 12px;font-weight:600;cursor:pointer;font-size:14px}
 .dot{width:9px;height:9px;border-radius:50%;background:#8a949a;flex:none}
@@ -402,7 +405,7 @@ details.small summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--
   .form-grid,.jobhead{grid-template-columns:minmax(0,1fr)}
   .crewrow{grid-template-columns:minmax(0,1fr) auto}
   .crewrow .sigbox{grid-column:1/-1;grid-row:2}
-  .tag input{width:140px}
+  .tag .wrap input{width:140px}
   .folder-btn{margin-left:0}
   h1{font-size:26px}
 }
