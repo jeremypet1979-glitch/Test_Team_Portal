@@ -1,6 +1,6 @@
 {
   "requireLogin": true,
-  "updated": "2026-11-19 13:14:06",
+  "updated": "2026-11-23 11:24:05",
   "users": [
     {
       "name": "Admin",
@@ -30,6 +30,12 @@
       "name": "Dylan Johnson",
       "salt": "sfp-cf1zkyc4",
       "hash": "dd3a69d3ffd0bbfe678706b3ca17fb9abd8f8d0d7f58b39dd31eb6a583bedae8",
+      "role": "user"
+    },
+    {
+      "name": "Eric Johns",
+      "salt": "sfp-h2sbc9yf",
+      "hash": "c0da6bdde061715f670ffe1ddb73a2a0ec9e29f1f01c6b501ad2fae42f3b66a5",
       "role": "user"
     },
     {
